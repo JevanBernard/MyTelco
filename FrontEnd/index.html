@@ -20,6 +20,13 @@
             <img src="assets/img/logo.png" alt="MyTelco Logo" class="logo"> <!-- Pastikan ada file logo -->
         </div>
 
+        <!-- HAMBURGER MENU (Hanya muncul di Mobile) -->
+        <div class="menu-toggle" id="mobile-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
         <nav class="main-nav">
             <ul>
                 <li><a href="#home">Beranda</a></li>
@@ -100,85 +107,209 @@
         <!-- PACKAGES SECTION -->
         <section id="packages" class="packages-section">
             <header class="section-header">
-                <h2>Pilihan Paket Unggulan</h2>
-                <p>Jelajahi paket standar kami atau gunakan AI untuk hasil personal.</p>
+                <h2>Pilihan Paket <span class="highlight">Unggulan</span></h2>
+                <p>Jelajahi paket standar kami. Tidak menemukan yang cocok? Gunakan fitur rekomendasi AI (Login) untuk hasil personal.</p>
             </header>
 
             <div class="packages-grid">
                 <!-- Card 1: General -->
                 <article class="package-card">
-                    <div class="card-header">
-                        <h3>GENERAL</h3>
-                        <span class="data-amount">30 GB</span>
+                    <div class="card-top">
+                        <div class="card-header">
+                            <span class="badge-outline">GENERAL</span>
+                            <!-- Ganti i data-lucide dengan img src -->
+                            <img src="assets/img/icon/solid_signal.svg" class="card-icon" alt="Signal">
+                        </div>
+                        <div class="data-amount">30 <span class="unit">GB</span></div>
                     </div>
+                    
+                    <div class="card-divider"></div>
+                    
                     <ul class="features-list">
-                        <li>✅ Masa Aktif 30 Hari</li>
-                        <li>✅ 5G Network Ready</li>
-                        <li>✅ 60 Menit Telepon</li>
+                        <!-- Icon Checklist -->
+                        <li><img src="assets/img/icon/check-circle.svg" alt="check-circle"> Masa Aktif 30 Hari</li>
+                        <li><img src="assets/img/icon/check-circle.svg" altcheck-circleCheck"> 5G Network Ready</li>
+                        <li><img src="assets/img/icon/check-circle.svg" alt="-circheck-circleCheck"> 60 Menit Telepon</li>
                     </ul>
+                    
                     <div class="card-footer">
-                        <p>Mulai dari</p>
-                        <div class="price">Rp 80k<span>/bulan</span></div>
-                        <button class="btn-outline">Pilih Paket</button>
+                        <div class="price-info">
+                            <span class="label">Mulai dari</span>
+                            <div class="price">Rp 80k <span class="period">/bulan</span></div>
+                        </div>
+                        <button class="btn-circle-arrow">
+                            <img src="assets/img/icon/arrow-up.svg" alt="Arrow">
+                        </button>
                     </div>
                 </article>
 
-                <!-- Card 2: Streaming -->
-                <article class="package-card featured"> <!-- Class featured biar beda warna -->
-                    <div class="card-header">
-                        <h3>STREAMING</h3>
-                        <span class="data-amount">50 GB</span>
+                <!-- Card 2: Streaming (Featured) -->
+                <article class="package-card">
+                    <div class="card-top">
+                        <div class="card-header">
+                            <span class="badge-outline">STREAMING</span>
+                            <img src="assets/img/icon/play-fill.svg" class="card-icon" alt="Play">
+                        </div>
+                        <div class="data-amount">50 <span class="unit">GB</span></div>
                     </div>
+
+                    <div class="card-divider"></div>
+                    
                     <ul class="features-list">
-                        <li>✅ Masa Aktif 30 Hari</li>
-                        <li>✅ Unlimited YouTube & Netflix</li>
-                        <li>✅ Bebas FUP Harian</li>
+                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Masa Aktif 30 Hari</li>
+                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Unlimited YouTube & Netflix</li>
+                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Bebas FUP Harian</li>
                     </ul>
+                    
                     <div class="card-footer">
-                        <p>Mulai dari</p>
-                        <div class="price">Rp 110k<span>/bulan</span></div>
-                        <button class="btn-primary">Pilih Paket</button>
+                        <div class="price-info">
+                            <span class="label">Mulai dari</span>
+                            <div class="price">Rp 110k <span class="period">/bulan</span></div>
+                        </div>
+                        <button class="btn-circle-arrow">
+                            <img src="assets/img/icon/arrow-up.svg" alt="Arrow">
+                        </button>
                     </div>
                 </article>
 
                 <!-- Card 3: Gaming -->
                 <article class="package-card">
-                    <div class="card-header">
-                        <h3>GAMING</h3>
-                        <span class="data-amount">75 GB</span>
+                    <div class="card-top">
+                        <div class="card-header">
+                            <span class="badge-outline">GAMING</span>
+                            <img src="assets/img/icon/solid_signal.svg" class="card-icon" alt="Game">
+                        </div>
+                        <div class="data-amount">75 <span class="unit">GB</span></div>
                     </div>
+
+                    <div class="card-divider"></div>
+
                     <ul class="features-list">
-                        <li>✅ Ping Rendah Prioritas</li>
-                        <li>✅ Voucher Game Bonus</li>
-                        <li>✅ Discord Unlimited</li>
+                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Ping Rendah Prioritas</li>
+                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Voucher Game Bonus</li>
+                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Discord Unlimited</li>
                     </ul>
+
                     <div class="card-footer">
-                        <p>Mulai dari</p>
-                        <div class="price">Rp 150k<span>/bulan</span></div>
-                        <button class="btn-outline">Pilih Paket</button>
+                        <div class="price-info">
+                            <span class="label">Mulai dari</span>
+                            <div class="price">Rp 150k <span class="period">/bulan</span></div>
+                        </div>
+                        <button class="btn-circle-arrow">
+                            <img src="assets/img/icon/arrow-up.svg" alt="Arrow">
+                        </button>
                     </div>
                 </article>
+
+                <!-- Card 4: Family -->
+                <article class="package-card">
+                    <div class="card-top">
+                        <div class="card-header">
+                            <span class="badge-outline">FAMILY</span>
+                            <img src="assets/img/icon/solid_signal.svg" class="card-icon" alt="Family">
+                        </div>
+                        <div class="data-amount">100 <span class="unit">GB</span></div>
+                    </div>
+
+                    <div class="card-divider"></div>
+
+                    <ul class="features-list">
+                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Bisa Bagi Kuota (4 Nomor)</li>
+                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Kontrol Orang Tua</li>
+                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Bonus Cloud Storage</li>
+                    </ul>
+
+                    <div class="card-footer">
+                        <div class="price-info">
+                            <span class="label">Mulai dari</span>
+                            <div class="price">Rp 200k <span class="period">/bulan</span></div>
+                        </div>
+                        <button class="btn-circle-arrow">
+                            <img src="assets/img/icon/arrow-up.svg" alt="Arrow">
+                        </button>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Tombol Bawah Besar -->
+            <div class="packages-action">
+                <button class="btn-primary-large">
+                    Lihat Semua Paket <img src="assets/img/icon/arrow-up.svg" style="width: 20px;" alt="Arrow">
+                </button>
             </div>
         </section>
 
         <!-- FAQ SECTION -->
         <section id="faq" class="faq-section">
             <div class="faq-content">
-                <h2>Bantuan & FAQ</h2>
-                <p>Temukan jawaban seputar layanan rekomendasi pintar kami.</p>
+                <!-- Kolom Kiri -->
+                <div class="faq-left">
+                    <h2>Bantuan & <span class="highlight">FAQ</span></h2>
+                    <p>Temukan jawaban seputar layanan, pembayaran, dan fitur rekomendasi pintar kami.</p>
+                    
+                    <a href="#" class="btn-help-center">
+                        <!-- Ganti dengan icon tanda tanya/help -->
+                        <img src="assets/img/icon/help-circle.svg" alt="Help">
+                        Pusat Bantuan Lengkap
+                    </a>
+                </div>
                 
-                <div class="faq-list">
-                    <details>
-                        <summary>Mengapa saya mendapatkan rekomendasi paket?</summary>
-                        <p>Kami memiliki sistem AI yang mendeteksi pola penggunaan data Anda untuk memberikan penawaran paling hemat.</p>
+                <!-- Kolom Kanan (Accordion) -->
+                <div class="faq-list faq-right">
+                    <!-- Item 1 (Default Terbuka) -->
+                    <details open>
+                        <summary>
+                            Mengapa saya mendapatkan rekomendasi paket?
+                            <img src="assets/img/icon/chevron-down.svg" class="faq-toggle-icon" alt="Toggle">
+                        </summary>
+                        <div class="faq-answer">
+                            Kami memiliki sistem AI yang mendeteksi penggunaan data Anda di MyTelco. 
+                            Rekomendasi yang kami berikan akan berdasarkan kebutuhan Anda agar lebih hemat.
+                        </div>
                     </details>
+
+                    <!-- Item 2 -->
                     <details>
-                        <summary>Apa itu fitur 'Jaga Pulsa' MyTelco?</summary>
-                        <p>Fitur ini mematikan internet otomatis saat kuota habis agar pulsa reguler tidak terpotong.</p>
+                        <summary>
+                            Apa itu fitur 'Jaga Pulsa' MyTelco?
+                            <img src="assets/img/icon/chevron-down.svg" class="faq-toggle-icon" alt="Toggle">
+                        </summary>
+                        <div class="faq-answer">
+                            Fitur ini mematikan internet otomatis saat kuota habis agar pulsa reguler tidak terpotong secara tidak sengaja.
+                        </div>
                     </details>
+
+                    <!-- Item 3 -->
                     <details>
-                        <summary>Apa itu FUP (Fair Usage Policy)?</summary>
-                        <p>Batas pemakaian wajar untuk menjaga kualitas jaringan bagi semua pengguna.</p>
+                        <summary>
+                            Bagaimana jika masa aktif habis tapi kuota ada?
+                            <img src="assets/img/icon/chevron-down.svg" class="faq-toggle-icon" alt="Toggle">
+                        </summary>
+                        <div class="faq-answer">
+                            Sisa kuota akan hangus jika masa aktif paket berakhir. Kami sarankan melakukan perpanjangan sebelum masa aktif habis.
+                        </div>
+                    </details>
+
+                    <!-- Item 4 -->
+                    <details>
+                        <summary>
+                            Apa itu FUP (Fair Usage Policy)?
+                            <img src="assets/img/icon/chevron-down.svg" class="faq-toggle-icon" alt="Toggle">
+                        </summary>
+                        <div class="faq-answer">
+                            Batas pemakaian wajar untuk menjaga kualitas jaringan bagi semua pengguna. Kecepatan akan disesuaikan setelah melewati batas ini.
+                        </div>
+                    </details>
+
+                    <!-- Item 5 -->
+                    <details>
+                        <summary>
+                            Metode pembayaran apa saja yang tersedia?
+                            <img src="assets/img/icon/chevron-down.svg" class="faq-toggle-icon" alt="Toggle">
+                        </summary>
+                        <div class="faq-answer">
+                            Kami menerima pembayaran melalui Transfer Bank, E-Wallet (GoPay, OVO, Dana), dan Kartu Kredit/Debit.
+                        </div>
                     </details>
                 </div>
             </div>
@@ -188,42 +319,83 @@
     <!-- FOOTER -->
     <footer class="main-footer">
         <div class="footer-content">
+            <!-- Kolom 1: Brand & Social -->
             <div class="footer-brand">
-                <img src="assets/img/logo-dark.png" alt="MyTelco">
-                <p>Connecting you to the future with intelligent service packages.</p>
+                <div class="logo-container">
+                    <!-- Pastikan logo-dark.png ada, atau gunakan logo.png dengan filter brightness -->
+                    <img src="assets/img/logo.png" alt="MyTelco" class="footer-logo">
+                    <!-- <span class="brand-text">MyTelco</span> -->
+                </div>
+                <p>Connecting you to the future with intelligent service packages and AI-powered recommendations.</p>
+                
                 <div class="social-links">
-                    <!-- Masukkan icon sosmed disini -->
-                    <a href="#">IG</a> <a href="#">FB</a> <a href="#">TW</a>
+                    <a href="#" aria-label="Facebook">
+                        <img src="assets/img/icon/facebook.svg" alt="FB">
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <img src="assets/img/icon/twitter.svg" alt="TW">
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <img src="assets/img/icon/instagram.svg" alt="IG">
+                    </a>
+                    <a href="#" aria-label="LinkedIn">
+                        <img src="assets/img/icon/linkedin.svg" alt="IN">
+                    </a>
                 </div>
             </div>
 
+            <!-- Kolom 2: Services -->
             <div class="footer-links">
                 <h4>Services</h4>
                 <ul>
                     <li><a href="#">Internet Plans</a></li>
                     <li><a href="#">Phone Services</a></li>
                     <li><a href="#">Streaming</a></li>
+                    <li><a href="#">Cloud Storage</a></li>
+                    <li><a href="#">Global Roaming</a></li>
                 </ul>
             </div>
 
+            <!-- Kolom 3: Company -->
             <div class="footer-links">
                 <h4>Company</h4>
                 <ul>
                     <li><a href="#">About Us</a></li>
                     <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Blog</a></li>
                     <li><a href="#">Support</a></li>
                 </ul>
             </div>
 
+            <!-- Kolom 4: Contact -->
             <div class="footer-contact">
                 <h4>Contact</h4>
-                <p>📍 Gatot Subroto Tengah, Denpasar</p>
-                <p>📞 081-238-907-644</p>
-                <p>✉️ hello@mytelco.com</p>
+                <ul>
+                    <li>
+                        <img src="assets/img/icon/map-pin.svg" alt="Location">
+                        <span>Gatot Subroto Tengah, Denpasar 180627</span>
+                    </li>
+                    <li>
+                        <img src="assets/img/icon/phone.svg" alt="Phone">
+                        <span>081-238-907-644</span>
+                    </li>
+                    <li>
+                        <img src="assets/img/icon/mail.svg" alt="Mail">
+                        <span>hello@mytelco.com</span>
+                    </li>
+                </ul>
             </div>
         </div>
+
+        <!-- Bagian Bawah: Copyright & Legal -->
         <div class="footer-bottom">
             <p>&copy; 2025 MyTelco. All rights reserved.</p>
+            <div class="footer-legal">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
+            </div>
         </div>
     </footer>
 
