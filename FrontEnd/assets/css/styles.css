@@ -1,0 +1,647 @@
+/* --- 1. RESET & VARIABLES (Sesuai Desain Asli) --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Poppins:wght@400;500;600&display=swap');
+
+:root {
+    --bg-dark: #0a0a0a;
+    --text-main: #ffffff;
+    --text-muted: #94a3b8; /* Sesuai .sudah-punya-id */
+    --accent-yellow: #ffdb43;
+    --accent-orange: #fea100;
+    --primary-gradient: linear-gradient(90deg, #ffdb43, #fea100 52.5%, #ffdb43);
+    --card-bg: rgba(24, 24, 27, 0.2);
+    --border-dark: #334155;
+    --font-main: 'Inter', sans-serif;
+    --font-display: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-main);
+    font-size: 16px;
+    line-height: 1.5;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Background Blurs (Replikasi .home-child) */
+body::before {
+    content: '';
+    position: fixed;
+    top: -10%;
+    left: 20%;
+    width: 630px;
+    height: 630px;
+    background-color: rgba(254, 161, 0, 0.1);
+    filter: blur(200px); /* Blur diperhalus agar tidak pecah */
+    border-radius: 50%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    bottom: 10%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: rgba(254, 161, 0, 0.08);
+    filter: blur(150px);
+    border-radius: 50%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+ul { list-style: none; }
+
+/* --- 2. HEADER & NAVIGATION (Update Sesuai Permintaan Persis) --- */
+.main-header {
+    /* Style dasar dari .header-2 */
+    width: 100%;
+    position: sticky; /* Tetap sticky agar UX bagus, tapi style visual ikut desain */
+    top: 0;
+    z-index: 1000;
+    
+    /* Visual Properties dari user */
+    backdrop-filter: blur(12px);
+    background-color: rgba(0, 0, 0, 0.8);
+    border-bottom: 1px solid #1e293b;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 64px; /* Padding persis */
+    gap: 20px;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+    font-family: var(--font-main);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo { 
+    /* Style dari .dark-1-icon */
+    width: 196px;
+    max-height: 100%;
+    object-fit: cover;
+    position: relative;
+} 
+.brand-name { display: none; } /* Hide teks karena logo gambar sudah besar */
+
+.main-nav ul {
+    /* Style dari .nav */
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.main-nav a {
+    /* Style dari .beranda */
+    position: relative;
+    line-height: 145%;
+    text-transform: capitalize;
+    font-weight: 500;
+    color: #fff;
+    font-family: var(--font-main);
+}
+
+.main-nav a.active {
+    /* Style dari .beranda-wrapper */
+    border-radius: 6px;
+    background-color: rgba(249, 115, 22, 0.1);
+    border: 1px solid rgba(249, 115, 22, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    color: var(--accent-yellow);
+}
+
+/* Tombol Sign In (Style dari .sign-in-wrapper) */
+.btn-signin {
+    box-shadow: 0px 0px 15px rgba(254, 161, 0, 0.3);
+    border-radius: 100px;
+    background: linear-gradient(105.11deg, #fea100, #ffdb43);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    color: #000;
+    font-weight: 500;
+    font-family: var(--font-main);
+}
+
+/* --- 3. HERO SECTION (PERSIS DESAIN) --- */
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Menggunakan padding dari .header-2 agar rata kiri-kanan */
+    padding: 80px 150px; 
+    min-height: 85vh;
+    gap: 40px;
+}
+
+.hero-content {
+    flex: 1;
+    max-width: 650px;
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Badge AI (Pill Shape) */
+.badge-ai {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    /* Ukuran dan warna sesuai .gravity-uithunderbolt-fill-parent */
+    padding: 12px 24px;
+    border-radius: 100px;
+    background-color: rgba(254, 161, 0, 0.1);
+    border: 1px solid rgba(254, 161, 0, 0.3);
+    color: var(--accent-yellow);
+    font-family: var(--font-display);
+    font-weight: 500;
+    width: fit-content;
+    margin-bottom: 24px;
+}
+
+/* Typography Headings */
+h1 {
+    display: none; /* Kita hidden H1 karena desain pakai H2 style */
+}
+
+h2 {
+    font-size: 4rem; /* 64px */
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    text-transform: capitalize;
+    color: #fff;
+}
+
+/* Gradient Text "Spesial Untukmu" */
+.highlight {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-content p {
+    color: var(--text-muted); /* #94a3b8 */
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.6;
+    margin-bottom: 40px;
+    max-width: 580px; /* Batasi lebar agar tidak terlalu panjang */
+}
+
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.hero-image img {
+    max-width: 100%;
+    /* Efek glow kuning di belakang gambar */
+    filter: drop-shadow(0 0 60px rgba(254, 161, 0, 0.15));
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* --- 4. AI DEMO BOX (Disesuaikan agar mirip tombol di desain) --- */
+.ai-demo-box {
+    /* Container untuk dua tombol berdampingan */
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    width: 100%;
+    margin-bottom: 60px; /* Jarak ke Stats */
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Jarak antar tombol */
+}
+
+.ai-demo-box h3 { display: none; }
+.input-group { display: none; } /* Sembunyikan input group lama */
+
+/* Tombol Primary (Kuning dengan Panah) */
+.btn-primary {
+    background: var(--primary-gradient);
+    border: none;
+    padding: 16px 32px;
+    border-radius: 12px;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    box-shadow: 0 4px 20px rgba(254, 161, 0, 0.4); /* Glow effect */
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+/* Menambahkan panah otomatis setelah teks */
+.btn-primary::after {
+    content: '→'; /* Panah Unicode */
+    font-size: 1.2rem;
+    transition: transform 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(254, 161, 0, 0.5);
+}
+
+.btn-primary:hover::after {
+    transform: translateX(5px); /* Efek panah bergerak */
+}
+
+/* Tombol Secondary (Dark Outline) */
+.btn-secondary {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 16px 32px;
+    border-radius: 12px;
+    color: #fff; /* Teks putih/abu */
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* --- 5. STATS SECTION (Layout Garis Vertikal) --- */
+.stats-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px; /* Atur jarak antar stat */
+    padding: 0; /* Reset padding */
+    margin-top: auto;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Rata kiri sesuai desain */
+    gap: 6px;
+    padding-right: 40px; /* Ruang untuk garis */
+    border-right: 1px solid rgba(255, 255, 255, 0.15); /* Garis Pemisah Vertikal */
+}
+
+/* Hilangkan garis untuk item terakhir */
+.stat-item:last-child {
+    border-right: none;
+    padding-right: 0;
+}
+
+.stat-number {
+    font-size: 2.25rem; /* ~36px */
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+}
+
+.stat-label {
+    color: var(--accent-orange);
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-transform: capitalize;
+}
+
+/* --- 6. PACKAGES SECTION --- */
+.packages-section {
+    padding: 80px 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 56px;
+}
+
+.section-header { text-align: center; }
+.section-header h2 { font-size: 3.75rem; /* 60px */ margin-bottom: 10px; }
+.section-header p { color: var(--text-muted); font-size: 1.25rem; font-family: Arial, sans-serif; }
+
+.packages-grid {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+/* Styles Kartu Umum (Sesuai .container12) */
+.package-card {
+    width: 300px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-dark);
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.05) inset;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    transition: transform 0.3s;
+}
+
+/* Kartu Highlight / Streaming (Sesuai .container13) */
+.package-card.featured {
+    border: 1px solid var(--accent-yellow); /* Border kuning */
+    box-shadow: 0px 10px 30px rgba(255, 219, 67, 0.2), 0px 2px 0px rgba(255, 255, 255, 0.05) inset;
+}
+
+.package-card.featured .general-wrapper {
+    border-color: var(--accent-orange);
+    color: var(--accent-yellow);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.general-wrapper { /* Badge Kategori */
+    border: 1px solid #475569;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    font-family: var(--font-display);
+    letter-spacing: 0.05em;
+    color: #cbd5e1;
+}
+
+.data-amount {
+    font-size: 3.5rem; /* 56px */
+    font-weight: 800;
+    line-height: 1;
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.data-amount span { /* Tulisan GB */
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+/* Gradient text khusus Streaming (Sesuai .div3) */
+.package-card.featured .data-amount {
+    background: linear-gradient(-73.36deg, #fea100, #ffdb43);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.features-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.875rem;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+
+.card-footer {
+    margin-top: auto;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+}
+
+.card-footer p { font-size: 0.75rem; color: #64748b; margin-bottom: 4px; }
+
+.price {
+    font-size: 1.75rem; /* 28px */
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    margin-bottom: 20px;
+}
+.price span { font-size: 1rem; color: #64748b; font-weight: 500; }
+
+.btn-outline {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--text-muted);
+    background: transparent;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-outline:hover { border-color: white; }
+
+.package-card.featured .btn-primary { width: 100%; }
+
+/* --- 7. FAQ SECTION (Sesuai .temukan-jawaban...) --- */
+.faq-section {
+    margin-top: 80px;
+    background: linear-gradient(180deg, #000, #0a0a0a);
+    box-shadow: 0px -16px 16px rgba(254, 161, 0, 0.1);
+    border-radius: 56px 56px 0 0;
+    padding: 80px 64px;
+    min-height: 500px;
+}
+
+.faq-content { max-width: 1200px; margin: 0 auto; display: flex; gap: 80px; }
+.faq-left { flex: 1; }
+.faq-right { flex: 1; }
+
+.faq-section h2 { font-size: 3.75rem; margin-bottom: 20px; }
+.faq-section p { color: var(--text-muted); font-size: 1.125rem; max-width: 400px; }
+
+.faq-list details {
+    background-color: #18181b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.faq-list summary {
+    font-weight: 600;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-list details[open] summary { margin-bottom: 16px; color: var(--accent-orange); }
+
+/* --- 8. FOOTER --- */
+.main-footer {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-top: 0.7px solid rgba(255, 255, 255, 0.1);
+    padding: 48px 64px 20px;
+    font-family: Arial, sans-serif;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-brand p {
+    color: #99a1af;
+    line-height: 1.5;
+    margin-top: 16px;
+    max-width: 200px;
+}
+
+.footer-links h4 { margin-bottom: 16px; font-size: 1.125rem; }
+.footer-links ul li { margin-bottom: 8px; }
+.footer-links a { color: #99a1af; font-size: 1rem; }
+
+.footer-bottom {
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    color: #99a1af;
+    font-size: 0.875rem;
+}
+
+/* --- 9. PROMO BANNER SECTION (Running Text) --- */
+.promo-banner {
+    width: 100%;
+    height: 600px; /* Kembali ke fixed height */
+    position: relative;
+    background: linear-gradient(101.52deg, #fea100, #ffdb43);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Background Pattern */
+.promo-pattern {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    background-image: url('../../img/pattern.svg');
+    background-size: cover;
+    pointer-events: none;
+}
+
+/* Container untuk Teks Berjalan - Digeser sedikit ke atas */
+.scrolling-wrapper {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+/* Teks Besar yang Berjalan */
+.running-text {
+    display: inline-block;
+    font-size: 12rem;
+    font-weight: 800;
+    color: #fff;
+    text-transform: uppercase;
+    animation: scroll-left 20s linear infinite;
+    padding-left: 100%;
+    font-family: var(--font-display);
+    letter-spacing: -0.04em;
+    opacity: 1;
+}
+
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+/* Teks Deskripsi di Kanan Bawah */
+.promo-description {
+    position: absolute;
+    bottom: 20%; /* Posisi di bawah area personalized */
+    right: 10%; /* Rata kanan */
+    z-index: 2;
+    max-width: 500px;
+    text-align: right;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 500;
+    font-family: var(--font-display);
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 1024px) {
+    h1, h2 { font-size: 3rem; }
+    .hero-section { flex-direction: column-reverse; text-align: center; justify-content: center; padding: 60px 24px; gap: 60px; }
+    .hero-content { margin-top: 0; align-items: center; }
+    .hero-content p { margin: 0 auto 40px; text-align: center; }
+    
+    .stats-section { 
+        justify-content: center; 
+        gap: 20px; 
+        margin-top: 40px;
+        width: 100%;
+    }
+    .stat-item { 
+        padding-right: 20px; 
+        align-items: center; 
+    }
+    
+    .input-group { 
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+    }
+    .ai-demo-box { margin-bottom: 40px; text-align: center; }
+    
+    .faq-content { flex-direction: column; gap: 40px; }
+    .footer-content { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+    .main-header { padding: 20px; flex-direction: column; gap: 20px; }
+    .main-nav ul { flex-wrap: wrap; justify-content: center; gap: 20px; }
+    .packages-grid { flex-direction: column; align-items: center; }
+    .footer-content { grid-template-columns: 1fr; text-align: center; }
+    .footer-brand p { margin: 16px auto; }
+    
+    .stat-item { border-right: none; padding: 0; }
+    .stats-section { flex-direction: column; gap: 30px; }
+}
