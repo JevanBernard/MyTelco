@@ -37,7 +37,7 @@
         </nav>
 
         <div class="auth-buttons">
-            <a href="#" class="btn-signin">Sign In</a>
+            <a href="/login" class="btn-signin">Sign In</a>
         </div>
     </header>
 
@@ -399,7 +399,17 @@
         </div>
     </footer>
 
+    <div id="login-overlay" style="
+        display: none; 
+        position: fixed; 
+        top: 0; left: 0; 
+        width: 100%; height: 100%; 
+        z-index: 9999; 
+        background-color: #0d0d0d; 
+        overflow-y: auto;">
+    </div>
+
     <!-- Script Utama -->
-    <script src="assets/js/app.js"></script>
+    <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>
