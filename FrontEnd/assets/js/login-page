@@ -1,0 +1,262 @@
+export default class Login {
+  async render() {
+    return `
+      <style>
+        /* Reset & Container Utama */
+        .login-container {
+          display: flex;
+          min-height: 100vh;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background-color: #0d0d0d;
+          color: white;
+          overflow: hidden;
+        }
+
+        /* Bagian Kiri (Visual/Logo) */
+        .left-panel {
+          flex: 1;
+          background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          display: none; /* Disembunyikan di mobile, muncul di desktop */
+        }
+        
+        /* Tampilkan panel kiri hanya di layar lebar */
+        @media (min-width: 768px) {
+          .left-panel { display: flex; }
+        }
+
+        .brand-logo {
+          position: absolute;
+          top: 30px;
+          left: 30px;
+          font-weight: bold;
+          font-size: 1.2rem;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        /* Simulasi Logo Besar 3D (Placeholder) */
+        .hero-image {
+          width: 300px;
+          height: 300px;
+          /* Ganti URL ini dengan gambar 3D 'M' kamu nanti */
+          background-image: url('https://placehold.co/400x400/orange/white?text=M+Logo+3D'); 
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: center;
+          border-radius: 50%;
+          box-shadow: 0 0 50px rgba(255, 165, 0, 0.2);
+        }
+
+        /* Bagian Kanan (Formulir) */
+        .right-panel {
+          flex: 1;
+          padding: 40px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center; /* Center form horizontally */
+          position: relative;
+          background-image: linear-gradient(#151515 1px, transparent 1px), linear-gradient(90deg, #151515 1px, transparent 1px);
+          background-size: 40px 40px; /* Efek garis grid tipis di background */
+        }
+
+        .form-wrapper {
+          width: 100%;
+          max-width: 400px;
+        }
+
+        h1 {
+          font-size: 2rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+          color: #888;
+          margin-bottom: 2rem;
+          font-size: 0.9rem;
+        }
+
+        /* Styling Input Form */
+        .input-group {
+          margin-bottom: 1.5rem;
+          position: relative;
+        }
+
+        .input-group input {
+          width: 100%;
+          padding: 12px 15px 12px 45px; /* Padding kiri besar untuk icon */
+          background-color: #1a1b1e;
+          border: 1px solid #333;
+          border-radius: 8px;
+          color: white;
+          font-size: 1rem;
+          box-sizing: border-box; /* Agar padding tidak menambah lebar total */
+        }
+
+        .input-group input:focus {
+          outline: none;
+          border-color: #ffb700;
+        }
+
+        /* Icon Placeholder (CSS Shapes/Text) */
+        .input-icon {
+          position: absolute;
+          left: 15px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #666;
+          font-size: 1.2rem;
+        }
+
+        /* Tombol Lupa Password */
+        .forgot-password {
+          display: block;
+          text-align: right;
+          color: #ffb700;
+          text-decoration: none;
+          font-size: 0.85rem;
+          margin-bottom: 1.5rem;
+        }
+
+        /* Tombol Masuk */
+        .btn-submit {
+          width: 100%;
+          padding: 12px;
+          background: linear-gradient(90deg, #ffb700, #ffcc33);
+          border: none;
+          border-radius: 8px;
+          color: black;
+          font-weight: bold;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: transform 0.2s;
+        }
+
+        .btn-submit:hover {
+          transform: scale(1.02);
+          box-shadow: 0 0 15px rgba(255, 183, 0, 0.4);
+        }
+
+        /* Footer Link */
+        .register-link {
+          margin-top: 2rem;
+          text-align: center;
+          font-size: 0.9rem;
+          color: #ccc;
+        }
+
+        .register-link a {
+          color: #ffb700;
+          text-decoration: none;
+          font-weight: bold;
+        }
+
+        /* Pesan Error/Sukses */
+        #loginMessage {
+          text-align: center;
+          margin-top: 15px;
+          font-size: 0.9rem;
+          min-height: 20px;
+        }
+      </style>
+
+      <div class="login-container">
+        <div class="left-panel">
+          <div class="brand-logo">
+             <span style="color:#ffb700; font-size:24px;">M</span> MyTelco
+          </div>
+          <div class="hero-image"></div>
+        </div>
+
+        <div class="right-panel">
+          <div class="form-wrapper">
+            <h1>Selamat Datang Kembali!</h1>
+            <p class="subtitle">Kelola paket dan dapatkan rekomendasi cerdas.</p>
+
+            <form id="loginForm">
+              <div class="input-group">
+                <span class="input-icon">👤</span>
+                <input type="email" id="email" name="email" placeholder="Customer ID (Email)" required>
+              </div>
+
+              <div class="input-group">
+                <span class="input-icon">🔒</span>
+                <input type="password" id="password" name="password" placeholder="Kata Sandi" required>
+              </div>
+
+              <a href="#" class="forgot-password">Lupa Kata Sandi?</a>
+
+              <button type="submit" class="btn-submit">Masuk Sekarang</button>
+            </form>
+
+            <p id="loginMessage"></p>
+
+            <div class="register-link">
+              Belum punya akun? <a href="#/register">Daftar di sini</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  async afterRender() {
+    const form = document.querySelector('#loginForm');
+    const messageElement = document.querySelector('#loginMessage');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      // Reset pesan saat submit diklik
+      messageElement.style.color = 'white'; 
+      messageElement.textContent = 'Memproses...';
+
+      const email = document.querySelector('#email').value;
+      const password = document.querySelector('#password').value;
+
+      try {
+        const response = await fetch('', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const result = await response.json();
+        console.log('Login Response:', result);
+
+        if (!result.error && result.loginResult) {
+          const userData = {
+            name: result.loginResult.name,
+            userId: result.loginResult.userId,
+            token: result.loginResult.token,
+          };
+
+          localStorage.setItem('userLogin', JSON.stringify(userData));
+          localStorage.setItem('authToken', result.loginResult.token);
+
+          messageElement.style.color = '#4ade80'; // Hijau terang agar terlihat di background gelap
+          messageElement.textContent = 'Login berhasil! Mengarahkan...';
+
+          setTimeout(() => {
+            window.location.hash = '/';
+          }, 1200);
+        } else {
+          messageElement.style.color = '#ff4d4d'; // Merah terang
+          messageElement.textContent = result.message || 'Email atau password salah.';
+        }
+      } catch (error) {
+        console.error('Error saat login:', error);
+        messageElement.style.color = '#ff4d4d';
+        messageElement.textContent = 'Terjadi kesalahan saat login (Network Error).';
+      }
+    });
+  }
+}
