@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyTelco AI - Rekomendasi Paket</title>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 40px;
+        min-height: 100vh;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+      h1 {
+        text-align: center;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+      }
+      h2 {
+        text-align: center;
+        opacity: 0.9;
+      }
+      .form-box {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin: 30px 0;
+      }
+      label {
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: block;
+      }
+      input,
+      select {
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+      }
+      button {
+        grid-column: span 2;
+        padding: 16px;
+        background: #00d4ff;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      button:hover {
+        background: #00b0d4;
+        transform: scale(1.02);
+      }
+      #result {
+        margin-top: 40px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 15px;
+        font-size: 1.3em;
+      }
+      .rec-item {
+        background: white;
+        color: #333;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 12px;
+        border-left: 6px solid #00d4ff;
+      }
+      .rank-1 {
+        border-left-color: gold;
+        font-size: 1.3em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>MyTelco AI</h1>
+      <h2>Cek Rekomendasi Paket Khusus Untukmu</h2>
+      <p style="text-align: center; opacity: 0.9">
+        Isi data penggunaanmu, AI kami akan kasih 3 paket terbaik dalam 1 detik!
+      </p>
+
+      <div class="form-box">
+        <div>
+          <label>Monthly Spend (Rp)</label>
+          <input
+            id="monthly_spend"
+            type="number"
+            placeholder="contoh: 150000"
+            required
+          />
+        </div>
+        <div>
+          <label>Avg Data Usage (GB)</label>
+          <input
+            id="avg_data_usage_gb"
+            type="number"
+            step="0.1"
+            placeholder="contoh: 25"
+            required
+          />
+        </div>
+        <div>
+          <label>Pct Video Usage (%)</label>
+          <input
+            id="pct_video_usage"
+            type="number"
+            step="0.01"
+            min="0"
+            max="1"
+            placeholder="0.70 (70%)"
+            required
+          />
+        </div>
+        <div>
+          <label>Travel Score (0-1)</label>
+          <input
+            id="travel_score"
+            type="number"
+            step="0.01"
+            min="0"
+            max="1"
+            value="0.1"
+            required
+          />
+        </div>
+        <div>
+          <label>Complaint Count</label>
+          <input
+            id="complaint_count"
+            type="number"
+            min="0"
+            value="0"
+            required
+          />
+        </div>
+        <div>
+          <label>Avg Call Duration (menit)</label>
+          <input
+            id="avg_call_duration"
+            type="number"
+            step="0.1"
+            value="10"
+            required
+          />
+        </div>
+        <div>
+          <label>Topup Freq (kali/bulan)</label>
+          <input id="topup_freq" type="number" min="0" value="4" required />
+        </div>
+        <div>
+          <label>Umur Akun (hari)</label>
+          <input id="account_age_days" type="number" value="180" required />
+        </div>
+      </div>
+
+      <button onclick="getRecommendation()">Dapatkan Rekomendasi AI</button>
+
+      <div id="result"></div>
+    </div>
+
+    <script>
+      async function getRecommendation() {
+        document.getElementById("result").innerHTML =
+          "<p style='text-align:center;'>AI sedang berpikir...</p>";
+
+        const payload = {
+          customer_id: "CUST-" + Date.now(),
+          monthly_spend: Number(document.getElementById("monthly_spend").value),
+          avg_data_usage_gb: Number(
+            document.getElementById("avg_data_usage_gb").value
+          ),
+          pct_video_usage: Number(
+            document.getElementById("pct_video_usage").value
+          ),
+          travel_score: Number(document.getElementById("travel_score").value),
+          complaint_count: Number(
+            document.getElementById("complaint_count").value
+          ),
+          avg_call_duration: Number(
+            document.getElementById("avg_call_duration").value
+          ),
+          topup_freq: Number(document.getElementById("topup_freq").value),
+          account_age_days: Number(
+            document.getElementById("account_age_days").value
+          ),
+        };
+
+        try {
+          const response = await fetch("http://127.0.0.1:8000/recommend", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          const result = await response.json();
+
+          if (!response.ok) {
+            document.getElementById(
+              "result"
+            ).innerHTML = `<p style="color:#ff6b6b;">Error: ${result.detail}</p>`;
+            return;
+          }
+
+          let html = `<h3 style="text-align:center;">Top 3 Rekomendasi Untukmu:</h3>`;
+          result.recommendations.forEach((r, i) => {
+            const medal =
+              i === 0 ? "1st Place" : i === 1 ? "2nd Place" : "3rd Place";
+            html += `<div class="rec-item rank-${r.rank}">
+            <strong>${medal} ${r.offer}</strong><br>
+            <span style="opacity:0.9;">Confidence: ${r.confidence}</span>
+          </div>`;
+          });
+          html += `<p style="text-align:center; margin-top:20px; opacity:0.8;">
+          Didukung XGBoost • Akurasi 99% • Hybrid ML + Business Rules
+        </p>`;
+
+          document.getElementById("result").innerHTML = html;
+        } catch (err) {
+          document.getElementById(
+            "result"
+          ).innerHTML = `<p style="color:#ff6b6b;">Server FastAPI belum jalan!<br>
+          Dobel klik START.bat dulu ya!</p>`;
+        }
+      }
+    </script>
+  </body>
+</html>
