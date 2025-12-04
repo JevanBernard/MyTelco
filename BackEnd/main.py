@@ -3,6 +3,7 @@ from pydantic import BaseModel
 import joblib
 import pandas as pd
 from utils import create_features, apply_business_rules
+from fastapi.middleware.cors import CORSMiddleware
 # items = []  
 
 # @app.get("/")
@@ -14,13 +15,21 @@ from utils import create_features, apply_business_rules
 #     items.append(item)
 #     return items
 
-preprocessor = joblib.load(r"C:\Users\Pongo\Desktop\MateriASAH\projekgede\preprocessor.pkl")
-model = joblib.load(r"C:\Users\Pongo\Desktop\MateriASAH\projekgede\xgb_model.pkl")
+preprocessor = joblib.load(r"C:\Users\Pongo\MyTelco\ML_Engine\preprocessor.pkl")
+model = joblib.load(r"C:\Users\Pongo\MyTelco\ML_Engine\xgb_model.pkl")
 
 app = FastAPI(
     title = 'Telco Personalized Offer Prediction API',
     description = 'API for predicting personalized offers for Telco customers using an XGBoost model.',
     version = '2.0'
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # schema input
@@ -48,7 +57,7 @@ class Customer(BaseModel):
 def home():
     return {"message": "Welcome to the Telco Personalized Offer Prediction API"}
 
-@app.post("/recommend/")
+@app.post("/recommend")
 def recommend(customer: Customer):
     try:
         offer_map = {
