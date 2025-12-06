@@ -17,8 +17,8 @@ from pydantic import BaseModel
 #     items.append(item)
 #     return items
 
-preprocessor = joblib.load(r"C:\Users\Pongo\MyTelco\ML_Engine\preprocessor.pkl")
-model = joblib.load(r"C:\Users\Pongo\MyTelco\ML_Engine\xgb_model.pkl")
+# preprocessor = joblib.load(r"C:\Users\Pongo\MyTelco\ML_Engine\preprocessor.pkl")
+# model = joblib.load(r"C:\Users\Pongo\MyTelco\ML_Engine\xgb_model.pkl")
 
 app = FastAPI(
     title = 'Telco Personalized Offer Prediction API',
@@ -41,6 +41,7 @@ print("Sedang memuat model dan artifacts...")
 try:
     model = joblib.load(os.path.join(BASE_PATH, "xgb_model.pkl")) # Ganti nama jika beda
     encoder = joblib.load(os.path.join(BASE_PATH, "label_encoder.pkl"))
+    preprocessor = joblib.load(os.path.join(BASE_PATH, "preprocessor.pkl"))
     
     # Load Feature Names (Wajib ada untuk mengatasi error kolom mismatch!)
     with open(os.path.join(BASE_PATH, "feature_names.json"), "r") as f:
@@ -73,6 +74,7 @@ def engineer_features(df_input):
     # 1. Penanganan Konteks (Clip negatif)
     df['is_refund_context'] = (df['monthly_spend'] < 0).astype(int)
     df['monthly_spend'] = df['monthly_spend'].clip(lower=0)
+    df['is_duration_error'] = (df['avg_call_duration'] < 0).astype(int)
     
     # 2. Ratio Features
     df['cost_per_gb'] = df['monthly_spend'] / (df['avg_data_usage_gb'] + 0.001)
@@ -105,13 +107,32 @@ def recommend(customer: Customer):
         # B. Feature Engineering
         df_engineered = engineer_features(df_input)
 
-        # C. One-Hot Encoding & REINDEXING (Solusi Anti-Error)
-        # Langkah ini mengubah 'Samsung' jadi 'device_brand_Samsung' = 1
-        df_encoded = pd.get_dummies(df_engineered)
+        # # C. One-Hot Encoding & REINDEXING (Solusi Anti-Error)
+        # # Langkah ini mengubah 'Samsung' jadi 'device_brand_Samsung' = 1
+        # df_encoded = pd.get_dummies(df_engineered)
         
-        # Langkah KUNCI: Menyamakan kolom input dengan kolom yang dipelajari model
-        # Kolom yang kurang diisi 0, kolom berlebih dibuang.
-        df_final = df_encoded.reindex(columns=feature_names, fill_value=0)
+        # # Langkah KUNCI: Menyamakan kolom input dengan kolom yang dipelajari model
+        # # Kolom yang kurang diisi 0, kolom berlebih dibuang.
+        # df_final = df_encoded.reindex(columns=feature_names, fill_value=0)
+
+        # # Langkah KUNCI: Menyamakan kolom input
+        # df_final = df_encoded.reindex(columns=feature_names, fill_value=0)
+
+        df_final = preprocessor.transform(df_engineered)
+
+        # # --- DEBUGGING AREA (Tambahkan ini) ---
+        # print("\n--- DEBUG: DATA YANG MASUK KE MODEL ---")
+        # print("Urutan Kolom:", df_final.columns.tolist())
+        # print("Nilai Data:", df_final.values[0])
+        
+        # # Cek spesifik nilai travel score dan video usage di mata model
+        # # Ganti index '0' atau '3' sesuai posisi kolom di print 'Urutan Kolom' di atas
+        # # Biar kita tau apakah ketuker
+        # print("---------------------------------------")
+        # # --------------------------------------
+
+        # D. Prediksi Model (ML Pure)
+        pred_idx = model.predict(df_final)[0]
 
         # D. Prediksi Model (ML Pure)
         pred_idx = model.predict(df_final)[0]
@@ -151,6 +172,11 @@ def recommend(customer: Customer):
         elif raw_data['travel_score'] > 0.8: # Sesuaikan threshold
             final_offer = 'Roaming Pass'
             override_reason = "Rule: High Travel Score"
+
+        # --- RULE 6: Roaming Check (DEFENSIVE - Blokir kalau skor rendah) ---
+        elif (base_offer == 'Roaming Pass') and (raw_data['travel_score'] < 0.5):
+            final_offer = 'General Offer'
+            override_reason = "Rule: Invalid Roaming Prediction (Low Score)"
 
         # F. Return Hasil
         return {
