@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <!-- CSS Utama -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <!-- Component Navbar -->
+    <script src="assets/js/components.js" defer></script>
+
+    <title>Coba AI - Chatbot MyTelco</title>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <my-navbar></my-navbar>
+
+<div class="chatbot-page">
+
+
+    <!-- CHAT AREA (kosong awal) -->
+    <section class="chat-container" id="chatContainer"></section>
+
+    <!-- INPUT FORM -->
+    <form class="chat-input-form" id="chatForm">
+        <div class="input-wrapper">
+            <input 
+                type="text"
+                id="chatInput"
+                class="chat-input"
+                placeholder="Tanya Sesuatu..."
+                autocomplete="off"
+            />
+            <button type="submit" class="send-btn">
+                <img src="assets/icons/send-solid.svg" alt="Kirim">
+            </button>
+        </div>
+    </form>
+
+</div>
+
+<!-- JAVASCRIPT UI ONLY -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const chatContainer = document.getElementById("chatContainer");
+    const chatForm = document.getElementById("chatForm");
+    const chatInput = document.getElementById("chatInput");
+
+    function scrollToBottom() {
+        setTimeout(() => {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }, 80);
+    }
+
+    window.addUserMessage = function(text) {
+        const div = document.createElement("div");
+        div.className = "user-message";
+        div.innerHTML = `
+            <div class="user-message-content">
+                <div class="user-message-bubble">
+                    <div class="user-message-text">${text}</div>
+                </div>
+            </div>
+        `;
+        chatContainer.appendChild(div);
+        scrollToBottom();
+    }
+
+    window.addBotMessage = function(text) {
+        const div = document.createElement("div");
+        div.className = "bot-message";
+        div.innerHTML = `
+            <div class="bot-message-content">
+                <div class="bot-avatar-wrapper">
+                    <div class="bot-avatar-bg"></div>
+                    <img class="bot-avatar-icon" src="assets/icons/avatar-m.svg">
+                </div>
+                <div class="bot-message-bubble">
+                    <div class="bot-message-text">${text}</div>
+                </div>
+            </div>
+        `;
+        chatContainer.appendChild(div);
+        scrollToBottom();
+    }
+
+    window.addQuickReply = function(text, callback) {
+        const wrap = document.createElement("div");
+        wrap.className = "quick-reply-container";
+
+        const btn = document.createElement("button");
+        btn.className = "quick-reply-btn";
+        btn.textContent = text;
+
+        btn.onclick = () => {
+            addUserMessage(text);
+            wrap.remove();
+            if (callback) callback();
+        };
+
+        wrap.appendChild(btn);
+        chatContainer.appendChild(wrap);
+        scrollToBottom();
+    }
+
+    window.showTyping = function() {
+        const div = document.createElement("div");
+        div.className = "typing-indicator bot-message";
+        div.innerHTML = `
+            <div class="bot-message-content">
+                <div class="bot-avatar-wrapper">
+                    <div class="bot-avatar-bg"></div>
+                </div>
+                <div class="bot-message-bubble typing-bubble">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        `;
+        chatContainer.appendChild(div);
+        scrollToBottom();
+        return div;
+    }
+
+    window.hideTyping = function(typingEl) {
+        if (typingEl) typingEl.remove();
+    }
+
+});
+</script>
+<script src="assets/js/chatbot.js"></script>
+</body>
+</html>
+
