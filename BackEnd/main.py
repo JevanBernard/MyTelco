@@ -6,19 +6,6 @@ import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-# items = []  
-
-# @app.get("/")
-# async def read_root():
-#     return {"Hello": "World"}
-
-# @app.get("/item/")
-# def create_item(item: str):
-#     items.append(item)
-#     return items
-
-# preprocessor = joblib.load(r"C:\Users\Pongo\MyTelco\ML_Engine\preprocessor.pkl")
-# model = joblib.load(r"C:\Users\Pongo\MyTelco\ML_Engine\xgb_model.pkl")
 
 app = FastAPI(
     title = 'Telco Personalized Offer Prediction API',
@@ -103,38 +90,11 @@ def recommend(customer: Customer):
         # A. Konversi Input ke DataFrame
         raw_data = customer.dict()
         df_input = pd.DataFrame([raw_data])
-
-        # B. Feature Engineering
         df_engineered = engineer_features(df_input)
-
-        # # C. One-Hot Encoding & REINDEXING (Solusi Anti-Error)
-        # # Langkah ini mengubah 'Samsung' jadi 'device_brand_Samsung' = 1
-        # df_encoded = pd.get_dummies(df_engineered)
-        
-        # # Langkah KUNCI: Menyamakan kolom input dengan kolom yang dipelajari model
-        # # Kolom yang kurang diisi 0, kolom berlebih dibuang.
-        # df_final = df_encoded.reindex(columns=feature_names, fill_value=0)
-
-        # # Langkah KUNCI: Menyamakan kolom input
-        # df_final = df_encoded.reindex(columns=feature_names, fill_value=0)
-
         df_final = preprocessor.transform(df_engineered)
-
-        # # --- DEBUGGING AREA (Tambahkan ini) ---
-        # print("\n--- DEBUG: DATA YANG MASUK KE MODEL ---")
-        # print("Urutan Kolom:", df_final.columns.tolist())
-        # print("Nilai Data:", df_final.values[0])
-        
-        # # Cek spesifik nilai travel score dan video usage di mata model
-        # # Ganti index '0' atau '3' sesuai posisi kolom di print 'Urutan Kolom' di atas
-        # # Biar kita tau apakah ketuker
-        # print("---------------------------------------")
-        # # --------------------------------------
-
-        # D. Prediksi Model (ML Pure)
         pred_idx = model.predict(df_final)[0]
 
-        # D. Prediksi Model (ML Pure)
+        # B. Prediksi Model (ML Pure)
         pred_idx = model.predict(df_final)[0]
         base_offer = encoder.inverse_transform([pred_idx])[0]
         
@@ -142,17 +102,17 @@ def recommend(customer: Customer):
         probs = model.predict_proba(df_final)[0]
         confidence = float(probs.max())
 
-        # E. HYBRID RULES (Logic Otak Kanan / Business Override)
+        # C. HYBRID RULES (Logic Otak Kanan / Business Override)
         final_offer = base_offer
         override_reason = "Model Prediction"
 
         # --- RULE 1: Crisis Management (Retention) ---
-        if raw_data['complaint_count'] >= 3:
+        if raw_data['complaint_count'] >= 2:
             final_offer = 'Retention Offer'
             override_reason = "Rule: High Complaint Count"
 
         # --- RULE 2: Streaming Addict ---
-        elif raw_data['pct_video_usage'] > 0.8:
+        elif raw_data['pct_video_usage'] > 0.6:
             final_offer = 'Streaming Partner Pack'
             override_reason = "Rule: High Video Usage"
             
@@ -169,7 +129,7 @@ def recommend(customer: Customer):
             override_reason = "Rule: Low Activity User"
             
         # --- RULE 5: Roaming (Orang Kaya/Traveler) ---
-        elif raw_data['travel_score'] > 0.8: # Sesuaikan threshold
+        elif raw_data['travel_score'] > 0.6: # Sesuaikan threshold
             final_offer = 'Roaming Pass'
             override_reason = "Rule: High Travel Score"
 
@@ -199,4 +159,5 @@ def recommend(customer: Customer):
 # Health check
 @app.get("/health")
 def health():
+
     return {'status': 'healthy'}
