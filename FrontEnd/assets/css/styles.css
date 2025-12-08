@@ -838,7 +838,7 @@ h2 {
 /* CHATBOT PAGE*/
 
 .chatbot-page {
-    padding-top: 150px
+    padding-top: 150px;
     min-height: 100vh;
     width: 100%;
     position: relative;
