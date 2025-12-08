@@ -177,7 +177,6 @@ class MyFooter extends HTMLElement {
                     <div class="footer-brand">
                         <div class="logo-container">
                             <img src="assets/img/logo.png" alt="MyTelco" class="footer-logo">
-                            <span class="brand-text">MyTelco</span>
                         </div>
                         <p>Connecting you to the future with intelligent service packages and AI-powered recommendations.</p>
                         
