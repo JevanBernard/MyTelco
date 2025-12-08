@@ -62,7 +62,7 @@ class MyNavbar extends HTMLElement {
                         <li><a href="index.html">Beranda</a></li>
                         <li><a href="chatbot.html">Coba AI</a></li>
                         <li><a href="index.html#packages">Produk</a></li>
-                        <li><a href="contact.html">Tentang Kami</a></li>
+                        <li><a href="kontak.html">Tentang Kami</a></li>
                         
                         <!-- Tombol Sign In Mobile (Hanya muncul di HP) -->
                         <li class="mobile-only-btn"><a href="#" class="btn-signin">Sign In</a></li>

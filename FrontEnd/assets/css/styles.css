@@ -838,7 +838,7 @@ h2 {
 /* CHATBOT PAGE*/
 
 .chatbot-page {
-    padding-top: 150px
+    padding-top: 150px;
     min-height: 100vh;
     width: 100%;
     position: relative;
@@ -884,7 +884,7 @@ h2 {
     cursor: pointer;
 }
 
-/*  CHAT CONTENT AREA*/
+/*  CHAT CONTENT AREA */
 
 .chat-container {
     padding: 10px 70px 160px;
@@ -1491,3 +1491,4 @@ h2 {
         text-align: center;
     }
 }
+
