@@ -22,29 +22,26 @@
     <!-- NAVBAR -->
     <my-navbar></my-navbar>
 
-<div class="chatbot-page">
+    <div class="chatbot-page">
+        <!-- CHAT AREA (kosong awal) -->
+        <section class="chat-container" id="chatContainer"></section>
 
-
-    <!-- CHAT AREA (kosong awal) -->
-    <section class="chat-container" id="chatContainer"></section>
-
-    <!-- INPUT FORM -->
-    <form class="chat-input-form" id="chatForm">
-        <div class="input-wrapper">
-            <input 
-                type="text"
-                id="chatInput"
-                class="chat-input"
-                placeholder="Tanya Sesuatu..."
-                autocomplete="off"
-            />
-            <button type="submit" class="send-btn">
-                <img src="assets/icons/send-solid.svg" alt="Kirim">
-            </button>
-        </div>
-    </form>
-
-</div>
+        <!-- INPUT FORM -->
+        <form class="chat-input-form" id="chatForm">
+            <div class="input-wrapper">
+                <input 
+                    type="text"
+                    id="chatInput"
+                    class="chat-input"
+                    placeholder="Tanya Sesuatu..."
+                    autocomplete="off"
+                />
+                <button type="submit" class="send-btn">
+                    <img src="assets/img/icon/send-chat.svg" alt="Kirim">
+                </button>
+            </div>
+        </form>
+    </div>
 
 <!-- JAVASCRIPT UI ONLY -->
 <script>
@@ -80,8 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
         div.innerHTML = `
             <div class="bot-message-content">
                 <div class="bot-avatar-wrapper">
-                    <div class="bot-avatar-bg"></div>
-                    <img class="bot-avatar-icon" src="assets/icons/avatar-m.svg">
+                    <img class="bot-avatar-icon" src="assets/img/chatbot-icon.svg">
                 </div>
                 <div class="bot-message-bubble">
                     <div class="bot-message-text">${text}</div>
@@ -117,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
         div.innerHTML = `
             <div class="bot-message-content">
                 <div class="bot-avatar-wrapper">
-                    <div class="bot-avatar-bg"></div>
+                    <img class="bot-avatar-icon" src="assets/img/chatbot-icon.svg">
                 </div>
                 <div class="bot-message-bubble typing-bubble">
                     <span class="dot"></span>
