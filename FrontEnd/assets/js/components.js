@@ -60,9 +60,9 @@ class MyNavbar extends HTMLElement {
                     <ul>
                         <!-- Link Navigasi (Class active akan ditambahkan otomatis oleh JS) -->
                         <li><a href="index.html">Beranda</a></li>
-                        <li><a href="index.html#ml-demo">Coba AI</a></li>
+                        <li><a href="chatbot.html">Coba AI</a></li>
                         <li><a href="index.html#packages">Produk</a></li>
-                        <li><a href="index.html#about">Tentang Kami</a></li>
+                        <li><a href="contact.html">Tentang Kami</a></li>
                         
                         <!-- Tombol Sign In Mobile (Hanya muncul di HP) -->
                         <li class="mobile-only-btn"><a href="#" class="btn-signin">Sign In</a></li>
