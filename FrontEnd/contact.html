@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hubungi Kami - MyTelco</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon/apple-touch-icon.png">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- KOMPONEN NAVBAR & FOOTER -->
+    <script src="assets/js/components.js" defer></script>
+</head>
+<body>
+    <my-navbar></my-navbar>
+    
+    <main>
+        <!-- Hero Section -->
+        <section class="contact-hero">
+            <div class="contact-hero-content">
+                <h1>Pusat <span>Bantuan</span></h1>
+                <p>Ada kendala dengan paket atau jaringan? Kami siap membantu 24/7. Laporan Anda membantu kami menjadi lebih baik.</p>
+            </div>
+            <!-- Ilustrasion -->
+            <div class="contact-hero-image">
+                <img src="assets/img/contact-hero.svg" alt="Ilustrasi Pusat Bantuan">
+            </div>
+             
+        </section>
+
+        <!-- Contact Options Section -->
+        <section class="contact-options">
+            <div class="contact-option-1">
+                <h3>Kirim Tiket Laporan</h3>
+                <!-- Form Laporan -->
+                <form class="report-form">
+                    <div class="container-form">
+                        <label for="client-phone">Nomor Pelanggan / HP</label>
+                        <input type="text" id="client-phone" name="client-phone" placeholder="+6288997766655">
+                    </div>
+                    <div class="container-form">
+                        <label for="issue-type">Kategori Masalah</label>
+                        <select id="issue-type" name="issue-type" required>
+                            <option value="" disabled selected>Pilih Kategori...</option>
+                            <option value="network">Masalah Jaringan</option>
+                            <option value="billing">Masalah Tagihan</option>
+                            <option value="technical">Masalah Teknis</option>
+                            <option value="other">Lainnya</option>
+                        </select>    
+                    </div>
+                    <div class="container-form">
+                        <label for="issue-title">Judul Laporan</label>
+                        <input type="text" id="issue-title" name="issue-title" placeholder="Contoh: Internet mati di daerah Jawa" required>    
+                    </div>
+                    <div class="container-form">
+                        <label for="description">Detail Kendala</label>
+                        <textarea id="description" name="description" rows="4" placeholder="Jelaskan masalah Anda secara rinci..." required></textarea>
+                    </div>
+
+                    <button type="submit">
+                        <h4>Kirim Laporan</h4>
+                        <img src="assets/img/icon/send-messege.svg" alt="send icon button">
+                    </button>
+                </form>
+            </div>
+            <div class="contact-option-2">
+                <h3>Kontak Cepat</h3>
+                <div class="contact-lists">
+                    <div class="contact-list">
+                        <img class="frame-child" alt="" src="assets/img/icon/call-center.svg">
+                        <div class="call-center-parent">
+                            <div class="call-center">Call Center</div>
+                            <div class="call-center-text">188 (Bebas Pulsa)</div>
+                        </div>
+                    </div>
+                    <div class="contact-list">
+                        <img class="frame-child" alt="" src="assets/img/icon/whatsapp-official.svg">
+                        <div class="call-center-parent">
+                            <div class="call-center">WhatsApp Official</div>
+                            <div class="call-center-text">0812-9999-8888</div>
+                        </div>
+                    </div>
+                    <div class="contact-list">
+                        <img class="frame-child" alt="" src="assets/img/icon/email-support.svg">
+                        <div class="call-center-parent">
+                            <div class="call-center">Email Support</div>
+                            <div class="call-center-text">help@mytelco.id</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <my-footer></my-footer>
+</body>
+</html>
