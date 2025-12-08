@@ -570,7 +570,6 @@ h2 {
 =========================================== */
 
 .chatbot-page {
-    padding-top: 150px; /* agar tidak tertutup navbar components */
     min-height: 100vh;
     width: 100%;
     position: relative;
@@ -624,7 +623,7 @@ h2 {
 
 .chat-container {
     padding: 10px 70px 160px;
-    height: calc(100vh - 320px);
+    /* height: calc(100vh - 320px); */
     overflow-y: auto;
 }
 
@@ -835,10 +834,13 @@ h2 {
     .running-text { font-size: 4rem; }
 }
 
+/* ========================================
+   CHATBOT PAGE STYLES
+======================================== */
+
 /* CHATBOT PAGE*/
 
 .chatbot-page {
-    padding-top: 150px;
     min-height: 100vh;
     width: 100%;
     position: relative;
@@ -887,64 +889,125 @@ h2 {
 /*  CHAT CONTENT AREA */
 
 .chat-container {
-    padding: 10px 70px 160px;
-    height: calc(100vh - 320px);
+    
+    /* height: calc(100vh - 320px); */
     overflow-y: auto;
+    padding-inline: 200px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 .bot-message {
     display: flex;
-    margin-bottom: 26px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
 }
 
 .bot-message-content {
     display: flex;
+    min-width: 400px;
+    max-width: 800px;
+    flex-direction: column;
     align-items: flex-start;
-    gap: 14px;
+    gap: 16px;
+    align-self: stretch;
 }
 
 .bot-avatar-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.bot-avatar-bg {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #ffdb43, #fea100);
+    height: 100%;
+    width: auto;
 }
 
 .bot-message-bubble {
-    background: rgba(25, 25, 25, 0.85);
-    border: 1px solid #333;
-    color: #eee;
-    padding: 16px 20px;
-    border-radius: 16px;
-    max-width: 70%;
-    width: fit-content;
-    word-wrap: break-word;
-    white-space: normal;
+    display: flex;
+    padding: 12px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    border-radius: 20px 20px 20px 8px;
+    border: 1px solid rgba(153, 161, 175, 0.40);
+    background: #27272A;
 }
 
 
 /* USER MESSAGE */
 .user-message {
     display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    align-self: stretch;
+}
+
+.user-message-content {
+    /* display: flex;
+    padding: 12px 24px;
     justify-content: flex-end;
-    margin-bottom: 26px;
+    align-items: center;
+    gap: 10px; */
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
+    align-self: stretch;
 }
 
 .user-message-bubble {
-    background: linear-gradient(135deg, #ffdc3c, #ff9900);
-    padding: 16px 20px;
-    border-radius: 16px;
-    color: #000;
-    max-width: 70%;
+    
     width: fit-content;
-    word-wrap: break-word;
-    white-space: normal;
+    display: flex;
+    padding: 12px 24px;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    max-width: 500px;
+
+    border-radius: 20px 20px 8px 20px;
+    background: linear-gradient(269deg, #FEA100 0%, #FFDB43 100%);
+}
+
+.typing-bubble {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 20px;
+
+    background: #27272A;
+    border-radius: 20px 20px 20px 8px;
+    border: 1px solid rgba(153, 161, 175, 0.40);
+
+    width: fit-content;
+}
+
+.typing-bubble .dot {
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: blink 1.4s infinite ease-in-out both;
+}
+
+.typing-bubble .dot:nth-child(1) {
+    animation-delay: 0s;
+}
+.typing-bubble .dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.typing-bubble .dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes blink {
+    0% { opacity: 0.4; transform: translateY(0); }
+    20% { opacity: 1; transform: translateY(-3px); }
+    40% { opacity: 0.4; transform: translateY(0); }
 }
 
 
@@ -969,23 +1032,27 @@ h2 {
 /* INPUT BAR*/
 
 .chat-input-form {
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    display: flex;
     width: 100%;
-    padding: 22px 60px;
+    padding: 20px 200px;
+    align-items: center;
+    gap: 24px;
+    position: fixed;
+    /* bottom: 0;
+    left: 0; */
     background: #0c0c0c;
-    border-top: 1px solid #262626;
+    border-top: 1px solid rgba(100, 116, 139, 0.50);
 }
 
 .chat-input-form .input-wrapper {
     display: flex;
     align-items: center;
+    width: inherit;
     gap: 18px;
     background: #111;
     padding: 14px 18px;
     border-radius: 16px;
-    border: 1px solid #333;
+    border: 1px solid #FEA100;
 }
 
 .chat-input {
@@ -998,21 +1065,24 @@ h2 {
 }
 
 .send-btn {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, #ffd940, #ff9800);
-    border: none;
-    border-radius: 14px;
+    display: flex;
+    padding: 14px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    border-radius: 16px;
+    background: linear-gradient(135deg, #FEA100 -0.21%, #FFDB43 99.8%);
     cursor: pointer;
 }
 
 .send-btn img {
-    width: 22px;
+    height: 100%;
+    width: auto;
 }
 
 /* ========================================
    CONTACT PAGE STYLES
-   Tambahkan code ini ke bagian akhir file styles.css
 ======================================== */
 
 .contact-page {
