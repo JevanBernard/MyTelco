@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "username": "user",
+    "password": "123",
+    "name": "Pelanggan Setia",
+    "quota": 30
+  },
+  {
+    "id": 2,
+    "username": "admin",
+    "password": "admin",
+    "name": "Administrator",
+    "quota": 999
+  }
+]

@@ -14,10 +14,9 @@ class MyNavbar extends HTMLElement {
                         margin-top: 10px;
                         text-align: center;
                     }
-                    /* Di mobile, tombol desktop disembunyikan oleh CSS utama */
                 }
 
-                /* 2. Styling Menu Aktif (Sesuai Desain Figma) */
+                /* 2. Styling Menu Aktif */
                 .main-nav a.active {
                     position: relative;
                     border-radius: 6px;
@@ -37,10 +36,49 @@ class MyNavbar extends HTMLElement {
                     top: 0;
                     z-index: 1000;
                 }
-                
-                /* Class ini akan ditambahkan via JS saat scroll ke bawah */
                 .header-hidden {
                     transform: translateY(-100%);
+                }
+
+                /* 4. STYLE UNTUK PROFIL USER (AVATAR) */
+                .user-profile {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    cursor: pointer;
+                }
+                
+                .avatar-circle {
+                    width: 40px;
+                    height: 40px;
+                    background: linear-gradient(135deg, #fea100, #ffdb43);
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #000;
+                    font-weight: 800;
+                    font-size: 1rem;
+                    border: 2px solid rgba(255, 255, 255, 0.2);
+                    box-shadow: 0 0 15px rgba(254, 161, 0, 0.4);
+                    transition: transform 0.2s, border-color 0.2s;
+                }
+
+                .avatar-circle:hover {
+                    transform: scale(1.1);
+                    border-color: #fff;
+                }
+
+                .user-greeting {
+                    color: #fff;
+                    font-size: 0.9rem;
+                    font-weight: 500;
+                    display: block;
+                }
+                
+                @media (max-width: 768px) {
+                    .user-greeting { display: none; } /* Hide nama di HP biar rapi */
+                    .user-profile { justify-content: center; }
                 }
             </style>
 
@@ -58,27 +96,86 @@ class MyNavbar extends HTMLElement {
 
                 <nav class="main-nav">
                     <ul>
-                        <!-- Link Navigasi (Class active akan ditambahkan otomatis oleh JS) -->
                         <li><a href="index.html">Beranda</a></li>
                         <li><a href="index.html#ml-demo">Coba AI</a></li>
                         <li><a href="index.html#packages">Produk</a></li>
                         <li><a href="index.html#about">Tentang Kami</a></li>
                         
-                        <!-- Tombol Sign In Mobile (Hanya muncul di HP) -->
-                        <li class="mobile-only-btn"><a href="#" class="btn-signin">Sign In</a></li>
+                        <!-- Area Tombol Mobile (Akan diganti JS jika login) -->
+                        <li class="mobile-only-btn" id="mobileAuthContainer">
+                            <a href="login.html" class="btn-signin">Sign In</a>
+                        </li>
                     </ul>
                 </nav>
 
-                <!-- Tombol Sign In Desktop (Disembunyikan di Mobile via CSS Utama) -->
-                <div class="auth-buttons">
-                    <a href="#" class="btn-signin">Sign In</a>
+                <!-- Area Tombol Desktop (Akan diganti JS jika login) -->
+                <div class="auth-buttons" id="desktopAuthContainer">
+                    <a href="login.html" class="btn-signin">Sign In</a>
                 </div>
             </header>
         `;
 
         this.initMobileMenu();
         this.initScrollBehavior();
-        this.highlightActiveLink(); // Jalankan fungsi otomatis active state
+        this.highlightActiveLink();
+        
+        // --- JALANKAN CEK LOGIN ---
+        this.checkLoginStatus();
+    }
+
+    // Fungsi Cek Status Login & Ganti Tampilan
+    checkLoginStatus() {
+        // Ambil data user dari LocalStorage (disimpan saat login.js sukses)
+        const userToken = localStorage.getItem('user_token');
+
+        if (userToken) {
+            const user = JSON.parse(userToken);
+            // Ambil inisial nama (Misal: "Budi Santoso" -> "BS")
+            const initials = user.name 
+                ? user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
+                : 'U';
+
+            // HTML untuk Avatar Profil
+            const profileHTML = `
+                <div class="user-profile" id="userProfile" title="Klik untuk Logout">
+                    <span class="user-greeting">Hi, ${user.name.split(' ')[0]}</span>
+                    <div class="avatar-circle">
+                        ${initials}
+                    </div>
+                </div>
+            `;
+
+            // Update Tampilan Desktop
+            const desktopContainer = this.querySelector('#desktopAuthContainer');
+            if (desktopContainer) {
+                desktopContainer.innerHTML = profileHTML;
+                this.addLogoutListener(desktopContainer);
+            }
+
+            // Update Tampilan Mobile
+            const mobileContainer = this.querySelector('#mobileAuthContainer');
+            if (mobileContainer) {
+                mobileContainer.innerHTML = profileHTML;
+                this.addLogoutListener(mobileContainer);
+            }
+        }
+    }
+
+    // Fungsi Logout (Klik Avatar)
+    addLogoutListener(container) {
+        const profile = container.querySelector('.user-profile');
+        if (profile) {
+            profile.addEventListener('click', () => {
+                // Konfirmasi Logout sederhana
+                const confirmLogout = confirm("Apakah Anda yakin ingin keluar (Logout)?");
+                if (confirmLogout) {
+                    // Hapus data sesi
+                    localStorage.removeItem('user_token');
+                    // Refresh halaman ke index/login
+                    window.location.href = 'index.html';
+                }
+            });
+        }
     }
 
     initMobileMenu() {
@@ -93,14 +190,12 @@ class MyNavbar extends HTMLElement {
         }
     }
 
-    // Logika Auto-Hide Navbar saat Scroll
     initScrollBehavior() {
         let lastScrollTop = 0;
         const header = this.querySelector('.main-header');
 
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
             if (scrollTop > lastScrollTop && scrollTop > 50) {
                 header.classList.add('header-hidden');
             } else {
@@ -110,45 +205,36 @@ class MyNavbar extends HTMLElement {
         });
     }
 
-    // --- LOGIKA BARU: OTOMATIS PINDAH ACTIVE STATE ---
     highlightActiveLink() {
         const links = this.querySelectorAll('.main-nav a');
         const currentUrl = window.location.href;
         const currentHash = window.location.hash;
         const currentPath = window.location.pathname;
 
-        // Fungsi pembantu untuk set active class
         const setActive = (targetLink) => {
             links.forEach(link => link.classList.remove('active'));
             if(targetLink) targetLink.classList.add('active');
         };
 
-        // 1. Cek saat halaman dimuat
         let foundActive = false;
         links.forEach(link => {
-            // Logika pencocokan URL
             if (link.href === currentUrl) {
                 setActive(link);
                 foundActive = true;
             } else if (currentPath.endsWith('index.html') && link.getAttribute('href') === 'index.html' && !currentHash) {
-                // Khusus halaman utama tanpa hash
                 setActive(link);
                 foundActive = true;
             }
         });
 
-        // Jika tidak ada yang cocok (misal root '/'), set Beranda sebagai default
         if (!foundActive) {
             const homeLink = this.querySelector('a[href="index.html"]');
             if(homeLink) setActive(homeLink);
         }
 
-        // 2. Update saat link diklik (agar terasa instan tanpa reload)
         links.forEach(link => {
             link.addEventListener('click', () => {
                 setActive(link);
-                
-                // Tutup menu mobile jika sedang terbuka
                 const mainNav = this.querySelector('.main-nav');
                 const menuToggle = this.querySelector('#mobile-menu');
                 if (mainNav.classList.contains('active')) {
@@ -158,7 +244,6 @@ class MyNavbar extends HTMLElement {
             });
         });
         
-        // 3. Update saat hash berubah (untuk navigasi satu halaman/scroll)
         window.addEventListener('hashchange', () => {
             links.forEach(link => {
                 if(link.href === window.location.href) {
