@@ -1,7 +1,9 @@
-// --- BAGIAN 1: IMPORT HALAMAN LOGIN ---
+// --- BAGIAN 1: IMPORT HALAMAN LOGIN, REGISTER & SURVEY ---
 import Login from './login-page.js';
+import Register from './register-page.js';
+import Survey from './survey-page.js';
 
-// --- BAGIAN 2: KODE ASLI TEMANMU (TIDAK DIUBAH) ---
+// --- BAGIAN 2: KODE ASLI (TIDAK DIUBAH) ---
 
 // Fungsi untuk memanggil API Machine Learning (Backend)
 async function kirimData() {
@@ -45,54 +47,65 @@ async function kirimData() {
     }
 }
 
-// --- FUNGSI BARU: HAMBURGER MENU ---
+// --- FUNGSI HAMBURGER MENU ---
 document.addEventListener('DOMContentLoaded', () => {
     const menuToggle = document.getElementById('mobile-menu');
     const mainNav = document.querySelector('.main-nav');
 
     if (menuToggle && mainNav) {
         menuToggle.addEventListener('click', () => {
-            // Toggle class 'active' untuk menampilkan/menyembunyikan menu
             mainNav.classList.toggle('active');
-            
-            // Opsional: Animasi hamburger menjadi 'X'
             menuToggle.classList.toggle('open');
         });
     }
 });
 
+// --- BAGIAN 3: LOGIKA ROUTING (LOGIN & REGISTER) ---
 
-// --- BAGIAN 3: TAMBAHAN LOGIKA ROUTING (LOGIN) ---
-
-// PENTING: Karena kita pakai type="module", fungsi kirimData jadi tersembunyi.
-// Kita harus pasang ke 'window' agar tombol HTML <button onclick="kirimData()"> tetap bisa membacanya.
 window.kirimData = kirimData;
 
 // Logika Pindah Halaman
 const initRouter = async () => {
     const landingPage = document.querySelector('#landing-page');
     const appContainer = document.querySelector('#app');
-    const hash = window.location.hash; // Cek URL (misal: #/login)
+    const hash = window.location.hash;
 
     if (hash === '#/login') {
-        // Jika URL akhiran #/login:
-        landingPage.style.display = 'none'; // Sembunyikan Home
-        appContainer.style.display = 'block'; // Tampilkan Wadah Login
+        // Halaman Login
+        landingPage.style.display = 'none';
+        appContainer.style.display = 'block';
 
-        // Render halaman Login
         const loginPage = new Login();
         appContainer.innerHTML = await loginPage.render();
         await loginPage.afterRender();
         
+    } else if (hash === '#/register') {
+        // Halaman Register
+        landingPage.style.display = 'none';
+        appContainer.style.display = 'block';
+
+        const registerPage = new Register();
+        appContainer.innerHTML = await registerPage.render();
+        await registerPage.afterRender();
+        
+    } else if (hash === '#/survey') {
+        // Halaman Survey
+        landingPage.style.display = 'none';
+        appContainer.style.display = 'block';
+
+        const surveyPage = new Survey();
+        appContainer.innerHTML = await surveyPage.render();
+        await surveyPage.afterRender();
+        
     } else {
-        // Jika URL kosong atau #home:
-        landingPage.style.display = 'block'; // Tampilkan Home
-        appContainer.style.display = 'none'; // Sembunyikan Wadah Login
-        appContainer.innerHTML = ''; // Bersihkan memori login
+        // Halaman Home
+        landingPage.style.display = 'block';
+        appContainer.style.display = 'none';
+        appContainer.innerHTML = '';
     }
 };
 
-// Jalankan saat tombol diklik (URL berubah)
+// Jalankan saat URL berubah
 window.addEventListener('hashchange', initRouter);
 // Jalankan saat halaman pertama kali dibuka
 window.addEventListener('load', initRouter);

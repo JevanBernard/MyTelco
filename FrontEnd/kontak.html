@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hubungi MyTelco untuk bantuan paket internet, layanan pelanggan 24/7, dan dukungan teknis">
+    <meta name="keywords" content="contact mytelco, customer service, bantuan pelanggan, telco support">
+    <title>Hubungi Kami - MyTelco | Layanan Pelanggan 24/7</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico">
+    <link rel="icon" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
+    <link rel="icon" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
+    
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <!-- Header dengan Navigasi -->
+    <my-navbar></my-navbar>
+
+    <!-- Main Content -->
+    <main class="contact-page">
+        <!-- Hero Section -->
+        <section class="contact-hero" aria-labelledby="hero-heading">
+            <h1 id="hero-heading">Pusat <span class="highlight">Bantuan</span></h1>
+            <p class="hero-subtitle">Ada Kendala Dengan Paket Atau Jaringan? Kami Siap Membantu 24/7. Laporan Anda Membantu Kami Menjadi Lebih Baik.</p>
+            
+            <!-- Hero Visual with Floating Icons -->
+            <figure class="contact-hero-visual" role="img" aria-label="Ilustrasi layanan bantuan MyTelco">
+                <div class="hero-illustration">
+                    <img src="assets/img/hero-illustration.png" alt="Ilustrasi logo MyTelco dengan ikon layanan pelanggan">
+                </div>
+                
+                <!-- Floating Icons -->
+                <div class="floating-icon icon-phone" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Ikon telepon">
+                        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                    </svg>
+                </div>
+                
+                <div class="floating-icon icon-mail" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Ikon email">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                </div>
+                
+                <div class="floating-icon icon-user" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Ikon pengguna">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+                
+                <div class="floating-icon icon-play" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Ikon play">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </div>
+            </figure>
+        </section>
+
+        <!-- Contact Content Section -->
+        <section class="contact-main" aria-label="Form kontak dan informasi">
+            <!-- Contact Form -->
+            <article class="contact-form-wrapper">
+                <header>
+                    <h2>Kirim Tiket Laporan</h2>
+                </header>
+                
+                <form id="contactForm" method="post" action="#" novalidate>
+                    <div class="form-group">
+                        <label for="phone">Nomor Pelanggan / HP <abbr title="required" aria-label="wajib diisi">*</abbr></label>
+                        <input 
+                            type="tel" 
+                            id="phone" 
+                            name="phone"
+                            placeholder="0812-3456-7890" 
+                            required
+                            aria-required="true"
+                            pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}"
+                            aria-describedby="phone-error">
+                        <span id="phone-error" class="error-message" role="alert" aria-live="polite"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Kategori Masalah <abbr title="required" aria-label="wajib diisi">*</abbr></label>
+                        <select 
+                            id="category" 
+                            name="category"
+                            required
+                            aria-required="true"
+                            aria-describedby="category-error">
+                            <option value="">Pilih Kategori...</option>
+                            <option value="internet">Internet</option>
+                            <option value="tagihan">Tagihan</option>
+                            <option value="paket">Paket Data</option>
+                            <option value="teknis">Masalah Teknis</option>
+                            <option value="lainnya">Lainnya</option>
+                        </select>
+                        <span id="category-error" class="error-message" role="alert" aria-live="polite"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Judul Laporan <abbr title="required" aria-label="wajib diisi">*</abbr></label>
+                        <input 
+                            type="text" 
+                            id="subject" 
+                            name="subject"
+                            placeholder="Contoh: Internet mati di daerah Tabet" 
+                            required
+                            aria-required="true"
+                            maxlength="100"
+                            aria-describedby="subject-error">
+                        <span id="subject-error" class="error-message" role="alert" aria-live="polite"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Detail Kendala <abbr title="required" aria-label="wajib diisi">*</abbr></label>
+                        <textarea 
+                            id="message" 
+                            name="message"
+                            placeholder="Jelaskan masalah Anda sedetail mungkin..." 
+                            required
+                            aria-required="true"
+                            maxlength="500"
+                            aria-describedby="message-error"></textarea>
+                        <span id="message-error" class="error-message" role="alert" aria-live="polite"></span>
+                    </div>
+
+                    <button type="submit" class="submit-btn" aria-label="Kirim laporan">
+                        <span>Kirim Laporan</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
+                </form>
+            </article>
+
+            <!-- Contact Information -->
+            <aside class="contact-info-wrapper" aria-label="Informasi kontak alternatif">
+                <header>
+                    <h3>Kontak Cepat</h3>
+                </header>
+                
+                <div class="contact-card" role="article">
+                    <div class="contact-card-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+                        </svg>
+                    </div>
+                    <div class="contact-card-content">
+                        <h4>Call Center</h4>
+                        <p><a href="tel:188" aria-label="Hubungi call center 188">188 (Bebas Pulsa)</a></p>
+                    </div>
+                </div>
+
+                <div class="contact-card" role="article">
+                    <div class="contact-card-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM9 11H7V9h2v2zm4 0h-2V9h2v2zm4 0h-2V9h2v2z"/>
+                        </svg>
+                    </div>
+                    <div class="contact-card-content">
+                        <h4>WhatsApp Official</h4>
+                        <p><a href="https://wa.me/6281299998888" target="_blank" rel="noopener noreferrer" aria-label="Hubungi WhatsApp official">0812-9999-8888</a></p>
+                    </div>
+                </div>
+
+                <div class="contact-card" role="article">
+                    <div class="contact-card-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                    </div>
+                    <div class="contact-card-content">
+                        <h4>Email Support</h4>
+                        <p><a href="mailto:Help@Mytelco.id" aria-label="Kirim email ke support">Help@Mytelco.id</a></p>
+                    </div>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <my-footer></my-footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/components.js"></script>
+    <script src="assets/js/contact-form.js"></script>
+</body>
+</html>

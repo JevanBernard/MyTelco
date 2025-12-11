@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MyTelco</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico">
+    <link rel="icon" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
+    <link rel="icon" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- KOMPONEN NAVBAR & FOOTER -->
+    <script src="assets/js/components.js" defer></script>
+</head>
+<body>
+    <my-navbar></my-navbar>
+
+    <main>
+        <section class="main-dashboard">
+            <div class="profile-dashboard">
+                <div class="avatar-user-dashboard">
+                    <img src="./assets/img/icon/user-profile-dashboard.svg" alt="avatar user">
+                </div>
+                <div class="detail-user-dashboard">
+                    <h1>Galih Tambunan</h1>
+                    <h3>0812-3456-7890</h3>
+                </div>
+            </div>
+
+            <div class="info-dashboard">
+                <div class="info">
+                    <div class="text-info">
+                        <img src="./assets/img/icon/wallet.svg" alt="Sisa Pulsa">
+                        <p>Sisa Pulsa</p>
+                    </div>
+                    <div class="detail-info">
+                        <h1>Rp 12.500</h1>
+                        <p>Aktif s.d 20 Des 2025</p>
+                    </div>
+                    <div class="button-info">
+                        <img src="./assets/img/icon/plus.svg" alt="tambah pulsa">
+                        <p>Isi Pulsa</p>
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="text-info">
+                        <img src="./assets/img/icon/data.svg" alt="Internet">
+                        <p>Internet Utama</p>
+                    </div>
+                    <div class="detail-info">
+                        <h1>14.2 GB</h1>
+                    </div>
+                    <div class="group-parent">
+                        <div class="rectangle-parent">
+                            <div class="group-child"></div>
+                            <div class="group-item"></div>
+                        </div>
+                        <div class="info-kuota">Total 30 GB</div>
+                    </div>
+                </div>
+                <div class="info">
+                    <div class="text-info">
+                        <img src="./assets/img/icon/crown.svg" alt="Point">
+                        <p>Telco Point</p>
+                    </div>
+                    <div class="detail-info">
+                        <h1>850</h1>
+                        <p>Level: Gold Member</p>
+                    </div>
+                    <a href="./product.html" class="button-trade">
+                        <p>Tukar Sekarang</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="smart-dashboard">
+                <div class="header-smart">
+                    <img src="./assets/img/icon/thunder.svg" alt="">
+                    <b>SMART Telco Analyzer</b>
+                </div>   
+                <div class="text-smart">
+                    <h1>Kamu cocok dengan paket <span>Streaming Partner Pack</span> kami!</h1>
+                    <p>Pola datamu 80% habis untuk Streaming. Paketmu saat ini tidak efisien. Hemat pengeluaran dengan paket khusus Streaming.</p>
+                </div>   
+                <a href="./product.html" class="button-smart">
+                    Lihat Rekomendasi Streaming
+                    <img src="./assets/img/icon/arrow-up.svg" alt="">
+                </a>          
+            </div>
+
+            <div class="about-dashboard">
+                <div class="history">
+                    <h1>Transaksi Terakhir</h1>
+                    <div class="history-frames">
+                        <div class="history-frame">
+                            <div class="history-group">
+                                <img src="./assets/img/icon/global.svg" alt="history">
+                                <div class="history-list">
+                                    <h3>Combo Sakti</h3>
+                                    <p>Hari Ini, 14:00</p>
+                                </div>
+                            </div>
+                            <b>Rp 150k</b>
+                        </div>
+                    </div>
+                    <div class="history-frames">
+                        <div class="history-frame">
+                            <div class="history-group">
+                                <img src="./assets/img/icon/global.svg" alt="history">
+                                <div class="history-list">
+                                    <h3>Netflix Pack</h3>
+                                    <p>Kemarin, 16:00</p>
+                                </div>
+                            </div>
+                            <b>Rp 50k</b>
+                        </div>
+                    </div>
+                    <div class="history-frames">
+                        <div class="history-frame">
+                            <div class="history-group">
+                                <img src="./assets/img/icon/global.svg" alt="history">
+                                <div class="history-list">
+                                    <h3>Combo Sakti</h3>
+                                    <p>Kemarin, 14:00</p>
+                                </div>
+                            </div>
+                            <b>Rp 150k</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="customer-service">
+                    <img src="./assets/img/icon/customer-service.svg" alt="customer service">
+                    <div class="customer-info">
+                        <h1>Butuh Bantuan</h1>
+                        <p>CS kami siap bantu 24/7</p>
+                    </div>
+                    <a href="./kontak.html" class="service-button">
+                        Hubungi CS
+                    </a>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <my-footer></my-footer>
+</body>

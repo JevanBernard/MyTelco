@@ -97,9 +97,9 @@ class MyNavbar extends HTMLElement {
                 <nav class="main-nav">
                     <ul>
                         <li><a href="index.html">Beranda</a></li>
-                        <li><a href="index.html#ml-demo">Coba AI</a></li>
-                        <li><a href="index.html#packages">Produk</a></li>
-                        <li><a href="index.html#about">Tentang Kami</a></li>
+                        <li><a href="chatbot.html">Coba AI</a></li>
+                        <li><a href="product.html">Produk</a></li>
+                        <li><a href="kontak.html">Tentang Kami</a></li>
                         
                         <!-- Area Tombol Mobile (Akan diganti JS jika login) -->
                         <li class="mobile-only-btn" id="mobileAuthContainer">
@@ -262,7 +262,6 @@ class MyFooter extends HTMLElement {
                     <div class="footer-brand">
                         <div class="logo-container">
                             <img src="assets/img/logo.png" alt="MyTelco" class="footer-logo">
-                            <span class="brand-text">MyTelco</span>
                         </div>
                         <p>Connecting you to the future with intelligent service packages and AI-powered recommendations.</p>
                         
