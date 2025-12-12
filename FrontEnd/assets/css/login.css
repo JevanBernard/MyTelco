@@ -1,26 +1,30 @@
-/* Reset body untuk login page */
+/* --- RESET KHUSUS HALAMAN LOGIN --- */
+/* PERBAIKAN: Hapus overflow hidden dari body agar halaman lain (Home) bisa di-scroll kembali */
 body {
     margin: 0;
     padding: 0;
-    height: 100vh;
     background-color: #0a0a0a;
-    overflow: hidden; /* Mencegah scroll di desktop */
+    font-family: var(--font-main, 'Inter', sans-serif);
 }
 
 .login-container {
     display: flex;
-    height: 100vh;
     width: 100%;
+    height: 100vh;
+    /* PERBAIKAN: Pindahkan overflow hidden ke sini. 
+       Jadi hanya saat masuk halaman login saja scroll-nya terkunci. */
+    overflow: hidden; 
 }
 
-/* --- BAGIAN KIRI (ILUSTRASI) --- */
-.login-left {
+/* --- BAGIAN KIRI (VISUAL) --- */
+.login-visual {
     flex: 1;
     background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
-    display: flex;
-    flex-direction: column;
     position: relative;
-    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
     border-right: 1px solid #27272a;
 }
 
@@ -28,26 +32,29 @@ body {
     position: absolute;
     top: 40px;
     left: 40px;
+    z-index: 10;
 }
-.login-logo { width: 150px; }
+.login-logo { width: 140px; }
 
 .illustration-wrapper {
-    flex: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
 }
 
+/* Gambar 3D Utama */
 .login-3d-img {
-    width: 80%;
-    max-width: 500px;
-    filter: drop-shadow(0 0 50px rgba(254, 161, 0, 0.2));
+    width: 70%;
+    max-width: 450px;
     z-index: 2;
+    filter: drop-shadow(0 0 60px rgba(254, 161, 0, 0.2));
     animation: float 6s ease-in-out infinite;
 }
 
-/* Dekorasi Orbit (Lingkaran Tipis) */
+/* Efek Orbit/Lingkaran Putus-putus */
 .orbit-circle {
     position: absolute;
     width: 500px;
@@ -58,59 +65,67 @@ body {
     animation: rotate 60s linear infinite;
 }
 
+/* Icon Melayang */
 .floating-icon {
     position: absolute;
     font-size: 1.5rem;
-    color: var(--accent-yellow);
-    background: rgba(255,255,255,0.05);
-    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px;
     border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.1);
+    z-index: 3;
 }
-.icon-phone { top: 20%; left: 30%; }
-.icon-game { top: 30%; right: 20%; }
-.icon-user { bottom: 30%; left: 20%; }
+.icon-1 { top: 20%; left: 25%; }
+.icon-2 { bottom: 25%; right: 20%; }
+.icon-3 { top: 30%; right: 15%; }
 
 /* --- BAGIAN KANAN (FORM) --- */
-.login-right {
+.login-form-area {
     flex: 1;
-    background-color: #0a0a0a;
     display: flex;
-    align-items: center;
     justify-content: center;
-    position: relative;
+    align-items: center;
+    background-color: #0a0a0a;
     padding: 40px;
+    position: relative;
 }
 
-/* Background Pattern Garis (Optional) */
-.bg-pattern {
+/* Background Blur di belakang form (Efek Glow) */
+.login-form-area::before {
+    content: '';
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    background-image: url('../img/pattern.svg'); /* Jika ada */
-    opacity: 0.05;
-    pointer-events: none;
+    width: 400px;
+    height: 400px;
+    background: rgba(254, 161, 0, 0.05);
+    filter: blur(150px);
+    border-radius: 50%;
+    z-index: 0;
 }
 
-.login-form-wrapper {
+.form-content {
     width: 100%;
-    max-width: 420px;
+    max-width: 400px;
+    position: relative;
     z-index: 2;
 }
 
 .form-header { margin-bottom: 40px; }
 .form-header h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 700;
     color: #fff;
-    margin-bottom: 10px;
-    font-family: var(--font-display);
+    margin-bottom: 8px;
+    font-family: var(--font-display, 'Poppins', sans-serif);
 }
-.form-header p { color: var(--text-muted); font-size: 1rem; }
+.form-header p {
+    color: #94a3b8;
+    font-size: 1rem;
+}
 
-/* Input Styles */
+/* Input Fields */
 .form-group { margin-bottom: 20px; }
 
-.input-icon-wrapper {
+.input-wrapper {
     position: relative;
     display: flex;
     align-items: center;
@@ -121,12 +136,12 @@ body {
     left: 16px;
     width: 20px;
     height: 20px;
-    filter: invert(0.5); /* Icon abu-abu */
+    filter: invert(0.6); /* Abu-abu */
 }
 
-.input-icon-wrapper input {
+.input-wrapper input {
     width: 100%;
-    padding: 16px 16px 16px 50px; /* Padding kiri besar untuk icon */
+    padding: 16px 16px 16px 50px; /* Padding kiri untuk icon */
     background-color: #18181b;
     border: 1px solid #334155;
     border-radius: 12px;
@@ -134,24 +149,47 @@ body {
     font-size: 1rem;
     outline: none;
     transition: 0.3s;
-    font-family: var(--font-main);
 }
 
-.input-icon-wrapper input:focus {
-    border-color: var(--accent-orange);
+.input-wrapper input:focus {
+    border-color: #fea100;
     background-color: #0f0f11;
 }
 
+/* Validation Styles */
+.input-wrapper input.invalid {
+    border-color: #ff4d4d;
+    background-color: rgba(255, 77, 77, 0.05);
+}
+
+.validation-msg {
+    color: #ff4d4d;
+    font-size: 0.8rem;
+    margin-top: 6px;
+    margin-left: 4px;
+    display: none;
+    animation: slideDown 0.2s ease;
+}
+
+.validation-msg.visible { display: block; }
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Links & Button */
 .form-actions {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 30px;
+    margin-bottom: 32px;
 }
 
 .forgot-password {
-    color: var(--accent-orange);
+    color: #fea100;
     font-size: 0.9rem;
     text-decoration: none;
+    font-weight: 500;
 }
 .forgot-password:hover { text-decoration: underline; }
 
@@ -160,14 +198,14 @@ body {
     padding: 16px;
     border-radius: 12px;
     border: none;
-    background: var(--primary-gradient);
+    background: linear-gradient(90deg, #fea100, #ffdb43);
     color: #000;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1rem;
     cursor: pointer;
-    font-family: var(--font-display);
-    transition: 0.3s;
+    font-family: var(--font-display, 'Poppins', sans-serif);
     box-shadow: 0 4px 20px rgba(254, 161, 0, 0.3);
+    transition: 0.3s;
 }
 
 .btn-login:hover {
@@ -175,58 +213,6 @@ body {
     box-shadow: 0 8px 30px rgba(254, 161, 0, 0.5);
 }
 
-.form-footer {
-    margin-top: 30px;
-    text-align: center;
-    color: var(--text-muted);
-}
-.form-footer a { color: var(--accent-orange); font-weight: 600; }
-
-.message-box {
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-    font-size: 0.9rem;
-    display: none; /* Default hidden */
-}
-.message-box.error { background: rgba(255, 0, 0, 0.1); color: #ff4d4d; border: 1px solid #ff4d4d; display: block; }
-.message-box.success { background: rgba(0, 255, 0, 0.1); color: #00ff00; border: 1px solid #00ff00; display: block; }
-
-/* Responsive Mobile */
-@media (max-width: 900px) {
-    .login-left { display: none; } /* Sembunyikan ilustrasi di HP */
-    body { overflow-y: auto; }
-}
-
-/* --- VALIDATION STYLES (BARU) --- */
-
-/* Border merah saat input invalid */
-.input-wrapper input.invalid {
-    border-color: #ff4d4d;
-    background-color: rgba(255, 77, 77, 0.05);
-}
-
-/* Pesan error kecil di bawah input */
-.validation-msg {
-    color: #ff4d4d;
-    font-size: 0.8rem;
-    margin-top: 6px;
-    margin-left: 4px;
-    display: none; /* Default sembunyi */
-    animation: slideDown 0.2s ease;
-}
-
-.validation-msg.visible {
-    display: block;
-}
-
-@keyframes slideDown {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Tombol disabled jadi abu-abu */
 .btn-login:disabled {
     background: #333;
     color: #666;
@@ -267,8 +253,19 @@ body {
 
 /* Responsiveness */
 @media (max-width: 900px) {
-    .login-container { flex-direction: column; height: auto; min-height: 100vh; }
-    .login-visual { display: none; } /* Sembunyikan visual di HP agar fokus form */
-    .login-form-area { padding: 40px 20px; height: 100vh; }
-    body { overflow-y: auto; }
+    /* FIX: Biarkan scroll di mobile */
+    .login-container { 
+        flex-direction: column; 
+        height: auto; 
+        min-height: 100vh;
+        overflow: visible; 
+    }
+    
+    .login-visual { display: none; }
+    
+    .login-form-area { 
+        padding: 40px 20px; 
+        height: auto; 
+        min-height: 100vh; 
+    }
 }

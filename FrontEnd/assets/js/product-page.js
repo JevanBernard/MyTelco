@@ -140,3 +140,19 @@ function formatPrice(value) {
     }
     return value.toString();
 }
+
+// --- 3. INTERAKSI KATEGORI (KLIK AKTIF) ---
+    const categories = document.querySelectorAll('.category');
+    categories.forEach(cat => {
+        cat.addEventListener('click', () => {
+            // Hapus active dari semua
+            categories.forEach(c => c.classList.remove('active'));
+            // Tambah active ke yg diklik
+            cat.classList.add('active');
+            
+            // Jika di mobile, tutup sidebar setelah klik
+            if(window.innerWidth <= 768) {
+                filterSidebar.classList.remove('active');
+            }
+        });
+    });
