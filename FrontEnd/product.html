@@ -27,7 +27,7 @@
 </head>
 <body>
     
-    <my-navbar></my-navbar>
+    <my-navbar active="produk"></my-navbar>
 
     <main>
         <section class="hero-product-section">
@@ -77,7 +77,12 @@
             </div>
         </section>
 
-        <section class="all-products">
+        <section class="all-products" id="product-lists">
+            <!-- Tombol Filter Mobile -->
+            <button class="mobile-filter-btn" id="toggleFilter">
+                <img src="./assets/img/icon/filter.svg" alt="Filter"> Filter Kategori
+            </button>
+
             <div class="container-product">
                 <aside class="filter">
                     <div class="search-bar">
@@ -160,6 +165,9 @@
                             <img src="./assets/img/icon/check-circle-dark.svg" alt="" class="check-icon">
                         </div>
                     </div>
+
+                    <!-- Tombol Tutup Filter (Mobile Only) -->
+                    <button class="close-filter-btn" id="closeFilter">Tutup</button>
                 </aside>
 
                 <div class="products" id="productsContainer"></div>

@@ -255,18 +255,23 @@ h2 {
 /* --- 4. PROMO BANNER --- */
 .promo-banner {
     width: 100%;
-    height: 400px; /* Sedikit dikecilkan agar pas */
+    height: 600px;
     position: relative;
-
+    /* Mengembalikan background dot pattern + gradient */
     background: 
         url("../img/dot-pattern.svg") center/cover no-repeat,
         linear-gradient(101.52deg, #fea100, #ffdb43);
-
+    /* Pastikan gradient ada di belakang pattern dengan urutan atau blend mode jika perlu, 
+       tapi syntax di atas menumpuk pattern di atas gradient */
+    background-blend-mode: overlay; /* Opsional: agar menyatu lebih halus */
+    
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+/* Wrapper jadi Flex agar teks berjejer ke samping */
 .scrolling-wrapper {
     position: absolute;
     top: 40%;
@@ -275,26 +280,43 @@ h2 {
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
+    display: flex; /* PENTING: Agar 2 teks berjejer */
 }
-.scrolling-wrapper h1 {
+
+/* Style Teks */
+.running-text {
     display: inline-block;
-    font-size: 10rem; /* Responsive size di bawah */
+    font-size: 12rem; /* Ukuran Besar */
     font-weight: 800;
     color: #fff;
     text-transform: uppercase;
-    animation: scroll-left 20s linear infinite;
-    padding-left: 100%;
     font-family: var(--font-display);
+    letter-spacing: -0.04em;
+    opacity: 1;
+
+    /* ANIMASI */
+    animation: scroll-left 20s linear infinite;
+    
+    /* LAYOUT PENTING */
+    flex-shrink: 0;    /* Jangan mengecil */
+    padding-right: 50px; /* Jarak antar teks duplikat */
+    padding-left: 0;   /* HAPUS padding-left 100% yg lama */
 }
-@keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+
+/* Animasi menggeser teks ke kiri sejauh lebarnya sendiri */
+@keyframes scroll-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+}
+
 .promo-description {
     position: absolute;
-    bottom: 15%;
-    right: 5%;
+    bottom: 20%;
+    right: 10%;
     z-index: 2;
     max-width: 500px;
     text-align: right;
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     font-weight: 500;
     color: rgba(0,0,0,0.8);
     font-family: var(--font-display);
@@ -629,17 +651,28 @@ h2 {
     padding: 10px 70px 160px;
     /* height: calc(100vh - 320px); */
     overflow-y: auto;
+    padding-inline: 200px; /* INI PENYEBAB MASALAH DI MOBILE */
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 .bot-message {
     display: flex;
-    margin-bottom: 26px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
 }
 
 .bot-message-content {
     display: flex;
+    min-width: 400px; /* INI JUGA MASALAH DI MOBILE (Layar HP < 400px) */
+    max-width: 800px;
+    flex-direction: column;
     align-items: flex-start;
-    gap: 14px;
+    gap: 16px;
+    align-self: stretch;
 }
 
 .bot-avatar-wrapper {
@@ -712,13 +745,17 @@ h2 {
 =========================================== */
 
 .chat-input-form {
+    display: flex;
+    width: 100%;
+    padding: 20px 200px; /* INI JUGA PERLU DIUBAH DI MOBILE */
+    align-items: center;
+    gap: 24px;
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%;
-    padding: 22px 60px;
     background: #0c0c0c;
-    border-top: 1px solid #262626;
+    border-top: 1px solid rgba(100, 116, 139, 0.50);
+    z-index: 100;
 }
 
 .chat-input-form .input-wrapper {
@@ -780,6 +817,62 @@ h2 {
     
     .running-text { font-size: 6rem; }
     .promo-description { bottom: 10%; right: 50%; transform: translateX(50%); text-align: center; width: 80%; }
+
+    .chat-container { padding-inline: 60px; }
+    .chat-input-form { padding: 20px 60px; }
+
+    /* Product */
+    .hero-product-section {
+        flex-direction: column;
+        padding: 60px 40px;
+        text-align: center;
+        gap: 40px;
+    }
+    
+    .hero-product { 
+        align-items: center; 
+        width: 100%; 
+    }
+    
+    .hero-title { align-items: center; }
+    
+    .hero-img-desktop { 
+        width: 80%; 
+        height: auto; 
+    }
+
+    .main-product { padding: 40px 24px; }
+    
+    .product-recomendation {
+        padding: 40px 24px;
+        text-align: center;
+    }
+    
+    .section-recommendation {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .recommendation-text { align-items: center; }
+    
+    .all-products { padding: 0 24px 80px; }
+    
+    /* Layout Filter & Produk: Stack ke bawah */
+    .container-product {
+        flex-direction: column;
+    }
+    
+    .filter {
+        width: 100%; /* Filter memanjang */
+    }
+    
+    .list-category {
+        flex-direction: row; /* Kategori jadi horizontal scroll */
+        overflow-x: auto;
+        padding-bottom: 10px;
+    }
+    
+    .category { min-width: 180px; } /* Agar scrollable */
 }
 
 /* Mobile Devices (768px and down) */
@@ -836,6 +929,94 @@ h2 {
     /* Promo Banner */
     .promo-banner { height: 350px; }
     .running-text { font-size: 4rem; }
+
+    /* Chatbot */
+    .chatbot-header {
+        padding: 0 24px; /* Kecilkan padding header */
+        justify-content: space-between; /* Agar nama user dan logout rapi */
+    }
+
+    .chat-container {
+        padding: 10px 24px 100px; /* Kecilkan padding container utama */
+        padding-inline: 24px; /* Override padding-inline 200px */
+    }
+
+    .bot-message-content {
+        min-width: auto; /* Hapus min-width 400px agar muat di HP */
+        width: 100%;
+    }
+
+    .bot-message-bubble, 
+    .user-message-bubble {
+        max-width: 85%; /* Gelembung chat lebih lebar di HP */
+        padding: 12px 16px;
+        font-size: 0.95rem;
+    }
+
+    .chat-input-form {
+        padding: 15px 20px; /* Kecilkan padding input bar */
+        gap: 12px;
+    }
+
+    .chat-input-form .input-wrapper {
+        padding: 10px 14px;
+        gap: 10px;
+    }
+
+    .send-btn {
+        width: 42px;
+        height: 42px;
+        padding: 10px;
+    }
+
+    /* Product */
+    .hero-product-section { padding: 40px 20px; }
+    .hero-title b { font-size: 36px; }
+    .product-recomendation { padding: 30px 20px; }
+    .recommendation-title b { font-size: 24px; }
+    .button-recommendation { font-size: 16px; width: 100%; }
+
+    /* Filter Sidebar jadi Off-Canvas (Overlay) */
+    .mobile-filter-btn { display: flex; }
+
+    .filter {
+        position: fixed;
+        top: 0; left: -100%; /* Sembunyi di kiri */
+        width: 80%;
+        height: 100vh;
+        background: #0c0c0c;
+        z-index: 2000;
+        padding: 20px;
+        transition: left 0.3s ease;
+        border-right: 1px solid #333;
+        overflow-y: auto;
+    }
+    
+    .filter.active { left: 0; } /* Muncul */
+
+    .list-category {
+        flex-direction: column; /* Balik ke vertikal di dalam menu */
+        overflow-x: visible;
+    }
+    
+    .category { width: 100%; }
+    
+    .close-filter-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        background: #ff4d4d;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+
+    /* Grid Produk 1 Kolom */
+    .products {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ========================================
@@ -2208,6 +2389,24 @@ h2 {
     transform: scale(1);
 }
 
+/* Mobile Filter Button (Default Hidden) */
+.mobile-filter-btn {
+    display: none;
+    width: 100%;
+    padding: 14px;
+    background: #18181B;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+.close-filter-btn { display: none; }
+
 
 /* ========================================
    CRUSIAL PRODUCT STYLE
@@ -2780,5 +2979,63 @@ h2 {
         align-items: center;
         text-align: center;
     }
+
+    /* Chatbot */
+    .chatbot-header {
+        padding: 0 16px; /* Padding lebih kecil lagi untuk layar sempit */
+    }
+
+    .chat-container {
+        padding: 10px 16px 90px; /* Kurangi padding samping & bawah */
+        padding-inline: 16px;
+    }
+
+    .bot-message-bubble, 
+    .user-message-bubble {
+        max-width: 90%; /* Maksimalkan lebar bubble chat */
+        padding: 10px 14px; /* Padding dalam bubble lebih compact */
+        font-size: 0.9rem; /* Font size sedikit lebih kecil */
+        border-radius: 12px;
+    }
+
+    .chat-input-form {
+        padding: 12px 16px; /* Input bar lebih rapat */
+        gap: 8px;
+    }
+
+    .chat-input-form .input-wrapper {
+        padding: 8px 12px;
+    }
+
+    .send-btn {
+        width: 38px; /* Tombol kirim lebih kecil */
+        height: 38px;
+        border-radius: 10px;
+    }
+    
+    .bot-avatar-bg, .user-avatar {
+        width: 32px; /* Avatar diperkecil sedikit */
+        height: 32px;
+    }
+
+    /* Product */
+    .hero-product-section { padding: 30px 16px; }
+    .hero-title b { font-size: 28px; }
+    .hero-product p { font-size: 1rem; }
+    
+    .product-recomendation { padding: 24px 16px; border-width: 2px; }
+    .recommendation-title b { font-size: 20px; }
+    
+    .button-recommendation { 
+        padding: 12px; 
+        font-size: 14px; 
+    }
+    
+    .all-products { padding: 0 16px 60px; }
+    
+    /* Product Card adjustments for small screens */
+    .product { padding: 20px; }
+    .product .quota { font-size: 28px; }
+    .product .price { font-size: 24px; } 
 }
 
