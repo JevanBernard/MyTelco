@@ -9,6 +9,8 @@
     <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico">
     <link rel="icon" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
     <link rel="icon" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
     
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -21,7 +23,6 @@
     <script src="assets/js/components.js" defer></script>
     <script type="module" src="assets/js/product-page.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"></script>
 
 </head>
 <body>
@@ -83,11 +84,11 @@
                         <img src="./assets/img/icon/search.svg" alt="search bar">
                         <input type="text" placeholder="Cari paket..." id="searchInput">
                     </div>
+                    <div class="header-category">
+                        <img src="./assets/img/icon/filter.svg" alt="filter category">
+                        <h1>Kebutuhan Digital</h1>
+                    </div>
                     <div class="list-category" id="listCategory">
-                        <div class="header-category">
-                            <img src="./assets/img/icon/filter.svg" alt="filter category">
-                            <h1>Kebutuhan Digital</h1>
-                        </div>
                         <div class="category">
                             <div class="name-category">
                                 <img src="./assets/img/icon/menu-square-default.svg" alt="">
@@ -164,7 +165,17 @@
                 <div class="products" id="productsContainer"></div>
             </div>
         </section>
+
     </main>
 
     <my-footer></my-footer>
+
+    <div id="purchaseModal" class="modal-overlay hidden">
+        <div class="modal-glass">
+            
+            <div id="modalContent"></div> 
+        </div>
+    </div>
+
+
 </body>
