@@ -1,6 +1,11 @@
-# .gitignore
-BackEnd/venv/
-venv/
-.env
+myenv/
+*.dll
+*.so
+*.dylib
 __pycache__/
-BackEnd/__pycache__/
+*.pyc
+*.pkl
+myenv/
+venv/
+ML_Engine/myenv/
+BackEnd/myenv
