@@ -29,10 +29,7 @@ try:
     model = joblib.load(os.path.join(BASE_PATH, "xgb_model.pkl")) # Ganti nama jika beda
     encoder = joblib.load(os.path.join(BASE_PATH, "label_encoder.pkl"))
     preprocessor = joblib.load(os.path.join(BASE_PATH, "preprocessor.pkl"))
-    
-    # Load Feature Names (Wajib ada untuk mengatasi error kolom mismatch!)
-    with open(os.path.join(BASE_PATH, "feature_names.json"), "r") as f:
-        feature_names = json.load(f)
+    feature_names = joblib.load(os.path.join(BASE_PATH, "final_features.pkl"))
         
     print("✅ Model, Encoder, dan Feature Names berhasil dimuat!")
     

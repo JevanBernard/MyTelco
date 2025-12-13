@@ -1,69 +1,91 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Produk My Telco</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico">
     <link rel="icon" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
     <link rel="icon" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
     
     <!-- CSS -->
-    <link rel="stylesheet" href="assets/css/styles.css">
-    
+    <link rel="stylesheet" href="assets/css/styles.css" />
+
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- KOMPONEN NAVBAR & FOOTER -->
     <script src="assets/js/components.js" defer></script>
     <script type="module" src="assets/js/product-page.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"></script>
 
 </head>
 <body>
     
-    <my-navbar></my-navbar>
+    <my-navbar active="produk"></my-navbar>
 
     <main>
-        <section class="hero-product-section">
-            <div class="hero-product">
-                <div class="header-smart">
-                    <img src="./assets/img/icon/thunder.svg" alt="product section">
-                    <b class="smart-telco-ai">Smart Telco AI</b>
-                </div>
-                <div class="hero-title">
-                    <b>Lihat Semua</b>
-                    <b><span>Katalog Paket</span></b>
-                </div>
-                <p>Temukan paket yang sesuai dengan kebutuhanmu. Dari paket harian hingga bulanan, untuk gaming hingga streaming.</p>
+      <section class="hero-product-section">
+        <div class="hero-product">
+          <div class="header-smart">
+            <img src="./assets/img/icon/thunder.svg" alt="product section" />
+            <b class="smart-telco-ai">Smart Telco AI</b>
+          </div>
+          <div class="hero-title">
+            <b>Lihat Semua</b>
+            <b><span>Katalog Paket</span></b>
+          </div>
+          <p>
+            Temukan paket yang sesuai dengan kebutuhanmu. Dari paket harian
+            hingga bulanan, untuk gaming hingga streaming.
+          </p>
+        </div>
+        <img
+          src="./assets/img/product-hero.svg"
+          alt="product hero"
+          width="auto"
+          height="100%"
+        />
+      </section>
+
+      <section class="main-product">
+        <div class="product-recomendation">
+          <img
+            src="./assets/img/background-recommendation.svg"
+            alt=""
+            class="background-recommendation"
+          />
+          <div class="section-recommendation">
+            <div class="recommendation-text">
+              <div class="header-smart">
+                <img
+                  src="./assets/img/icon/thunder.svg"
+                  alt="product section"
+                />
+                <b class="smart-telco-ai">Rekomendasi Spesial</b>
+              </div>
+              <div class="recommendation-title">
+                <b>Bingung pilih paket yang mana?<span></span></b>
+                <p>
+                  Minta AI kami untuk menemukan paket yang 100% cocok dengan
+                  gaya hidupmu.
+                </p>
+              </div>
             </div>
-            <img src="./assets/img/product-hero.svg" alt="product hero" width="auto" height="100%">
-        </section>
-        
-        <section class="main-product">
-            <div class="product-recomendation">
-                <img src="./assets/img/background-recommendation.svg" alt="" class="background-recommendation">
-                <div class="section-recommendation">
-                    <div class="recommendation-text">
-                        <div class="header-smart">
-                            <img src="./assets/img/icon/thunder.svg" alt="product section">
-                            <b class="smart-telco-ai">Rekomendasi Spesial</b>
-                        </div>
-                        <div class="recommendation-title">
-                            <b>Bingung pilih paket yang mana?<span></span></b>
-                            <p>Minta AI kami untuk menemukan paket yang 100% cocok dengan gaya hidupmu.</p>
-                        </div>
-                    </div>
-                    <a href="./dashboard.html" class="button-recommendation">
-                        Login untuk Rekomendasi
-                        <img src="./assets/img/icon/arrow-up.svg" alt="">
-                    </a>
-                </div>
-                <!-- <div class="recommendation-product">
+            <a href="./dashboard.html" class="button-recommendation">
+              Login untuk Rekomendasi
+              <img src="./assets/img/icon/arrow-up.svg" alt="" />
+            </a>
+          </div>
+          <!-- <div class="recommendation-product">
                     <div class="recommended-lists">
                         <div class="product-list" id="product">
 
@@ -73,21 +95,26 @@
                         <img src="./assets/img/icon/arrow-white.svg" alt="see more">
                     </a>
                 </div> -->
-            </div>
-        </section>
+        </div>
+      </section>
 
-        <section class="all-products">
+        <section class="all-products" id="product-lists">
+            <!-- Tombol Filter Mobile -->
+            <button class="mobile-filter-btn" id="toggleFilter">
+                <img src="./assets/img/icon/filter.svg" alt="Filter"> Filter Kategori
+            </button>
+
             <div class="container-product">
                 <aside class="filter">
                     <div class="search-bar">
                         <img src="./assets/img/icon/search.svg" alt="search bar">
                         <input type="text" placeholder="Cari paket..." id="searchInput">
                     </div>
+                    <div class="header-category">
+                        <img src="./assets/img/icon/filter.svg" alt="filter category">
+                        <h1>Kebutuhan Digital</h1>
+                    </div>
                     <div class="list-category" id="listCategory">
-                        <div class="header-category">
-                            <img src="./assets/img/icon/filter.svg" alt="filter category">
-                            <h1>Kebutuhan Digital</h1>
-                        </div>
                         <div class="category">
                             <div class="name-category">
                                 <img src="./assets/img/icon/menu-square-default.svg" alt="">
@@ -159,12 +186,25 @@
                             <img src="./assets/img/icon/check-circle-dark.svg" alt="" class="check-icon">
                         </div>
                     </div>
+
+                    <!-- Tombol Tutup Filter (Mobile Only) -->
+                    <button class="close-filter-btn" id="closeFilter">Tutup</button>
                 </aside>
 
                 <div class="products" id="productsContainer"></div>
             </div>
         </section>
+
     </main>
 
     <my-footer></my-footer>
+
+    <div id="purchaseModal" class="modal-overlay hidden">
+        <div class="modal-glass">
+            
+            <div id="modalContent"></div> 
+        </div>
+    </div>
+
+
 </body>

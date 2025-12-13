@@ -1,6 +1,41 @@
-# .gitignore
-BackEnd/venv/
+# --- DEPENDENCIES ---
+node_modules/
+/BackEnd/dwika/node_modules/
+/BackEnd/app/venv/
+/BackEnd/app/env/
 venv/
-.env
+env/
 __pycache__/
-BackEnd/__pycache__/
+*.py[cod]
+*$py.class
+
+# --- ENVIRONMENT VARIABLES (SANGAT PENTING) ---
+.env
+.env.local
+.env.*
+# Kecuali file contoh (jika ada)
+! .env.example
+
+# --- IDE & OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- LOGS ---
+*.log
+npm-debug.log*
+
+# --- BUILD & DIST ---
+dist/
+build/
+
+# --- DATA & MODELS ---
+# Hapus tanda pagar di bawah jika model > 100MB
+# *.pkl
+# *.h5
+# *.pt
+
+# Ignore local DB backups
+*.sql
+*.sqlite3
