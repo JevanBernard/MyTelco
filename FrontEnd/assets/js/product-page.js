@@ -298,34 +298,89 @@ window.selectPaymentMethod = (element, methodId) => {
     if(window.lucide) window.lucide.createIcons();
 };
 
-window.processTx = () => {
+window.processTx = async () => {
     const content = document.getElementById('modalContent');
+    const userJson = localStorage.getItem('user');
+    
+    // 1. Validasi Login
+    if (!userJson) {
+        alert("Silakan login terlebih dahulu untuk membeli paket.");
+        window.location.href = 'auth.html#login';
+        return;
+    }
 
+    const user = JSON.parse(userJson);
+    const userId = user.id || user.user_id; // Handle variasi nama field
+
+    // 2. Tampilan Loading
     content.innerHTML = `
         <div class="success-view">
             <i data-lucide="loader-2" class="animate-spin" width="64" style="color:#FEA100; margin-bottom:1.5rem;"></i>
             <h3 style="color:white;">Memproses Transaksi...</h3>
+            <p style="color:#888;">Mohon tunggu sebentar</p>
         </div>
     `;
     if(window.lucide) window.lucide.createIcons();
 
-    setTimeout(() => {
+    // 3. Kirim Data ke Backend FastAPI
+    try {
+        const payload = {
+            user_id: userId,
+            product_id: selectedProduct.product_id,
+            amount: selectedProduct.price,
+            method: selectedPaymentMethod
+        };
+
+        console.log("Sending Purchase:", payload);
+
+        const response = await fetch('http://127.0.0.1:8000/api/purchase', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.detail || "Transaksi Gagal");
+        }
+
+        // 4. Tampilan Sukses (Jika Backend OK)
+        setTimeout(() => {
+            content.innerHTML = `
+                <div class="success-view">
+                    <div style="width:80px; height:80px; background:#00E676; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:1.5rem; box-shadow:0 0 30px rgba(0,230,118,0.3);">
+                        <i data-lucide="check" width="48" color="#000"></i>
+                    </div>
+                    <h2 style="color:white; margin-bottom:0.5rem; font-size:1.8rem;">Pembayaran Berhasil!</h2>
+                    <p style="color:#94A3B8; margin-bottom:2.5rem; line-height:1.6;">
+                        Paket <b>${selectedProduct.name}</b> telah aktif.<br>
+                        Data profil Anda telah diperbarui.
+                    </p>
+                    <a href="dashboard.html" class="btn-buy-now" style="text-decoration:none; display:block; line-height:1.5;">
+                        Lihat Dashboard
+                    </a>
+                </div>
+            `;
+            if(window.lucide) window.lucide.createIcons();
+        }, 1000);
+
+    } catch (error) {
+        console.error("Purchase Error:", error);
         content.innerHTML = `
             <div class="success-view">
-                <div style="width:80px; height:80px; background:#00E676; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:1.5rem; box-shadow:0 0 30px rgba(0,230,118,0.3);">
-                    <i data-lucide="check" width="48" color="#000"></i>
+                <div style="width:80px; height:80px; background:#FF4D4D; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:1.5rem;">
+                    <i data-lucide="x" width="48" color="#fff"></i>
                 </div>
-                <h2 style="color:white; margin-bottom:0.5rem; font-size:1.8rem;">Pembayaran Berhasil!</h2>
-                <p style="color:#94A3B8; margin-bottom:2.5rem; line-height:1.6;">
-                    Paket <b>${selectedProduct.name}</b> telah aktif.<br>Silakan cek dashboard untuk melihat kuota.
-                </p>
-                <a href="dashboard.html" class="btn-buy-now" style="text-decoration:none; display:block; line-height:1.5;">
-                    Lihat Dashboard
-                </a>
+                <h2 style="color:white; margin-bottom:0.5rem;">Transaksi Gagal</h2>
+                <p style="color:#94A3B8; margin-bottom:2rem;">${error.message}</p>
+                <button onclick="window.closeModal()" class="btn-buy-now" style="background:#333; color:white;">
+                    Tutup
+                </button>
             </div>
         `;
         if(window.lucide) window.lucide.createIcons();
-    }, 2000);
+    }
 };
 
 function formatPrice(value) {

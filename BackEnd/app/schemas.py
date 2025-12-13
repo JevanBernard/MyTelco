@@ -1,13 +1,16 @@
 from pydantic import BaseModel
 from typing import Optional, List
+from uuid import UUID
 
-# 1. Schema Input Survey (Dari Frontend)
+# Schema untuk menerima data Survey dari Frontend
 class SurveyInput(BaseModel):
+    userId: UUID  # Frontend mengirim "userId"
+    budget: int
     name: str
     device: str
-    budget: str   # LOW, MID, HIGH
-    activity: str # GAMING, STREAMING, SOSMED, BROWSING
-    travel: str   # TIDAK_PERNAH, SERING, dll
+    activity: str
+    travel: str
+    provider: str
 
 # 2. Schema Output Produk (Ke Frontend)
 # REVISI: Menghapus ai_tags, menyesuaikan dengan kolom DB baru
@@ -27,3 +30,27 @@ class ProductBase(BaseModel):
     
     class Config:
         from_attributes = True # Wajib untuk membaca data dari SQLAlchemy
+        
+# Schema untuk Response
+class ProfileResponse(BaseModel):
+    profile_id: int
+    user_id: UUID
+    plan_type: str
+    monthly_spend: float
+    avg_data_usage_gb: float
+    
+    class Config:
+        from_attributes = True # Dulu orm_mode = True
+        
+# Schema Input untuk Pembelian
+class PurchaseInput(BaseModel):
+    user_id: UUID
+    product_id: int
+    amount: float
+    method: str # pulsa, gopay, dll
+
+# Schema Output sederhana
+class TransactionResponse(BaseModel):
+    status: str
+    message: str
+    new_balance: dict # Mengembalikan data profil terbaru (spend/freq)

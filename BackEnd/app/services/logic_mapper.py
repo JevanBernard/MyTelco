@@ -1,64 +1,96 @@
 import random
 
-# KONFIGURASI BOBOT AKTIVITAS
-PROFILE_CONFIG = {
-    'STREAMING': {'video_range': (0.75, 0.98), 'call_range': (1.0, 5.0), 'data_multiplier': 1.3},
-    'GAMING':    {'video_range': (0.10, 0.30), 'call_range': (0.5, 3.5), 'data_multiplier': 1.2},
-    'SOSMED':    {'video_range': (0.40, 0.70), 'call_range': (4.0, 9.0), 'data_multiplier': 1.0},
-    'BROWSING':  {'video_range': (0.05, 0.20), 'call_range': (8.0, 16.0), 'data_multiplier': 0.7}
+# Konfigurasi Rules (Sesuai Opsi HTML Frontend)
+ACTIVITY_RULES = {
+    'Streaming Film / Video': {
+        'multiplier': 1.3,
+        'call_range': (1.0, 5.0),
+        'video_range': (0.70, 1.0),
+        'act_id': 1
+    },
+    'Gaming & Esports': {
+        'multiplier': 1.2,
+        'call_range': (0.5, 3.0),
+        'video_range': (0.10, 0.30),
+        'act_id': 2
+    },
+    'Social Media & Chat': {
+        'multiplier': 1.0,
+        'call_range': (4.0, 9.0),
+        'video_range': (0.40, 0.70),
+        'act_id': 3
+    },
+    'Browsing & Kerja': {
+        'multiplier': 0.7,
+        'call_range': (8.0, 16.0),
+        'video_range': (0.05, 0.20),
+        'act_id': 4
+    }
 }
 
-def generate_user_profile(survey_data):
+TRAVEL_SCORES = {
+    'Tidak Pernah': 0.0,
+    'Jarang': 0.2,
+    'Kadang': 0.5,
+    'Sering': 0.8,
+    'Rutin': 1.0
+}
+
+def generate_user_profile(survey_data: dict) -> dict:
     """
-    Generator Data Sintetis: Mengubah Input Survey Manusia -> Angka Statistik Dataset
+    Mengubah raw survey data menjadi fitur input ML.
+    Logika Baru: Plan Type eksplisit dari input user, Topup Freq 0.
     """
     
-    # 1. Ambil Input
-    budget_tier = survey_data.get('budget', 'LOW')
-    activity = survey_data.get('activity', 'BROWSING')
-    device_brand = survey_data.get('device', 'Android')
+    # 1. Extract Inputs (Handling key dari Frontend)
+    try:
+        budget = int(survey_data.get('budget', 0))
+    except (ValueError, TypeError):
+        budget = 0
+        
+    activity = survey_data.get('activity', 'Social Media & Chat')
+    device = survey_data.get('device', 'Other')
+    travel = survey_data.get('travel', 'Tidak Pernah')
+    provider_input = survey_data.get('provider', 'Prabayar') # Default ke Prabayar
     
-    config = PROFILE_CONFIG.get(activity, PROFILE_CONFIG['BROWSING'])
-
-    # 2. Monthly Spend (Anchor)
-    spend_map = {'LOW': 45000.0, 'MID': 75000.0, 'HIGH': 150000.0}
-    base_spend = spend_map.get(budget_tier, 75000.0)
-    monthly_spend = base_spend * random.uniform(0.95, 1.05) # Sedikit variasi
-
-    # 3. Plan Type (The VIP Rule)
-    flagship_brands = ['iPhone', 'Apple', 'Samsung', 'Google', 'Huawei']
-    if (monthly_spend > 100000) or (device_brand in flagship_brands):
+    # 2. Ambil Rule berdasarkan Aktivitas
+    rule = ACTIVITY_RULES.get(activity, ACTIVITY_RULES['Social Media & Chat'])
+    
+    # 3. Hitung Avg Data Usage (GB)
+    if budget > 0:
+        estimated_monthly_gb = (budget / 10000.0) * rule['multiplier']
+        raw_data_daily = estimated_monthly_gb / 30.0
+        if raw_data_daily < 0.1: raw_data_daily = 0.1
+    else:
+        raw_data_gb = 0.0
+        
+    avg_data_usage_gb = round(raw_data_daily, 2)
+    
+    # 4. Generate Random Call Duration & Video Usage
+    avg_call_duration = round(random.uniform(*rule['call_range']), 2)
+    pct_video_usage = round(random.uniform(*rule['video_range']), 2)
+    
+    # 5. Tentukan Plan Type
+    # Frontend mengirim string: "Prabayar" atau "Pascabayar"
+    # Kita mapping ke standar database: "Prepaid" atau "Postpaid"
+    if provider_input == 'Pascabayar':
         plan_type = 'Postpaid'
     else:
         plan_type = 'Prepaid'
-
-    # 4. Data Usage (Daily Average Logic)
-    # Rumus: (Spend/10rb) * 0.5 * Multiplier
-    base_gb = (monthly_spend / 10000.0) * 0.5 
-    avg_data = base_gb * config['data_multiplier'] * random.uniform(0.9, 1.1)
-
-    # 5. Lain-lain
-    pct_video = random.uniform(*config['video_range'])
-    avg_call = random.uniform(*config['call_range'])
+        
+    # 6. Travel Score
+    travel_score = TRAVEL_SCORES.get(travel, 0.1)
     
-    # SMS (Echo Call)
-    if avg_call < 5.0: sms_freq = random.randint(0, 5)
-    elif avg_call < 10.0: sms_freq = random.randint(5, 12)
-    else: sms_freq = random.randint(12, 25)
-
-    # Travel Score
-    is_traveler = survey_data.get('travel') in ['SERING', 'RUTIN']
-    travel_score = random.uniform(0.7, 0.9) if is_traveler else random.uniform(0.0, 0.3)
-
+    # 7. Return Result
     return {
-        "monthly_spend": round(monthly_spend, 2),
+        "act_id": rule['act_id'],
         "plan_type": plan_type,
-        "device_brand": device_brand,
-        "avg_data_usage_gb": avg_data,
-        "pct_video_usage": pct_video,
-        "avg_call_duration": avg_call,
-        "sms_freq": sms_freq,
-        "topup_freq": random.randint(2, 6),
+        "device_brand": device,
+        "monthly_spend": budget,
+        "avg_data_usage_gb": avg_data_usage_gb,
+        "pct_video_usage": pct_video_usage,
+        "avg_call_duration": avg_call_duration,
+        "topup_freq": 0,
         "travel_score": travel_score,
-        "complaint_count": 0
+        "complaint_count": 0 
     }

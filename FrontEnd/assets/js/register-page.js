@@ -66,16 +66,16 @@ export default class Register {
                 </section>
             </div>
 
-            <!-- CUSTOM ALERT (Desain Sesuai Web) -->
+            <!-- CUSTOM ALERT (Updated for Survey Flow) -->
             <div id="customAlert" class="custom-alert">
                 <div class="alert-icon">
                     <img src="assets/img/icon/check-circle.svg" alt="Success">
                 </div>
                 <div class="alert-body">
                     <h3>Registrasi Berhasil!</h3>
-                    <p>Akun Anda siap digunakan.</p>
+                    <p>Akun Anda siap. Mari isi survey singkat untuk personalisasi.</p>
                 </div>
-                <button id="alertBtn" class="alert-btn">OK, Masuk</button>
+                <button id="alertBtn" class="alert-btn">Mulai Survey</button>
             </div>
 
             <!-- STYLE ALERT -->
@@ -158,14 +158,12 @@ export default class Register {
 
         if (!form) return;
 
-        // Logic Tombol Alert -> Pindah ke Login
+        // Logic Tombol Alert -> Redirect ke Survey
         if (alertBtn) {
             alertBtn.addEventListener('click', () => {
                 customAlert.classList.remove('show');
-                setTimeout(() => {
-                    customAlert.style.display = 'none';
-                    window.location.hash = '#login';
-                }, 200);
+                // Redirect ke halaman survey
+                window.location.href = 'survey.html';
             });
         }
 
@@ -201,7 +199,6 @@ export default class Register {
             submitBtn.disabled = true;
 
             try {
-                // Fetch Backend
                 const response = await fetch('http://localhost:3000/api/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -214,10 +211,25 @@ export default class Register {
 
                 const result = await response.json();
 
+                console.log("Full Response dari Node.js:", result);
+
                 if (response.ok && result.success) {
-                    // --- SUKSES: TAMPILKAN CUSTOM ALERT ---
+                    // --- PERBAIKAN LOGIKA PENYIMPANAN ---
+                    // Cek berbagai kemungkinan nama property
+                    const userId = result.data?.id || result.data?.user_id;
+
+                    if (userId) {
+                        console.log("User ID ditangkap:", userId);
+                        localStorage.setItem('temp_user_id', userId);
+                    } else {
+                        console.error("GAWAT: Backend success tapi tidak ada ID!", result);
+                        alert("Terjadi kesalahan sistem: User ID tidak ditemukan.");
+                        return; // Stop disini jangan lanjut
+                    }
+                    
+                    localStorage.setItem('temp_reg_name', fullName);
+
                     customAlert.style.display = 'flex';
-                    // Trigger reflow agar animasi transisi jalan
                     void customAlert.offsetWidth; 
                     customAlert.classList.add('show');
                     return; 

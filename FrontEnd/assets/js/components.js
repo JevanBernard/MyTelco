@@ -282,7 +282,7 @@ class MyNavbar extends HTMLElement {
                         <li><a href="index.html">Beranda</a></li>
                         <li><a href="chatbot.html">Coba AI</a></li>
                         <li><a href="product.html">Produk</a></li>
-                        <li><a href="kontak.html">Tentang Kami</a></li>
+                        <li><a href="kontak.html">Hubungi Kami</a></li>
                         
                         <!-- Container Auth Mobile (Hidden on Desktop) -->
                         <li id="mobileAuthContainer">
@@ -326,7 +326,7 @@ class MyNavbar extends HTMLElement {
 
                         <!-- DROPDOWN MENU -->
                         <div class="profile-dropdown" id="profileDropdown">
-                            <div class="dropdown-item" style="cursor: default;">
+                            <div class="dropdown-item" id="btnProfile" style="cursor: pointer;">
                                 <div>
                                     <div style="font-weight: 600; color: #fff; margin-bottom: 4px;">${user.name || 'Pengguna'}</div>
                                     <div style="font-size: 0.85rem; color: #94a3b8;">${user.phone || ''}</div>
@@ -364,6 +364,7 @@ class MyNavbar extends HTMLElement {
     setupProfileActions(container) {
         const userProfile = container.querySelector('.user-profile');
         const dropdown = container.querySelector('.profile-dropdown');
+        const btnProfile = container.querySelector('#btnProfile');
         const btnLogout = container.querySelector('#btnLogout');
 
         if (!userProfile || !dropdown) return;
@@ -377,6 +378,14 @@ class MyNavbar extends HTMLElement {
             });
             dropdown.classList.toggle('show');
         });
+
+        // Profile Action - Ke Dashboard
+        if (btnProfile) {
+            btnProfile.addEventListener('click', (e) => {
+                e.stopPropagation();
+                window.location.href = 'dashboard.html';
+            });
+        }
 
         // Logout Action
         if (btnLogout) {
