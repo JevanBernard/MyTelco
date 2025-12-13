@@ -1,8 +1,9 @@
 export default class Login {
     async render() {
+        // MENGGUNAKAN HTML DESAIN LAMA ANDA (Tanpa Perubahan Tampilan)
         return `
             <div class="login-container">
-                <!-- ... (Bagian Kiri Visual sama seperti sebelumnya) ... -->
+                <!-- BAGIAN KIRI: Visual -->
                 <aside class="login-visual">
                     <div class="brand-header">
                         <a href="index.html">
@@ -40,15 +41,14 @@ export default class Login {
                                 </div>
                             </div>
 
-                            <div class="form-actions">
-                                <a href="#" class="forgot-password">Lupa Kata Sandi?</a>
+                            <div class="form-actions" style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+                                <a href="#" class="forgot-password" style="color: #666; font-size: 0.9rem; text-decoration: none;">Lupa Kata Sandi?</a>
                             </div>
 
                             <button type="submit" class="btn-login">Masuk Sekarang</button>
                         </form>
 
                         <footer class="form-footer">
-                            <!-- Link ke Register menggunakan Hash -->
                             <p>Belum punya akun? <a href="#register">Daftar di sini</a></p>
                         </footer>
 
@@ -68,9 +68,12 @@ export default class Login {
 
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            // Ambil value dari ID yang sesuai dengan HTML lama (username)
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
+            // Reset Pesan
             messageBox.style.display = 'none';
             messageBox.className = 'message-box';
             
@@ -79,33 +82,40 @@ export default class Login {
             submitBtn.disabled = true;
 
             try {
-                // API Call ke Backend
+                // LOGIKA BARU: Fetch ke Backend Node.js
                 const response = await fetch('http://localhost:3000/api/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
+                    body: JSON.stringify({ 
+                        username: username, // Kirim sebagai 'username' sesuai controller backend
+                        password: password 
+                    })
                 });
 
-                const data = await response.json();
+                const result = await response.json();
 
-                if (response.ok && data.success) {
+                if (response.ok && result.success) {
+                    // SUKSES
                     messageBox.innerText = `Login Berhasil! Mengalihkan...`;
-                    messageBox.classList.add('success');
                     messageBox.style.display = 'block';
+                    messageBox.style.color = 'green';
                     
-                    localStorage.setItem('user_token', JSON.stringify(data.user));
+                    // Simpan data user (sesuai struktur response backend kita: result.data)
+                    localStorage.setItem('user', JSON.stringify(result.data));
+                    localStorage.setItem('isLoggedIn', 'true');
 
-                    // Redirect ke Dashboard (bisa SPA atau file terpisah)
+                    // Redirect
                     setTimeout(() => {
                         window.location.href = 'dashboard.html'; 
                     }, 1000);
                 } else {
-                    throw new Error(data.message || 'Login gagal');
+                    throw new Error(result.message || 'Login gagal');
                 }
             } catch (error) {
+                console.error('Login Error:', error);
                 messageBox.innerText = error.message;
-                messageBox.classList.add('error');
                 messageBox.style.display = 'block';
+                messageBox.style.color = 'red';
             } finally {
                 submitBtn.innerText = originalText;
                 submitBtn.disabled = false;

@@ -28,6 +28,9 @@ env/
 ENV/
 BackEnd/venv/
 .venv
+node_modules/
+.env
+.DS_Store
 
 # --- ENVIRONMENT VARIABLES (CRITICAL SECURITY) ---
 .env

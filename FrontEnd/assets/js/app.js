@@ -1,7 +1,7 @@
 // --- BAGIAN 1: IMPORT HALAMAN LOGIN, REGISTER & SURVEY ---
 import Login from './login-page.js';
 import Register from './register-page.js';
-import Survey from './survey-page.js';
+// import Survey from './survey-page.js';
 
 // --- BAGIAN 2: KODE ASLI (TIDAK DIUBAH) ---
 

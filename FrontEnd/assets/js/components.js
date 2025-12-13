@@ -2,168 +2,268 @@ class MyNavbar extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
             <style>
-                /* --- CSS KHUSUS NAVBAR --- */
-                
+                /* --- 1. CSS DASAR (DESKTOP FIRST) --- */
                 .main-header {
-                    position: sticky;
-                    top: 0;
-                    z-index: 1000;
-                    width: 100%;
+                    position: sticky; top: 0; z-index: 1000; width: 100%;
                     transition: transform 0.3s ease-in-out, background-color 0.3s ease;
-                    background-color: rgba(0, 0, 0, 0.9); /* Sedikit lebih gelap agar dropdown kontras */
-                    backdrop-filter: blur(12px);
-                    border-bottom: 1px solid #1e293b;
-                    box-sizing: border-box;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
+                    background-color: rgba(0, 0, 0, 0.9); backdrop-filter: blur(12px);
+                    border-bottom: 1px solid #1e293b; box-sizing: border-box;
+                    display: flex; align-items: center; justify-content: space-between;
                     padding: 20px 64px;
                 }
 
-                .header-hidden {
-                    transform: translateY(-100%);
-                }
-
+                .header-hidden { transform: translateY(-100%); }
                 .logo-container { display: flex; align-items: center; }
                 .logo { width: 140px; max-height: 100%; object-fit: contain; }
 
+                /* Navigasi Desktop */
                 .main-nav ul { display: flex; align-items: center; gap: 32px; margin: 0; padding: 0; list-style: none; }
-                
                 .main-nav a {
-                    position: relative;
-                    font-weight: 500;
-                    color: #fff;
-                    text-decoration: none;
-                    font-family: 'Inter', sans-serif;
-                    font-size: 0.95rem;
-                    transition: all 0.3s ease;
-                    padding: 8px 16px;
-                    border-radius: 6px;
+                    position: relative; font-weight: 500; color: #fff; text-decoration: none;
+                    font-family: 'Inter', sans-serif; font-size: 0.95rem; transition: all 0.3s ease;
+                    padding: 8px 16px; border-radius: 6px;
                 }
-
                 .main-nav a.active {
                     background-color: rgba(249, 115, 22, 0.1);
                     border: 1px solid rgba(249, 115, 22, 0.2);
-                    color: #ffdb43 !important;
-                    font-weight: 600;
+                    color: #ffdb43 !important; font-weight: 600;
                 }
+                .main-nav a:hover { color: #ffdb43; }
 
-                .main-nav a:hover {
-                    color: #ffdb43;
-                }
-
-                /* Tombol Sign In Default */
+                /* Tombol Sign In */
                 .btn-signin {
-                    box-shadow: 0px 0px 15px rgba(254, 161, 0, 0.3);
-                    border-radius: 100px;
+                    box-shadow: 0px 0px 15px rgba(254, 161, 0, 0.3); border-radius: 100px;
                     background: linear-gradient(105.11deg, #fea100, #ffdb43);
-                    padding: 10px 24px;
-                    color: #000;
-                    font-weight: 600;
-                    text-decoration: none;
-                    font-size: 0.9rem;
-                    white-space: nowrap;
+                    padding: 10px 24px; color: #000; font-weight: 600; text-decoration: none;
+                    font-size: 0.9rem; white-space: nowrap; cursor: pointer; border: none; display: inline-block;
                 }
 
-                /* --- PROFIL USER & DROPDOWN (BARU) --- */
+                /* --- USER PROFILE STYLING (DESKTOP) --- */
                 .user-profile { 
-                    display: flex; 
-                    align-items: center; 
-                    gap: 10px; 
-                    cursor: pointer; 
-                    position: relative; /* Penting untuk posisi dropdown */
-                    padding: 5px;
-                    border-radius: 50px;
-                    transition: background 0.3s;
+                    display: flex; align-items: center; gap: 12px; 
+                    cursor: pointer; position: relative; padding: 6px 12px;
+                    border-radius: 50px; transition: all 0.3s ease;
+                    border: 1px solid transparent;
                 }
-                
-                .user-profile:hover {
-                    background-color: rgba(255, 255, 255, 0.05);
+                .user-profile:hover { 
+                    background-color: rgba(255, 255, 255, 0.05); 
+                    border-color: rgba(255, 255, 255, 0.1);
                 }
+
+                .user-info-group { display: flex; flex-direction: column; text-align: right; line-height: 1.2; }
+                .user-greeting { color: #fff; font-size: 0.9rem; font-weight: 600; }
+                .user-role { color: #94a3b8; font-size: 0.75rem; }
 
                 .avatar-circle {
-                    width: 40px; height: 40px; background: linear-gradient(135deg, #fea100, #ffdb43);
+                    width: 38px; height: 38px; background: linear-gradient(135deg, #fea100, #ffdb43);
                     border-radius: 50%; display: flex; align-items: center; justify-content: center;
-                    color: #000; font-weight: 800; border: 2px solid rgba(255, 255, 255, 0.2);
+                    color: #000; font-weight: 800; border: 2px solid rgba(255, 255, 255, 0.1);
+                    font-size: 0.9rem;
                 }
-                .user-greeting { color: #fff; font-size: 0.9rem; font-weight: 500; }
 
-                /* Style Dropdown Menu */
+                /* Dropdown Menu (Desktop Default) */
                 .profile-dropdown {
-                    position: absolute;
-                    top: 120%; /* Muncul di bawah profil */
-                    right: 0;
-                    width: 200px;
-                    background-color: #18181b;
-                    border: 1px solid #333;
-                    border-radius: 12px;
-                    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-                    display: none; /* Hidden by default */
-                    flex-direction: column;
-                    overflow: hidden;
-                    z-index: 1100;
+                    position: absolute; top: 130%; right: 0; width: 240px;
+                    background-color: rgba(24, 24, 27, 0.95); backdrop-filter: blur(10px);
+                    border: 1px solid rgba(255,255,255,0.1);
+                    border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+                    display: none; flex-direction: column; overflow: hidden; z-index: 1100;
+                    transform-origin: top right;
                 }
-
-                /* Class untuk memunculkan dropdown */
-                .profile-dropdown.show {
-                    display: flex;
-                    animation: fadeIn 0.2s ease-in-out;
-                }
+                .profile-dropdown.show { display: flex; animation: scaleIn 0.2s cubic-bezier(0.165, 0.84, 0.44, 1); }
 
                 .dropdown-item {
-                    padding: 14px 20px;
-                    color: #e4e4e7;
-                    text-decoration: none;
-                    font-size: 0.9rem;
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                    transition: background 0.2s;
-                    border-bottom: 1px solid #27272a;
-                    cursor: pointer;
+                    padding: 12px 16px; color: #d4d4d8; text-decoration: none;
+                    font-size: 0.9rem; width: 100%; justify-content: space-between; display: flex; align-items: center;
+                    transition: all 0.2s; cursor: pointer; border-left: 2px solid transparent;
                 }
+                .dropdown-item:hover { background-color: rgba(255,255,255,0.05); color: #fff; border-left-color: #ffdb43; }
+                .dropdown-item.danger:hover { color: #ff4d4d; border-left-color: #ff4d4d; background-color: rgba(255, 77, 77, 0.1); }
 
-                .dropdown-item:last-child { border-bottom: none; }
-                .dropdown-item:hover { background-color: #27272a; color: #ffdb43; }
-
-                /* Mobile Button */
-                .mobile-only-btn { display: none; }
+                /* --- 2. LAYOUT UTILITIES --- */
                 .menu-toggle { display: none; flex-direction: column; gap: 6px; cursor: pointer; }
-                .menu-toggle span { display: block; width: 25px; height: 3px; background: #fff; border-radius: 3px; }
+                .menu-toggle span { display: block; width: 25px; height: 3px; background: #fff; border-radius: 3px; transition: all 0.3s ease; }
+                
+                /* Animasi hamburger ke X */
+                .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(8px, 8px); }
+                .menu-toggle.active span:nth-child(2) { opacity: 0; }
+                .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -7px); }
+                
+                #mobileAuthContainer { display: none !important; }
+                #desktopAuthContainer { display: flex !important; }
 
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: translateY(-10px); }
-                    to { opacity: 1; transform: translateY(0); }
+                @keyframes scaleIn {
+                    from { opacity: 0; transform: scale(0.95); }
+                    to { opacity: 1; transform: scale(1); }
                 }
 
-                /* --- RESPONSIVE (MOBILE) --- */
+                /* --- 3. RESPONSIVE (MOBILE <= 768px) --- */
                 @media (max-width: 768px) {
-                    .main-header { padding: 15px 24px; }
-                    #desktopAuthContainer { display: none; }
-                    .mobile-only-btn { display: block; width: 100%; text-align: center; margin-top: 15px; }
-                    .menu-toggle { display: flex; }
+                    .main-header { padding: 15px 20px; }
+                    .logo { width: 120px; }
+                    .menu-toggle { display: flex; z-index: 1001; }
 
                     .main-nav {
-                        position: absolute; top: 100%; left: 0; width: 100%;
-                        background-color: rgba(10, 10, 10, 0.98);
-                        backdrop-filter: blur(10px); padding: 20px;
-                        border-bottom: 1px solid #27272a;
-                        display: none; flex-direction: column;
-                    }
-                    .main-nav.open { display: flex; }
-                    .main-nav ul { flex-direction: column; width: 100%; align-items: flex-start; }
-                    .main-nav li { width: 100%; }
-                    .main-nav a { display: block; width: 100%; }
-                    
-                    /* Penyesuaian Dropdown di Mobile */
-                    .user-greeting { display: inline-block; margin-right: auto; }
-                    .user-profile { width: 100%; justify-content: space-between; }
-                    .profile-dropdown {
-                        position: static; /* Flow biasa di mobile */
+                        position: fixed; 
+                        top: 70px; 
+                        left: 0; 
                         width: 100%;
-                        margin-top: 10px;
-                        background-color: rgba(255,255,255,0.05);
+                        height: calc(100vh - 70px);
+                        background-color: rgba(10, 10, 10, 0.98); 
+                        backdrop-filter: blur(15px);
+                        border-top: 1px solid #27272a; 
+                        padding: 0;
+                        display: none; 
+                        flex-direction: column; 
+                        overflow-y: auto;
+                        transform: translateX(-100%);
+                        transition: transform 0.3s ease-in-out;
+                    }
+                    
+                    .main-nav.open { 
+                        display: flex; 
+                        transform: translateX(0);
+                    }
+                    
+                    .main-nav ul { 
+                        width: 100%; 
+                        padding: 0; 
+                        margin: 0;
+                        box-sizing: border-box; 
+                        flex-direction: column;
+                        gap: 0;
+                    }
+                    
+                    .main-nav ul li {
+                        width: 100%;
+                        border-bottom: 1px solid rgba(255,255,255,0.05);
+                    }
+                    
+                    .main-nav a { 
+                        display: block; 
+                        width: 100%; 
+                        padding: 18px 24px; 
+                        border-radius: 0;
+                        font-size: 1rem;
                         border: none;
+                        box-sizing: border-box;
+                    }
+                    
+                    .main-nav a.active {
+                        background-color: rgba(249, 115, 22, 0.15);
+                        border-left: 3px solid #ffdb43;
+                    }
+
+                    /* Auth Logic Mobile */
+                    #desktopAuthContainer { display: none !important; }
+                    #mobileAuthContainer { 
+                        display: block !important; 
+                        width: 100%; 
+                        padding: 20px 24px;
+                        border-top: 1px solid rgba(255,255,255,0.1);
+                        margin-top: auto;
+                        background-color: rgba(0,0,0,0.3);
+                    }
+                    
+                    #mobileAuthContainer .btn-signin { 
+                        width: 100%; 
+                        text-align: center; 
+                        padding: 14px 24px;
+                        font-size: 1rem;
+                        display: block;
+                    }
+
+                    /* --- MOBILE USER PROFILE (SAMA SEPERTI DESKTOP - DROPDOWN FLOATING) --- */
+                    #mobileAuthContainer .user-profile {
+                        width: 100%; 
+                        justify-content: space-between;
+                        padding: 14px 20px; 
+                        background-color: rgba(255,255,255,0.03);
+                        border: 1px solid rgba(255, 255, 255, 0.1);
+                        border-radius: 12px; 
+                        margin-bottom: 0;
+                        box-sizing: border-box;
+                        flex-direction: row;
+                        position: relative;
+                    }
+                    
+                    #mobileAuthContainer .user-profile:hover {
+                        background-color: rgba(255,255,255,0.05);
+                        border-color: rgba(255, 255, 255, 0.15);
+                    }
+                    
+                    #mobileAuthContainer .user-info-group { 
+                        text-align: left; 
+                        flex: 1;
+                    }
+                    
+                    #mobileAuthContainer .user-greeting {
+                        font-size: 1rem;
+                        margin-bottom: 2px;
+                    }
+                    
+                    #mobileAuthContainer .avatar-circle {
+                        width: 42px;
+                        height: 42px;
+                        font-size: 1rem;
+                    }
+                    
+                    /* Dropdown di Mobile: FLOATING seperti Desktop, tapi full width navbar */
+                    #mobileAuthContainer .profile-dropdown {
+                        position: absolute;
+                        top: calc(100% + 8px);
+                        left: 0;
+                        right: 0;
+                        width: 100%;
+                        background-color: rgba(24, 24, 27, 0.95);
+                        backdrop-filter: blur(10px);
+                        border: 1px solid rgba(255,255,255,0.1);
+                        border-radius: 12px;
+                        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+                        display: none;
+                        flex-direction: column;
+                        overflow: hidden;
+                        z-index: 1200;
+                    }
+                    
+                    #mobileAuthContainer .profile-dropdown.show {
+                        display: flex;
+                        animation: dropdownSlide 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+                    }
+
+                    #mobileAuthContainer .dropdown-item { 
+                        padding: 14px 20px;
+                        font-size: 0.95rem;
+                        border-left: 2px solid transparent;
+                    }
+                    
+                    #mobileAuthContainer .dropdown-item:hover {
+                        background-color: rgba(255,255,255,0.05);
+                        color: #fff;
+                        border-left-color: #ffdb43;
+                    }
+                    
+                    #mobileAuthContainer .dropdown-item:first-child {
+                        padding: 16px 20px;
+                        border-bottom: 1px solid rgba(255,255,255,0.1);
+                        background: rgba(255,255,255,0.02);
+                        cursor: default;
+                    }
+                    
+                    #mobileAuthContainer .dropdown-item:first-child:hover {
+                        background: rgba(255,255,255,0.02);
+                        border-left-color: transparent;
+                    }
+                    
+                    @keyframes dropdownSlide {
+                        from { 
+                            opacity: 0;
+                            transform: translateY(-10px);
+                        }
+                        to { 
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
                     }
                 }
             </style>
@@ -184,14 +284,16 @@ class MyNavbar extends HTMLElement {
                         <li><a href="product.html">Produk</a></li>
                         <li><a href="kontak.html">Tentang Kami</a></li>
                         
-                        <li class="mobile-only-btn" id="mobileAuthContainer">
-                            <a href="login.html" class="btn-signin">Sign In</a>
+                        <!-- Container Auth Mobile (Hidden on Desktop) -->
+                        <li id="mobileAuthContainer">
+                            <a href="#login" class="btn-signin">Sign In</a>
                         </li>
                     </ul>
                 </nav>
 
+                <!-- Container Auth Desktop (Hidden on Mobile) -->
                 <div class="auth-buttons" id="desktopAuthContainer">
-                    <a href="login.html" class="btn-signin">Sign In</a>
+                    <a href="#login" class="btn-signin">Sign In</a>
                 </div>
             </header>
         `;
@@ -200,107 +302,112 @@ class MyNavbar extends HTMLElement {
         this.initScrollBehavior();
         this.highlightActiveLink();
         this.checkLoginStatus();
-        this.setupAuthLinks();
         this.checkAccessControl();
+    }
+
+    checkLoginStatus() {
+        const storedUser = localStorage.getItem('user'); 
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+        if (storedUser && isLoggedIn === 'true') {
+            try {
+                const user = JSON.parse(storedUser);
+                const displayName = user.name ? user.name.split(' ')[0] : 'User';
+                const initials = user.name 
+                    ? user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
+                    : 'U';
+
+                const profileHTML = `
+                    <div class="user-profile" id="userProfile">
+                        <div class="user-info-group">
+                            <span class="user-greeting">Hi, ${displayName}</span>
+                        </div>
+                        <div class="avatar-circle">${initials}</div>
+
+                        <!-- DROPDOWN MENU -->
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <div class="dropdown-item" style="cursor: default;">
+                                <div>
+                                    <div style="font-weight: 600; color: #fff; margin-bottom: 4px;">${user.name || 'Pengguna'}</div>
+                                    <div style="font-size: 0.85rem; color: #94a3b8;">${user.phone || ''}</div>
+                                </div>
+                            </div>
+                            <div class="dropdown-item" id="btnLogout" style="color: #ff6b6b;">
+                                <span>Logout</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Render ke Desktop
+                const desktopContainer = this.querySelector('#desktopAuthContainer');
+                if (desktopContainer) {
+                    desktopContainer.innerHTML = profileHTML;
+                    desktopContainer.style.display = 'flex';
+                    this.setupProfileActions(desktopContainer);
+                }
+                
+                // Render ke Mobile
+                const mobileContainer = this.querySelector('#mobileAuthContainer');
+                if (mobileContainer) {
+                    mobileContainer.innerHTML = profileHTML;
+                    this.setupProfileActions(mobileContainer);
+                }
+
+            } catch (e) {
+                console.error("Gagal memparsing data user:", e);
+                localStorage.clear();
+            }
+        }
+    }
+
+    setupProfileActions(container) {
+        const userProfile = container.querySelector('.user-profile');
+        const dropdown = container.querySelector('.profile-dropdown');
+        const btnLogout = container.querySelector('#btnLogout');
+
+        if (!userProfile || !dropdown) return;
+
+        // Toggle Dropdown
+        userProfile.addEventListener('click', (e) => {
+            e.stopPropagation();
+            // Tutup dropdown lain
+            document.querySelectorAll('.profile-dropdown').forEach(d => {
+                if (d !== dropdown) d.classList.remove('show');
+            });
+            dropdown.classList.toggle('show');
+        });
+
+        // Logout Action
+        if (btnLogout) {
+            btnLogout.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (confirm("Apakah Anda yakin ingin keluar?")) {
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('isLoggedIn');
+                    window.location.href = 'index.html';
+                }
+            });
+        }
+
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!userProfile.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
     }
 
     checkAccessControl() {
         const protectedPages = ['chatbot.html'];
         const path = window.location.pathname;
         const pageName = path.split("/").pop(); 
-        const userToken = localStorage.getItem('user_token');
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
 
-        if (protectedPages.includes(pageName) && !userToken) {
+        if (protectedPages.includes(pageName) && isLoggedIn !== 'true') {
             alert("Fitur ini khusus member. Silakan login terlebih dahulu!");
-            window.location.href = 'index.html#login'; 
+            window.location.href = 'auth.html#login'; 
         }
-    }
-
-    setupAuthLinks() {
-        const signinBtns = this.querySelectorAll('.btn-signin');
-        signinBtns.forEach(btn => {
-            btn.addEventListener('click', () => {});
-        });
-    }
-
-    // --- LOGIKA CEK LOGIN & DROPDOWN ---
-    checkLoginStatus() {
-        const userToken = localStorage.getItem('user_token');
-
-        if (userToken) {
-            const user = JSON.parse(userToken);
-            const initials = user.name 
-                ? user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()
-                : 'U';
-
-            // HTML untuk Profil + Dropdown Menu
-            const profileHTML = `
-                <div class="user-profile" id="userProfile">
-                    <span class="user-greeting">Hi, ${user.name.split(' ')[0]}</span>
-                    <div class="avatar-circle">${initials}</div>
-
-                    <!-- DROPDOWN MENU -->
-                    <div class="profile-dropdown" id="profileDropdown">
-                        <div class="dropdown-item" id="btnViewProfile">
-                            Lihat Profil
-                        </div>
-                        <div class="dropdown-item" id="btnLogout" style="color: #ff4d4d;">
-                            Logout
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            // Render ke Desktop & Mobile Container
-            const desktopContainer = this.querySelector('#desktopAuthContainer');
-            const mobileContainer = this.querySelector('#mobileAuthContainer');
-
-            if (desktopContainer) {
-                desktopContainer.innerHTML = profileHTML;
-                this.setupProfileActions(desktopContainer);
-            }
-            if (mobileContainer) {
-                mobileContainer.innerHTML = profileHTML;
-                this.setupProfileActions(mobileContainer);
-            }
-        }
-    }
-
-    // Fungsi Logika Klik Dropdown & Actionnya
-    setupProfileActions(container) {
-        const userProfile = container.querySelector('.user-profile');
-        const dropdown = container.querySelector('.profile-dropdown');
-        const btnLogout = container.querySelector('#btnLogout');
-        const btnViewProfile = container.querySelector('#btnViewProfile');
-
-        // Toggle Dropdown saat Profil diklik
-        userProfile.addEventListener('click', (e) => {
-            // Mencegah dropdown tertutup langsung saat item di dalamnya diklik
-            if(e.target.closest('.dropdown-item')) return;
-            
-            e.stopPropagation(); // Mencegah event bubbling ke window
-            dropdown.classList.toggle('show');
-        });
-
-        // Tutup dropdown saat klik di luar
-        window.addEventListener('click', () => {
-            if (dropdown.classList.contains('show')) {
-                dropdown.classList.remove('show');
-            }
-        });
-
-        // Aksi: Lihat Profil -> Ke Dashboard
-        btnViewProfile.addEventListener('click', () => {
-            window.location.href = 'dashboard.html';
-        });
-
-        // Aksi: Logout
-        btnLogout.addEventListener('click', () => {
-            if (confirm("Apakah Anda yakin ingin keluar?")) {
-                localStorage.removeItem('user_token');
-                window.location.href = 'index.html';
-            }
-        });
     }
 
     initMobileMenu() {
@@ -310,6 +417,16 @@ class MyNavbar extends HTMLElement {
         if (menuToggle && mainNav) {
             menuToggle.addEventListener('click', () => {
                 mainNav.classList.toggle('open');
+                menuToggle.classList.toggle('active');
+            });
+
+            // Close menu saat link diklik
+            const navLinks = mainNav.querySelectorAll('a:not(.user-profile)');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mainNav.classList.remove('open');
+                    menuToggle.classList.remove('active');
+                });
             });
         }
     }
@@ -320,12 +437,14 @@ class MyNavbar extends HTMLElement {
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const nav = this.querySelector('.main-nav');
-            if (nav.classList.contains('open')) return;
+            if (nav && nav.classList.contains('open')) return;
 
-            if (scrollTop > lastScrollTop && scrollTop > 60) {
-                header.classList.add('header-hidden');
-            } else {
-                header.classList.remove('header-hidden');
+            if (header) {
+                if (scrollTop > lastScrollTop && scrollTop > 60) {
+                    header.classList.add('header-hidden');
+                } else {
+                    header.classList.remove('header-hidden');
+                }
             }
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         });

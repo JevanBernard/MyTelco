@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyTelco - Smart AI Provider</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="assets/js/components.js" defer></script>
+</head>
+
+<body>
+    <!-- Container Utama -->
+    <main class="survey-page" id="survey">
+        
+        <!-- Header Fixed (Logo) -->
+        <div class="header-survey">
+            <img src="./assets/img/icon-survey.svg" alt="Survey MyTelco">
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 0: LANDING (Tambahkan class 'active-step') -->
+        <!-- ============================================== -->
+        <div class="main-survey active-step" id="step-0">
+            <div class="survey-section">
+                <div class="header-smart">
+                    <img src="./assets/img/icon/thunder.svg" alt="product section">
+                    <b class="smart-telco-ai">Smart Telco AI</b>
+                </div>
+                <div class="header-survey-title">
+                    <b>Temukan Paket Sempurnamu</b>
+                    <p>Hanya butuh 1 menit. Jawab 5 pertanyaan simpel, AI kami akan carikan paket termurah & terbaik buat gaya hidupmu.</p>
+                </div>
+                <div class="button-group-survey">
+                    <button class="btn-survey-1" onclick="window.location.href='index.html'">Lewati</button>
+                    <button class="btn-survey-2" onclick="nextStep()">
+                        Mulai Sekarang <img src="./assets/img/icon/arrow-up.svg" alt="">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 1: NAMA & DEVICE -->
+        <!-- ============================================== -->
+        <div class="main-survey" id="step-1">
+            <div class="header-smart">
+                <img src="./assets/img/icon/thunder.svg" alt="product section">
+                <b class="smart-telco-ai">Smart Telco AI</b>
+            </div>
+            <!-- Progress Bar Statis (Visual) -->
+            <div class="progress-section">
+                <div class="text-progress"><p style="color:#FFDB43">MULAI</p><p>PREFERENSI</p><p>SELESAI</p></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 20%; background:#FFDB43; height:100%; border-radius:100px;"></div></div>    
+            </div>
+            <div class="question-section">
+                <div class="question-fill">
+                    <div class="question">
+                        <b>Halo! Siapa nama Anda?</b>
+                        <input type="text" id="inputName" class="text-input" placeholder="Tulis namamu di sini…">
+                    </div>
+                    <div class="question">
+                        <b>Device apa yang Anda pakai?</b>
+                        <div class="device-grid">
+                            <!-- Tambahkan onclick='selectOption(this)' -->
+                            <button class="device-option" onclick="selectOption(this, 'device')">Apple</button>
+                            <button class="device-option" onclick="selectOption(this, 'device')">Samsung</button>
+                            <button class="device-option" onclick="selectOption(this, 'device')">Xiaomi</button>
+                            <button class="device-option" onclick="selectOption(this, 'device')">Oppo</button>
+                            <button class="device-option" onclick="selectOption(this, 'device')">Vivo</button>
+                            <button class="device-option" onclick="selectOption(this, 'device')">Huawei</button>
+                            <button class="device-option" onclick="selectOption(this, 'device')">Realme</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-survey">
+                    <button class="btn-survey" onclick="nextStep()">
+                        Lanjut <img src="./assets/img/icon/arrow-up.svg" alt="">
+                    </button>
+                </div>
+            </div>
+        </div> 
+
+        <!-- ============================================== -->
+        <!-- SLIDE 2: BUDGET -->
+        <!-- ============================================== -->
+        <div class="main-survey" id="step-2">
+            <!-- Header & Progress -->
+            <div class="header-smart"><img src="./assets/img/icon/thunder.svg"><b class="smart-telco-ai">Smart Telco AI</b></div>
+            <div class="progress-section">
+                <div class="text-progress"><p>MULAI</p><p style="color:#FFDB43">PREFERENSI</p><p>SELESAI</p></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 40%; background:#FFDB43; height:100%; border-radius:100px;"></div></div>    
+            </div>
+            <div class="question-section">
+                <div class="question-fill">
+                    <div class="question"><b>Berapa budget internet bulanan Anda?</b></div>
+                </div>
+                <div class="rate-budget">
+                    <div class="budget-wrapper">
+                        <div class="budget-labels">
+                            <span>Hemat</span>
+                            <span id="budgetValue" class="budget-value">Rp 100.000,-</span>
+                            <span>Sultan</span>
+                        </div>
+                        <input type="range" id="budgetSlider" min="50000" max="500000" step="10000" value="100000">
+                    </div>
+                </div>
+                <div class="footer-survey" style="flex-direction:row; justify-content:space-between; width:100%">
+                    <button class="btn-survey-1" onclick="prevStep()">Kembali</button>
+                    <button class="btn-survey" onclick="nextStep()">Lanjut <img src="./assets/img/icon/arrow-up.svg"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 3: AKTIVITAS -->
+        <!-- ============================================== -->
+        <div class="main-survey" id="step-3">
+             <div class="header-smart"><img src="./assets/img/icon/thunder.svg"><b class="smart-telco-ai">Smart Telco AI</b></div>
+            <div class="progress-section">
+                <div class="text-progress"><p>MULAI</p><p style="color:#FFDB43">PREFERENSI</p><p>SELESAI</p></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 60%; background:#FFDB43; height:100%; border-radius:100px;"></div></div>    
+            </div>
+            <div class="question-section">
+                <div class="question-fill">
+                    <div class="question">
+                        <b>Apa aktivitas digital utama Anda?</b>
+                        <div class="select-input">
+                            <div class="option-list">
+                                <div class="option-item" onclick="selectOption(this, 'activity')">
+                                    <div class="option-left">
+                                        <div class="survey-img"><img src="./assets/img/icon/survey-play.svg" class="icon-option"></div>
+                                        <div class="option-text"><b>Streaming Film / Video</b><span>Netflix, Youtube, Viu</span></div>
+                                    </div>
+                                </div>
+                                <div class="option-item" onclick="selectOption(this, 'activity')">
+                                    <div class="option-left">
+                                        <div class="survey-img"><img src="./assets/img/icon/survey-game.svg" class="icon-option"></div>
+                                        <div class="option-text"><b>Gaming & Esports</b><span>MLBB, PUBG, FreeFire</span></div>
+                                    </div>
+                                </div>
+                                <div class="option-item" onclick="selectOption(this, 'activity')">
+                                    <div class="option-left">
+                                        <div class="survey-img"><img src="./assets/img/icon/survey-call.svg" class="icon-option"></div>
+                                        <div class="option-text"><b>Social Media & Chat</b><span>TikTok, Instagram, Whatsapp</span></div>
+                                    </div>
+                                </div>
+                                <div class="option-item" onclick="selectOption(this, 'activity')">
+                                    <div class="option-left">
+                                        <div class="survey-img"><img src="./assets/img/icon/survey-browser.svg" class="icon-option"></div>
+                                        <div class="option-text"><b>Browsing & Kerja</b><span>Email, Zoom, Chrome</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-survey" style="flex-direction:row; justify-content:space-between; width:100%">
+                    <button class="btn-survey-1" onclick="prevStep()">Kembali</button>
+                    <button class="btn-survey" onclick="nextStep()">Lanjut <img src="./assets/img/icon/arrow-up.svg"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 4: TRAVEL -->
+        <!-- ============================================== -->
+        <div class="main-survey" id="step-4">
+             <div class="header-smart"><img src="./assets/img/icon/thunder.svg"><b class="smart-telco-ai">Smart Telco AI</b></div>
+            <div class="progress-section">
+                <div class="text-progress"><p>MULAI</p><p style="color:#FFDB43">PREFERENSI</p><p>SELESAI</p></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 80%; background:#FFDB43; height:100%; border-radius:100px;"></div></div>    
+            </div>
+            <div class="question-section">
+                <div class="question-fill">
+                    <div class="question">
+                        <b>Seberapa Sering Anda Bepergian?</b>
+                        <div class="travel-input">
+                            <div class="travel-grid">
+                                <div class="travel-item" onclick="selectOption(this, 'travel')">
+                                    <div class="travel-item-img">
+                                        <img src="./assets/img/icon/couch.svg" class="travel-icon">
+                                    </div>
+                                    <b>Tidak Pernah</b>
+                                    <span>Anak Rumahan</span>
+                                </div>
+                                <div class="travel-item" onclick="selectOption(this, 'travel')">
+                                    <div class="travel-item-img">
+                                        <img src="./assets/img/icon/home.svg" class="travel-icon">
+                                    </div>
+                                    <b>Jarang</b>
+                                    <span>Mudik Saja</span>
+                                </div>
+                                <div class="travel-item" onclick="selectOption(this, 'travel')">
+                                    <div class="travel-item-img">
+                                        <img src="./assets/img/icon/bus.svg" class="travel-icon">
+                                    </div>
+                                    <b>Kadang</b>
+                                    <span>Liburan Lokal</span>
+                                </div>
+                                <div class="travel-item" onclick="selectOption(this, 'travel')">
+                                    <div class="travel-item-img">
+                                        <img src="./assets/img/icon/plane.svg" class="travel-icon">
+                                    </div>
+                                    <b>Sering</b>
+                                    <span>Dinas / Trip</span>
+                                </div>
+                                <div class="travel-item" onclick="selectOption(this, 'travel')">
+                                    <div class="travel-item-img">
+                                        <img src="./assets/img/icon/globe.svg" class="travel-icon">
+                                    </div>
+                                    <b>Rutin</b>
+                                    <span>Digital Nomad</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-survey" style="flex-direction:row; justify-content:space-between; width:100%">
+                    <button class="btn-survey-1" onclick="prevStep()">Kembali</button>
+                    <button class="btn-survey" onclick="nextStep()">Lanjut <img src="./assets/img/icon/arrow-up.svg"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 5: PROVIDER -->
+        <!-- ============================================== -->
+        <div class="main-survey" id="step-5">
+             <div class="header-smart"><img src="./assets/img/icon/thunder.svg"><b class="smart-telco-ai">Smart Telco AI</b></div>
+            <div class="progress-section">
+                <div class="text-progress"><p>MULAI</p><p>PREFERENSI</p><p style="color:#FFDB43">SELESAI</p></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 100%; background:#FFDB43; height:100%; border-radius:100px;"></div></div>    
+            </div>
+            <div class="question-section">
+                <div class="question-fill">
+                    <div class="question">
+                        <b>Kamu pengguna kartu provider apa?</b>
+                        <div class="provider-input"> 
+                            <div class="provider-grid">
+                            <div class="provider-item" onclick="selectOption(this, 'provider')">
+                                <div class="provider-img">
+                                    <img src="./assets/img/icon/sim.svg" class="provider-icon">
+                                </div>
+                                <b>Prabayar</b>
+                                <span>Bayar dulu</span>
+                            </div>
+                            <div class="provider-item" onclick="selectOption(this, 'provider')">
+                                <div class="provider-img">
+                                    <img src="./assets/img/icon/sim.svg" class="provider-icon">
+                                </div>
+                                <b>Pascabayar</b>
+                                <span>Bayar nanti</span>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-survey" style="flex-direction:row; justify-content:space-between; width:100%">
+                    <button class="btn-survey-1" onclick="prevStep()">Kembali</button>
+                    <button class="btn-survey" onclick="nextStep()">Kirim Jawaban <img src="./assets/img/icon/arrow-up.svg"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- SLIDE 6: LOADING -->
+        <!-- ============================================== -->
+        <div class="main-survey" id="step-6">
+            <div class="survey-section" style="text-align:center; padding: 100px;">
+                <div class="loading-fill" style="display:flex; flex-direction:column; align-items:center;">
+                    <div class="loader"></div>
+                    <div class="loading-text">
+                        <b>Sedang Membuat Rekomendasi...</b>
+                        <p>Mencocokkan profil & kebiasaan anda...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- LOGIC SCRIPT (The Brain) -->
+    <script>
+        let currentStep = 0;
+        const totalSteps = 6;
+
+        // 1. INIT
+        document.addEventListener('DOMContentLoaded', () => {
+            // Logic Slider Rupiah
+            const slider = document.getElementById('budgetSlider');
+            const display = document.getElementById('budgetValue');
+            if(slider && display) {
+                slider.addEventListener('input', (e) => {
+                    const val = parseInt(e.target.value);
+                    display.innerText = 'Rp ' + val.toLocaleString('id-ID') + ',-';
+                });
+            }
+        });
+
+        // 2. NAVIGASI STEP
+        function showSlide(index) {
+            // Sembunyikan semua
+            document.querySelectorAll('.main-survey').forEach(el => el.classList.remove('active-step'));
+            
+            // Tampilkan target
+            const target = document.getElementById(`step-${index}`);
+            if(target) target.classList.add('active-step');
+        }
+
+        function nextStep() {
+            if(currentStep === 1) {
+                // Validasi Nama
+                const name = document.getElementById('inputName').value;
+                if(!name) { alert("Isi nama dulu dong!"); return; }
+            }
+
+            if(currentStep < totalSteps) {
+                currentStep++;
+                showSlide(currentStep);
+                
+                // Jika masuk slide loading (step 6), simulasi selesai
+                if(currentStep === 6) {
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 3000);
+                }
+            }
+        }
+
+        function prevStep() {
+            if(currentStep > 0) {
+                currentStep--;
+                showSlide(currentStep);
+            }
+        }
+
+        // 3. SELECTION LOGIC (Visual Feedback)
+        function selectOption(element, category) {
+            // Reset saudara selevel
+            const parent = element.parentElement;
+            Array.from(parent.children).forEach(child => child.classList.remove('selected'));
+            
+            // Set aktif
+            element.classList.add('selected');
+        }
+    </script>
+</body>
+</html>
