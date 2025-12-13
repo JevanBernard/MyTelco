@@ -35,264 +35,195 @@
         import Login from './assets/js/login-page.js';
         import Register from './assets/js/register-page.js';
         
-        // --- DEFINISI COMPONENT HOME (SEBAGAI CLASS) ---
+        // --- DEFINISI COMPONENT HOME ---
         class Home {
             async render() {
                 return `
-                    <!-- 1. NAVBAR -->
                     <my-navbar></my-navbar>
-
                     <main>
-                        <!-- 2. HERO SECTION -->
+                        <!-- HERO SECTION -->
                         <section id="home" class="hero-section">
                             <div class="hero-content">
                                 <div class="badge-ai">⚡ Smart Telco AI</div>
                                 <h2>Paket Internet <br><span class="highlight">Spesial Untukmu</span></h2>
-                                <p>
-                                    Sudah punya ID Pelanggan? Masuk sekarang untuk melihat paket rahasia 
-                                    yang dirancang khusus oleh AI sesuai kebiasaanmu.
-                                </p>
-
+                                <p>Sudah punya ID Pelanggan? Masuk sekarang untuk melihat paket rahasia yang dirancang khusus oleh AI sesuai kebiasaanmu.</p>
                                 <div class="ai-demo-box" id="ml-demo">
-                                    <a href="#login" class="btn-primary">
-                                        Cek Rekomendasi Saya 
-                                        <!-- Menggunakan arrow-up.svg yang ada di foldermu, diputar 90deg agar ke kanan -->
-                                        <img src="assets/img/icon/arrow-up.svg" style="width: 20px; transform: rotate(90deg);" alt="Arrow">
-                                    </a>
-                                    <a href="#packages" class="btn-secondary">
-                                        Lihat Katalog Umum
-                                    </a>
+                                    <a href="#login" class="btn-primary">Cek Rekomendasi Saya <img src="assets/img/icon/arrow-up.svg" style="width: 20px; transform: rotate(90deg);" alt="Arrow"></a>
+                                    <a href="#packages" class="btn-secondary">Lihat Katalog Umum</a>
                                 </div>
-
                                 <div class="stats-section" id="statsSection">
-                                    <div class="stat-item">
-                                        <strong class="stat-number">8</strong>
-                                        <span class="stat-label">Kategori Target</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <strong class="stat-number">90%</strong>
-                                        <span class="stat-label">Akurasi Prediksi</span>
-                                    </div>
-                                    <div class="stat-item">
-                                        <strong class="stat-number">24/7</strong>
-                                        <span class="stat-label">Analisis Kilat</span>
-                                    </div>
+                                    <div class="stat-item"><strong class="stat-number">8</strong><span class="stat-label">Kategori Target</span></div>
+                                    <div class="stat-item"><strong class="stat-number">90%</strong><span class="stat-label">Akurasi Prediksi</span></div>
+                                    <div class="stat-item"><strong class="stat-number">24/7</strong><span class="stat-label">Analisis Kilat</span></div>
                                 </div>
                             </div>
-                            <div class="hero-image">
-                                <img src="assets/img/hero-illustration.png" alt="Ilustrasi AI Telco">
-                            </div>
+                            <div class="hero-image"><img src="assets/img/hero-illustration.png" alt="Ilustrasi AI Telco"></div>
                         </section>
 
-                        <!-- 3. PROMO BANNER -->
+                        <!-- PROMO BANNER -->
                         <section class="promo-banner">
                             <div class="scrolling-wrapper">
                                 <div class="running-text">PERSONALIZED CONNECTIVITY</div>
                                 <div class="running-text">PERSONALIZED CONNECTIVITY</div>
                             </div>
-                            <div class="promo-description">
-                                Nikmati paket seluler yang disesuaikan dengan gaya hidup digital Anda. 
-                                Didukung oleh AI canggih untuk mencegah kelelahan promosi.
-                            </div>
+                            <div class="promo-description">Nikmati paket seluler yang disesuaikan dengan gaya hidup digital Anda. Didukung oleh AI canggih untuk mencegah kelelahan promosi.</div>
                         </section>
 
-                        <!-- 4. PACKAGES SECTION -->
-                        <section id="packages" class="packages-section">
-                            <header class="section-header">
-                                <h2>Pilihan Paket <span class="highlight">Unggulan</span></h2>
-                                <p>Jelajahi paket standar kami. Tidak menemukan yang cocok? Gunakan fitur rekomendasi AI (Login) untuk hasil personal.</p>
-                            </header>
-
-                            <div class="packages-grid">
-                                <!-- Card 1 -->
-                                <article class="package-card">
-                                    <div class="card-top">
-                                        <div class="card-header">
-                                            <span class="badge-outline">GENERAL</span>
-                                            <img src="assets/img/icon/solid_signal.svg" class="card-icon" alt="Signal">
-                                        </div>
-                                        <div class="data-amount">30 <span class="unit">GB</span></div>
-                                    </div>
-                                    <div class="card-divider"></div>
-                                    <ul class="features-list">
-                                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Masa Aktif 30 Hari</li>
-                                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> 5G Network Ready</li>
-                                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> 60 Menit Telepon</li>
-                                    </ul>
-                                    <div class="card-footer">
-                                        <div class="price-info">
-                                            <span class="label">Mulai dari</span>
-                                            <div class="price">Rp 80k <span class="period">/bulan</span></div>
-                                        </div>
-                                        <button class="btn-circle-arrow"><img src="assets/img/icon/arrow-up.svg" alt="Arrow"></button>
-                                    </div>
-                                </article>
-
-                                <!-- Card 2 Featured -->
-                                <article class="package-card featured">
-                                    <div class="card-top">
-                                        <div class="card-header">
-                                            <span class="badge-outline">STREAMING</span>
-                                            <img src="assets/img/icon/play-fill.svg" class="card-icon-filled" alt="Play">
-                                        </div>
-                                        <div class="data-amount text-gold">50 <span class="unit">GB</span></div>
-                                    </div>
-                                    <div class="card-divider"></div>
-                                    <ul class="features-list">
-                                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Masa Aktif 30 Hari</li>
-                                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Unlimited YouTube & Netflix</li>
-                                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Bebas FUP Harian</li>
-                                    </ul>
-                                    <div class="card-footer">
-                                        <div class="price-info">
-                                            <span class="label">Mulai dari</span>
-                                            <div class="price">Rp 110k <span class="period">/bulan</span></div>
-                                        </div>
-                                        <button class="btn-circle-arrow filled"><img src="assets/img/icon/arrow-up.svg" style="transform: rotate(45deg);" alt="Arrow"></button>
-                                    </div>
-                                </article>
-
-                                <!-- Card 3 -->
-                                <article class="package-card">
-                                    <div class="card-top">
-                                        <div class="card-header">
-                                            <span class="badge-outline">GAMING</span>
-                                            <img src="assets/img/icon/solid_signal.svg" class="card-icon" alt="Game">
-                                        </div>
-                                        <div class="data-amount">75 <span class="unit">GB</span></div>
-                                    </div>
-                                    <div class="card-divider"></div>
-                                    <ul class="features-list">
-                                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Ping Rendah Prioritas</li>
-                                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Voucher Game Bonus</li>
-                                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Discord Unlimited</li>
-                                    </ul>
-                                    <div class="card-footer">
-                                        <div class="price-info">
-                                            <span class="label">Mulai dari</span>
-                                            <div class="price">Rp 150k <span class="period">/bulan</span></div>
-                                        </div>
-                                        <button class="btn-circle-arrow"><img src="assets/img/icon/arrow-up.svg" alt="Arrow"></button>
-                                    </div>
-                                </article>
-
-                                <!-- Card 4 -->
-                                <article class="package-card">
-                                    <div class="card-top">
-                                        <div class="card-header">
-                                            <span class="badge-outline">FAMILY</span>
-                                            <img src="assets/img/icon/solid_signal.svg" class="card-icon" alt="Family">
-                                        </div>
-                                        <div class="data-amount">100 <span class="unit">GB</span></div>
-                                    </div>
-                                    <div class="card-divider"></div>
-                                    <ul class="features-list">
-                                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Bisa Bagi Kuota (4 Nomor)</li>
-                                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Kontrol Orang Tua</li>
-                                        <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Bonus Cloud Storage</li>
-                                    </ul>
-                                    <div class="card-footer">
-                                        <div class="price-info">
-                                            <span class="label">Mulai dari</span>
-                                            <div class="price">Rp 200k <span class="period">/bulan</span></div>
-                                        </div>
-                                        <button class="btn-circle-arrow"><img src="assets/img/icon/arrow-up.svg" alt="Arrow"></button>
-                                    </div>
-                                </article>
+                        <!-- PACKAGES SECTION (TARGET LOGIC KITA) -->
+                        <section class="popular-packages" id="paket">
+                            <div class="header-section">
+                                <div class="header-smart"><img src="./assets/img/icon/thunder.svg" alt="icon"><b class="smart-telco-ai">Pilihan Terbaik</b></div>
+                                <h1 class="title-section">Paket <span class="highlight">Populer</span></h1>
+                                <p class="subtitle-section">Dipilih oleh jutaan pengguna MyTelco. Hemat, Cepat, dan Anti Lelet.</p>
                             </div>
 
-                            <div class="packages-action">
-                                <a href="product.html" class="btn-primary-large">
-                                    Lihat Semua Paket <img src="assets/img/icon/arrow-up.svg" style="width: 20px; transform: rotate(90deg);" alt="Arrow">
-                                </a>
+                            <!-- CONTAINER DINAMIS (ID INI YANG DICARI JS) -->
+                            <div class="packages-grid" id="popularPackagesContainer">
+                                <div style="grid-column: 1/-1; text-align: center; color: #888;">Memuat paket terbaik...</div>
                             </div>
+
+                            <div class="center-button"><a href="product.html" class="btn-secondary">Lihat Semua Paket</a></div>
                         </section>
 
-                        <!-- 5. FAQ SECTION -->
+                        <!-- FAQ SECTION -->
                         <section id="faq" class="faq-section">
                             <div class="faq-content">
                                 <div class="faq-left">
                                     <h2>Bantuan & FAQ</h2>
                                     <p>Temukan jawaban seputar layanan rekomendasi pintar kami.</p>
-                                    <a href="#" class="btn-help-center">
-                                        <img src="assets/img/icon/help-circle.svg" alt="Help"> Pusat Bantuan Lengkap
-                                    </a>
+                                    <a href="#" class="btn-help-center"><img src="assets/img/icon/help-circle.svg" alt="Help"> Pusat Bantuan Lengkap</a>
                                 </div>
                                 <div class="faq-list faq-right">
-                                    <details open>
-                                        <summary>Mengapa saya mendapatkan rekomendasi paket? <img src="assets/img/icon/chevron-down.svg" class="faq-toggle-icon"></summary>
-                                        <div class="faq-answer">Kami memiliki sistem AI yang mendeteksi penggunaan data Anda.</div>
-                                    </details>
-                                    <details>
-                                        <summary>Apa itu fitur 'Jaga Pulsa'? <img src="assets/img/icon/chevron-down.svg" class="faq-toggle-icon"></summary>
-                                        <div class="faq-answer">Fitur ini mematikan internet otomatis saat kuota habis.</div>
-                                    </details>
-                                    <details>
-                                        <summary>Apa itu FUP? <img src="assets/img/icon/chevron-down.svg" class="faq-toggle-icon"></summary>
-                                        <div class="faq-answer">Batas pemakaian wajar untuk menjaga kualitas jaringan.</div>
-                                    </details>
-                                    <details>
-                                        <summary>Metode pembayaran apa saja? <img src="assets/img/icon/chevron-down.svg" class="faq-toggle-icon"></summary>
-                                        <div class="faq-answer">Transfer Bank, E-Wallet, dan Kartu Kredit/Debit.</div>
-                                    </details>
+                                    <details open><summary>Mengapa saya mendapatkan rekomendasi paket? <img src="assets/img/icon/chevron-down.svg" class="faq-toggle-icon"></summary><div class="faq-answer">Kami memiliki sistem AI yang mendeteksi penggunaan data Anda.</div></details>
+                                    <details><summary>Apa itu fitur 'Jaga Pulsa'? <img src="assets/img/icon/chevron-down.svg" class="faq-toggle-icon"></summary><div class="faq-answer">Fitur ini mematikan internet otomatis saat kuota habis.</div></details>
+                                    <details><summary>Apa itu FUP? <img src="assets/img/icon/chevron-down.svg" class="faq-toggle-icon"></summary><div class="faq-answer">Batas pemakaian wajar untuk menjaga kualitas jaringan.</div></details>
+                                    <details><summary>Metode pembayaran apa saja? <img src="assets/img/icon/chevron-down.svg" class="faq-toggle-icon"></summary><div class="faq-answer">Transfer Bank, E-Wallet, dan Kartu Kredit/Debit.</div></details>
                                 </div>
                             </div>
                         </section>
                     </main>
-
-                    <!-- 2. FOOTER -->
                     <my-footer></my-footer>
                 `;
             }
 
             async afterRender() {
-                // --- ANIMASI ANGKA STATISTIK (COUNTING EFFECT) ---
+                // 1. ANIMASI ANGKA STATISTIK
+                this.initStatsAnimation();
+
+                // 2. FETCH PRODUK POPULER (Di sini tempat yang benar!)
+                //    Karena render() sudah selesai, elemen #popularPackagesContainer sudah ada di DOM.
+                await this.fetchPopularProducts();
+            }
+
+            // --- LOGIC FETCH PRODUK DIPINDAHKAN KE METHOD CLASS ---
+            async fetchPopularProducts() {
+                const container = document.getElementById('popularPackagesContainer');
+                if (!container) return; // Safety check
+
+                const API_URL = "http://127.0.0.1:8000/api/products"; 
+
+                try {
+                    let products = [];
+                    try {
+                        const response = await fetch(API_URL);
+                        if (!response.ok) throw new Error("Gagal mengambil data");
+                        products = await response.json();
+                    } catch (e) {
+                        console.warn("Backend FastAPI offline. Menggunakan Mock Data.");
+                        // Mock Data Fallback
+                        products = [
+                            { category: "General Offer", name: "Internet Hemat", price: 80000, data_quota_internet: 30, validity: 30, description: "Cocok untuk penggunaan harian standar." },
+                            { category: "Streaming Partner Pack", name: "Movie Mania", price: 110000, data_quota_internet: 50, validity: 30, description: "Nonton sepuasnya tanpa takut kuota habis." },
+                            { category: "Gaming & Esports", name: "Pro Gamer", price: 150000, data_quota_internet: 75, validity: 30, description: "Ping rendah dan koneksi stabil untuk gaming." }
+                        ];
+                    }
+                    
+                    const popularProducts = products.slice(0, 3); 
+
+                    if (popularProducts.length === 0) {
+                        container.innerHTML = '<p>Belum ada produk tersedia.</p>';
+                        return;
+                    }
+
+                    container.innerHTML = ''; 
+
+                    popularProducts.forEach((p, index) => {
+                        const isFeatured = index === 1; 
+                        const cardClass = isFeatured ? 'package-card featured' : 'package-card';
+                        const badgeText = p.category ? p.category.toUpperCase().split(' ')[0] : 'PAKET';
+                        
+                        let iconSrc = 'assets/img/icon/solid_signal.svg';
+                        if (p.category && p.category.includes('Streaming')) iconSrc = 'assets/img/icon/play-fill.svg';
+                        
+                        const priceK = (p.price / 1000).toFixed(0) + "k";
+
+                        const html = `
+                            <article class="${cardClass}" onclick="window.location.href='product.html'">
+                                <div class="card-top">
+                                    <div class="card-header">
+                                        <span class="badge-outline">${badgeText}</span>
+                                        <img src="${iconSrc}" class="${isFeatured ? 'card-icon-filled' : 'card-icon'}" alt="Icon">
+                                    </div>
+                                    <div class="data-amount ${isFeatured ? 'text-gold' : ''}">
+                                        ${p.data_quota_internet || 0} <span class="unit">GB</span>
+                                    </div>
+                                </div>
+                                <div class="card-divider"></div>
+                                <ul class="features-list">
+                                    <li><img src="assets/img/icon/check-circle.svg" alt="Check"> Masa Aktif ${p.validity} Hari</li>
+                                    <li><img src="assets/img/icon/check-circle.svg" alt="Check"> 5G Network Ready</li>
+                                    <li><img src="assets/img/icon/check-circle.svg" alt="Check"> ${p.description || "Koneksi Stabil"}</li>
+                                </ul>
+                                <div class="card-footer">
+                                    <div class="price-info">
+                                        <span class="label">Mulai dari</span>
+                                        <div class="price">Rp ${priceK} <span class="period">/bulan</span></div>
+                                    </div>
+                                    <button class="btn-circle-arrow ${isFeatured ? 'filled' : ''}">
+                                        <img src="assets/img/icon/arrow-up.svg" style="${isFeatured ? 'transform: rotate(45deg);' : ''}" alt="Arrow">
+                                    </button>
+                                </div>
+                            </article>
+                        `;
+                        container.innerHTML += html;
+                    });
+
+                } catch (error) {
+                    console.error("Error fetching products:", error);
+                    container.innerHTML = '<p style="text-align:center; color:red;">Gagal memuat paket.</p>';
+                }
+            }
+
+            initStatsAnimation() {
                 const statsSection = document.getElementById('statsSection');
                 if (statsSection) {
-                    // Observer untuk mengecek kapan user scroll ke stats section
                     const observer = new IntersectionObserver((entries) => {
                         entries.forEach(entry => {
                             if (entry.isIntersecting) {
                                 const numbers = entry.target.querySelectorAll('.stat-number');
-                                
                                 numbers.forEach(numElement => {
                                     const originalText = numElement.innerText;
-                                    // Regex untuk memisahkan angka dan teks (misal: "90%" -> ["90", "%"])
-                                    // atau "24/7" -> ["24", "/", "7"]
                                     const parts = originalText.match(/(\d+)|(\D+)/g);
-                                    
                                     if (parts) {
-                                        numElement.innerHTML = ''; // Kosongkan isi
-                                        
+                                        numElement.innerHTML = '';
                                         parts.forEach(part => {
-                                            if (/\d+/.test(part)) { // Jika bagian ini adalah angka
+                                            if (/\d+/.test(part)) {
                                                 const span = document.createElement('span');
                                                 span.innerText = '0';
                                                 numElement.appendChild(span);
-                                                
-                                                // Jalankan animasi hitung
                                                 const targetVal = parseInt(part);
-                                                const duration = 2000; // 2 detik
+                                                const duration = 2000;
                                                 const startTime = performance.now();
-                                                
                                                 const animate = (currentTime) => {
                                                     const elapsedTime = currentTime - startTime;
                                                     const progress = Math.min(elapsedTime / duration, 1);
-                                                    
-                                                    // Easing function (easeOutExpo) agar gerakan melambat di akhir
                                                     const ease = (progress === 1) ? 1 : 1 - Math.pow(2, -10 * progress);
-                                                    
                                                     span.innerText = Math.floor(ease * targetVal);
-                                                    
-                                                    if (progress < 1) {
-                                                        requestAnimationFrame(animate);
-                                                    } else {
-                                                        span.innerText = targetVal; // Pastikan angka akhir tepat
-                                                    }
+                                                    if (progress < 1) requestAnimationFrame(animate);
+                                                    else span.innerText = targetVal;
                                                 };
                                                 requestAnimationFrame(animate);
                                             } else {
-                                                // Jika bukan angka (misal: %, /), biarkan statis
                                                 const span = document.createElement('span');
                                                 span.innerText = part;
                                                 numElement.appendChild(span);
@@ -300,22 +231,19 @@
                                         });
                                     }
                                 });
-                                
-                                // Hentikan observe setelah animasi jalan sekali
                                 observer.unobserve(entry.target);
                             }
                         });
-                    }, { threshold: 0.5 }); // Mulai animasi saat 50% section terlihat
-                    
+                    }, { threshold: 0.5 });
                     observer.observe(statsSection);
                 }
             }
         }
 
-        // --- SISTEM ROUTING SEDERHANA ---
+        // --- SISTEM ROUTING ---
         const routes = {
             '/': Home,
-            '': Home, // Default
+            '': Home,
             '#home': Home,
             '#login': Login,
             '#register': Register
@@ -323,37 +251,27 @@
 
         const router = async () => {
             const contentDiv = document.getElementById('app');
-            
-            // Ambil hash URL (misal: #login), default ke '/'
             let hash = location.hash || '#home';
-            
-            // Atasi kasus URL root tanpa hash
             if (hash === '' || hash === '#') hash = '#home';
 
-            // Cari komponen yang cocok
             let PageClass = routes[hash] || Home;
 
             try {
-                // 1. Render Halaman
-                // SEKARANG INI AKAN BERHASIL KARENA HOME ADALAH CLASS
                 const page = new PageClass();
                 contentDiv.innerHTML = await page.render();
-                
-                // 2. Scroll ke atas
                 window.scrollTo(0, 0);
-
-                // 3. Jalankan logika (Event Listeners)
                 if (page.afterRender) await page.afterRender();
-                
             } catch (error) {
                 console.error("Gagal render:", error);
-                contentDiv.innerHTML = '<h1 style="color:white;text-align:center;padding:50px;">404 - Halaman Tidak Ditemukan atau Error Render</h1>';
+                contentDiv.innerHTML = '<h1 style="color:white;text-align:center;padding:50px;">404 - Error Render</h1>';
             }
         };
 
-        // Dengar perubahan URL
         window.addEventListener('hashchange', router);
         window.addEventListener('DOMContentLoaded', router);
+        
+        // HAPUS event listener DOMContentLoaded global yang lama agar tidak konflik
+        // document.addEventListener('DOMContentLoaded', ...); <--- INI PENYEBAB ERROR SEBELUMNYA
     </script>
 
 </body>
