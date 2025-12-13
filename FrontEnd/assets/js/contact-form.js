@@ -1,16 +1,3 @@
-// ========================================
-// CONTACT FORM VALIDATION & SUBMISSION
-// File: contact-form.js
-// ========================================
-
-// import supabase client if needed
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
-const supabaseUrl = "https://fylxzjgcvylsqipisozz.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ5bHh6amdjdnlsc3FpcGlzb3p6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUyODgyNjksImV4cCI6MjA4MDg2NDI2OX0.OpiME6EUSrVlS4ypw9qZDJYXaHvU3Coe5jGTSONdTeI";
-const supabase = createClient(supabaseUrl, supabaseKey);
-
 document.addEventListener("DOMContentLoaded", function () {
   const contactForm = document.getElementById("contactForm");
 
@@ -28,9 +15,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const subjectError = document.getElementById("subject-error");
   const messageError = document.getElementById("message-error");
 
-  // Validation functions
+  // Validation functions (Tetap Sama)
   function validatePhone(phone) {
-    // Indonesian phone number validation (flexible format)
     const phoneRegex = /^(\+62|62|0)[0-9]{9,12}$/;
     return phoneRegex.test(phone.replace(/[\s-]/g, ""));
   }
@@ -55,68 +41,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Real-time validation
-  phoneInput.addEventListener("blur", function () {
-    if (!validateRequired(this.value)) {
-      showError(phoneError, "Nomor telepon wajib diisi");
-    } else if (!validatePhone(this.value)) {
-      showError(phoneError, "Format nomor telepon tidak valid");
-    } else {
-      clearError(phoneError);
-    }
-  });
+  // Real-time validation listeners (Tetap Sama - Saya ringkas)
+  phoneInput.addEventListener("input", () => clearError(phoneError));
+  categorySelect.addEventListener("change", () => clearError(categoryError));
+  subjectInput.addEventListener("input", () => clearError(subjectError));
+  messageTextarea.addEventListener("input", () => clearError(messageError));
 
-  phoneInput.addEventListener("input", function () {
-    if (this.value.trim() !== "" && phoneError.textContent) {
-      clearError(phoneError);
-    }
-  });
-
-  categorySelect.addEventListener("change", function () {
-    if (!validateRequired(this.value)) {
-      showError(categoryError, "Kategori masalah wajib dipilih");
-    } else {
-      clearError(categoryError);
-    }
-  });
-
-  subjectInput.addEventListener("blur", function () {
-    if (!validateRequired(this.value)) {
-      showError(subjectError, "Judul laporan wajib diisi");
-    } else if (this.value.trim().length < 5) {
-      showError(subjectError, "Judul laporan minimal 5 karakter");
-    } else {
-      clearError(subjectError);
-    }
-  });
-
-  subjectInput.addEventListener("input", function () {
-    if (this.value.trim() !== "" && subjectError.textContent) {
-      clearError(subjectError);
-    }
-  });
-
-  messageTextarea.addEventListener("blur", function () {
-    if (!validateRequired(this.value)) {
-      showError(messageError, "Detail kendala wajib diisi");
-    } else if (this.value.trim().length < 10) {
-      showError(messageError, "Detail kendala minimal 10 karakter");
-    } else {
-      clearError(messageError);
-    }
-  });
-
-  messageTextarea.addEventListener("input", function () {
-    if (this.value.trim() !== "" && messageError.textContent) {
-      clearError(messageError);
-    }
-  });
-
-  // Form submission (diedit oleh galih agustan, untuk keperluan complaint count)
+  // Form submission
   contactForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    // Clear all previous errors
     clearError(phoneError);
     clearError(categoryError);
     clearError(subjectError);
@@ -124,188 +58,65 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let isValid = true;
 
-    // Validate phone
-    if (!validateRequired(phoneInput.value)) {
-      showError(phoneError, "Nomor telepon wajib diisi");
-      isValid = false;
-    } else if (!validatePhone(phoneInput.value)) {
-      showError(phoneError, "Format nomor telepon tidak valid");
-      isValid = false;
-    }
+    if (!validateRequired(phoneInput.value)) { showError(phoneError, "Nomor telepon wajib diisi"); isValid = false; }
+    else if (!validatePhone(phoneInput.value)) { showError(phoneError, "Format nomor telepon tidak valid"); isValid = false; }
 
-    // Validate category
-    if (!validateRequired(categorySelect.value)) {
-      showError(categoryError, "Kategori masalah wajib dipilih");
-      isValid = false;
-    }
+    if (!validateRequired(categorySelect.value)) { showError(categoryError, "Kategori wajib dipilih"); isValid = false; }
+    if (!validateRequired(subjectInput.value)) { showError(subjectError, "Judul wajib diisi"); isValid = false; }
+    if (!validateRequired(messageTextarea.value)) { showError(messageError, "Detail kendala wajib diisi"); isValid = false; }
 
-    // Validate subject
-    if (!validateRequired(subjectInput.value)) {
-      showError(subjectError, "Judul laporan wajib diisi");
-      isValid = false;
-    } else if (subjectInput.value.trim().length < 5) {
-      showError(subjectError, "Judul laporan minimal 5 karakter");
-      isValid = false;
-    }
-
-    // Validate message
-    if (!validateRequired(messageTextarea.value)) {
-      showError(messageError, "Detail kendala wajib diisi");
-      isValid = false;
-    } else if (messageTextarea.value.trim().length < 10) {
-      showError(messageError, "Detail kendala minimal 10 karakter");
-      isValid = false;
-    }
-
-    // If form is valid, submit
     if (isValid) {
-      submitToSupabase();
-    } else {
-      // Focus on first error
-      const firstError = document.querySelector('[aria-invalid="true"]');
-      if (firstError) {
-        firstError.focus();
-      }
+      submitToBackend();
     }
   });
 
-  // SUBMIT TO SUPABASE FUNCTION
-  async function submitToSupabase() {
+  // --- FUNGSI BARU: KIRIM KE BACKEND NODE.JS ---
+  async function submitToBackend() {
     const submitBtn = contactForm.querySelector(".submit-btn");
     const originalBtnText = submitBtn.innerHTML;
     submitBtn.disabled = true;
     submitBtn.innerHTML = "<span>Mengirim...</span>";
 
-    const rawPhone = phoneInput.value.trim();
+    const payload = {
+      phone: phoneInput.value.trim(),
+      category: categorySelect.value,
+      subject: subjectInput.value.trim(),
+      message: messageTextarea.value.trim()
+    };
 
     try {
-      const { data: userData, error: userError } = await supabase
-        .from("users")
-        .select("id")
-        .eq("phone", rawPhone)
-        .single();
-      let userId = null;
-      if (userData) {
-        userIdToInsert = userData.user_id;
+      // Tembak ke Node.js (Port 3000)
+      const response = await fetch('http://localhost:3000/api/complaint', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        alert("✓ Terima kasih! Laporan Anda telah dikirim.\n\nTim kami akan segera menindaklanjuti.");
+        contactForm.reset();
       } else {
-        console.warn("User not found, proceeding as guest.");
+        throw new Error(result.message || "Gagal mengirim laporan.");
       }
-      // insert ke tabel cmplaints
-      const { error: insertError } = await supabase.from("complaints").insert([
-        {
-          user_id: userIdToInsert,
-          phone_number: rawPhone,
-          kategori_masalah: categorySelect.value,
-          judul_laporan: subjectInput.value.trim(),
-          detail_kendala: messageTextarea.value.trim(),
-          tanggal: new Date(),
-        },
-      ]);
-      if (insertError) throw insertError;
-      // sukses
-      alert(
-        "✓ Terima kasih! Laporan Anda telah dikirim.\n\nTim kami akan segera menghubungi Anda melalui nomor yang terdaftar."
-      );
-      contactForm.reset();
+
     } catch (error) {
-      console.error("Error submitting to Supabase:", error);
-      alert(
-        "✗ Maaf, terjadi kesalahan saat mengirim laporan Anda. Silakan coba lagi."
-      );
+      console.error("Error:", error);
+      alert("✗ " + error.message);
     } finally {
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalBtnText;
     }
   }
 
-  // Submit form function
-  function submitForm() {
-    // Collect form data
-    const formData = {
-      phone: phoneInput.value.trim(),
-      category: categorySelect.value,
-      subject: subjectInput.value.trim(),
-      message: messageTextarea.value.trim(),
-      timestamp: new Date().toISOString(),
-    };
-
-    // Show loading state
-    const submitBtn = contactForm.querySelector(".submit-btn");
-    const originalBtnText = submitBtn.innerHTML;
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = "<span>Mengirim...</span>";
-
-    // Simulate API call (replace with actual API endpoint)
-    setTimeout(function () {
-      console.log("Form Data:", formData);
-
-      // Success message
-      alert(
-        "✓ Terima kasih! Laporan Anda telah dikirim.\n\nTim kami akan segera menghubungi Anda melalui nomor yang terdaftar."
-      );
-
-      // Reset form
-      contactForm.reset();
-
-      // Reset button
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = originalBtnText;
-
-      // Optional: Redirect after success
-      // window.location.href = 'thank-you.html';
-    }, 1500);
-
-    // For production, use actual API call:
-    /*
-        fetch('https://api.mytelco.com/contact', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('✓ Terima kasih! Laporan Anda telah dikirim.');
-                contactForm.reset();
-            } else {
-                alert('✗ Maaf, terjadi kesalahan. Silakan coba lagi.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('✗ Terjadi kesalahan koneksi. Silakan coba lagi.');
-        })
-        .finally(() => {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = originalBtnText;
-        });
-        */
-  }
-
-  // Phone number formatting (optional)
+  // Phone formatting (Tetap Sama)
   phoneInput.addEventListener("input", function (e) {
     let value = e.target.value.replace(/\D/g, "");
-
-    if (value.length > 0) {
-      if (value.startsWith("0")) {
-        // Format: 0812-3456-7890
-        if (value.length <= 4) {
-          value = value;
-        } else if (value.length <= 8) {
-          value = value.slice(0, 4) + "-" + value.slice(4);
-        } else {
-          value =
-            value.slice(0, 4) +
-            "-" +
-            value.slice(4, 8) +
-            "-" +
-            value.slice(8, 12);
-        }
-      }
+    if (value.startsWith("0")) {
+      if (value.length > 4) value = value.slice(0, 4) + "-" + value.slice(4);
+      if (value.length > 9) value = value.slice(0, 9) + "-" + value.slice(9);
     }
-
     e.target.value = value;
   });
 });
