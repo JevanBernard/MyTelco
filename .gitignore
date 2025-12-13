@@ -1,3 +1,14 @@
+myenv/
+*.dll
+*.so
+*.dylib
+__pycache__/
+*.pyc
+*.pkl
+myenv/
+venv/
+ML_Engine/myenv/
+BackEnd/myenv
 # --- PYTHON BASE ---
 __pycache__/
 *.py[cod]
