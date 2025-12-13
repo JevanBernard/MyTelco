@@ -1,51 +1,96 @@
-const { spawn } = require('child_process');
-const path = require('path');
+const { createClient } = require('@supabase/supabase-js');
+const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
-const predictChurn = (req, res) => {
-    let body = '';
+// --- SETUP SUPABASE ---
+let supabase;
+try {
+    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_KEY) {
+        throw new Error("Supabase URL atau Key belum diset di file .env");
+    }
+    supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+} catch (err) {
+    console.error("FATAL ERROR: Gagal inisialisasi Supabase Client:", err.message);
+}
 
-    // 1. Terima data dari Frontend
-    req.on('data', chunk => {
-        body += chunk.toString();
-    });
+// --- REGISTER (Logika Sebelumnya) ---
+exports.registerUser = async (req, res) => {
+    try {
+        const { name, username, password } = req.body;
 
-    req.on('end', () => {
-        // Contoh data dari frontend: { "internet": 60, "call": 20 }
-        const inputData = body; 
+        if (!name || !username || !password) {
+            return res.status(400).json({ success: false, message: 'Data tidak lengkap.' });
+        }
 
-        // 2. Tentukan lokasi script Python
-        // '..' artinya naik satu folder dari BackEnd, lalu masuk ML_Engine
-        const pythonScriptPath = path.join(__dirname, '../ML_Engine/predict.py');
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-        // 3. Jalankan Python (Spawn process)
-        // Kita kirim inputData sebagai argumen
-        const pythonProcess = spawn('python', [pythonScriptPath, inputData]);
-        // CATATAN: Jika di komputer kamu harus ketik 'python3', ganti 'python' jadi 'python3'
+        const { data, error } = await supabase
+            .from('users')
+            .insert([{ name: name, phone_number: username, password_hash: hashedPassword }])
+            .select();
 
-        let resultData = '';
+        if (error) {
+            if (error.code === '23505') return res.status(409).json({ success: false, message: 'Nomor telepon sudah terdaftar.' });
+            throw error;
+        }
 
-        // 4. Tangkap apa yang di-print oleh Python
-        pythonProcess.stdout.on('data', (data) => {
-            resultData += data.toString();
-        });
+        res.status(201).json({ success: true, message: 'Registrasi berhasil', data: data[0] });
 
-        // 5. Tangkap error jika Python gagal jalan
-        pythonProcess.stderr.on('data', (data) => {
-            console.error(`Python Error: ${data}`);
-        });
-
-        // 6. Saat Python selesai, kirim hasil ke Frontend
-        pythonProcess.on('close', (code) => {
-            if (code !== 0) {
-                res.writeHead(500, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ error: "Gagal memproses prediksi" }));
-            } else {
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-                // resultData sudah berupa JSON string dari Python
-                res.end(resultData);
-            }
-        });
-    });
+    } catch (error) {
+        console.error('Register Error:', error);
+        res.status(500).json({ success: false, message: `Server Error: ${error.message}` });
+    }
 };
 
-module.exports = { predictChurn };
+// --- LOGIN (Logika Baru) ---
+exports.loginUser = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        // 1. Validasi Input
+        if (!username || !password) {
+            return res.status(400).json({ success: false, message: 'Nomor HP dan Password wajib diisi.' });
+        }
+
+        console.log(`Login Attempt: ${username}`);
+
+        // 2. Cari User berdasarkan Phone Number
+        // Menggunakan .maybeSingle() agar tidak error jika data kosong (mengembalikan null)
+        const { data: user, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('phone_number', username)
+            .maybeSingle();
+
+        if (error) throw error;
+
+        // 3. Cek apakah user ditemukan
+        if (!user) {
+            return res.status(401).json({ success: false, message: 'Nomor telepon tidak terdaftar.' });
+        }
+
+        // 4. Verifikasi Password (Hash Comparison)
+        const isMatch = await bcrypt.compare(password, user.password_hash);
+
+        if (!isMatch) {
+            return res.status(401).json({ success: false, message: 'Password salah.' });
+        }
+
+        // 5. Sukses
+        console.log(`Login Success: ${username}`);
+        res.status(200).json({
+            success: true,
+            message: 'Login berhasil',
+            data: {
+                id: user.user_id,
+                name: user.name,
+                phone: user.phone_number
+            }
+        });
+
+    } catch (error) {
+        console.error('Login Error:', error);
+        res.status(500).json({ success: false, message: `Server Error: ${error.message}` });
+    }
+};

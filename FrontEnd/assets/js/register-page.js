@@ -26,7 +26,7 @@ export default class Register {
                         <form id="registerForm">
                             <div class="form-group">
                                 <div class="input-wrapper">
-                                    <img src="assets/img/icon/users.svg" class="input-icon" alt="User">
+                                    <img src="assets/img/icon/user.svg" class="input-icon" alt="User">
                                     <input type="text" id="fullName" placeholder="Nama Lengkap" required>
                                 </div>
                             </div>
