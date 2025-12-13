@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, Dict, Any
+from typing import Optional, List
 
 # 1. Schema Input Survey (Dari Frontend)
 class SurveyInput(BaseModel):
@@ -10,15 +10,20 @@ class SurveyInput(BaseModel):
     travel: str   # TIDAK_PERNAH, SERING, dll
 
 # 2. Schema Output Produk (Ke Frontend)
+# REVISI: Menghapus ai_tags, menyesuaikan dengan kolom DB baru
 class ProductBase(BaseModel):
     product_id: int
     category: str
     name: str
     price: float
-    data_quota: Optional[str] = None
-    validity: Optional[str] = None
+    
+    # Data Tampilan & Logika
+    data_quota: Optional[str] = None          # String: "25 GB"
+    data_quota_internet: Optional[int] = 0    # Int: 25
+    validity: Optional[int] = None            # Int: 30
+    
     description: Optional[str] = None
-    ai_tags: Dict[str, Any]
+    daily_usage_score: Optional[float] = 0.0  # Virtual Property dari Models
     
     class Config:
-        from_attributes = True
+        from_attributes = True # Wajib untuk membaca data dari SQLAlchemy

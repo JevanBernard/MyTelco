@@ -1,0 +1,271 @@
+/* --- RESET KHUSUS HALAMAN LOGIN --- */
+/* PERBAIKAN: Hapus overflow hidden dari body agar halaman lain (Home) bisa di-scroll kembali */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #0a0a0a;
+    font-family: var(--font-main, 'Inter', sans-serif);
+}
+
+.login-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    /* PERBAIKAN: Pindahkan overflow hidden ke sini. 
+       Jadi hanya saat masuk halaman login saja scroll-nya terkunci. */
+    overflow: hidden; 
+}
+
+/* --- BAGIAN KIRI (VISUAL) --- */
+.login-visual {
+    flex: 1;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-right: 1px solid #27272a;
+}
+
+.brand-header {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    z-index: 10;
+}
+.login-logo { width: 140px; }
+
+.illustration-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Gambar 3D Utama */
+.login-3d-img {
+    width: 70%;
+    max-width: 450px;
+    z-index: 2;
+    filter: drop-shadow(0 0 60px rgba(254, 161, 0, 0.2));
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Efek Orbit/Lingkaran Putus-putus */
+.orbit-circle {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    z-index: 1;
+    animation: rotate 60s linear infinite;
+}
+
+/* Icon Melayang */
+.floating-icon {
+    position: absolute;
+    font-size: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 50%;
+    z-index: 3;
+}
+.icon-1 { top: 20%; left: 25%; }
+.icon-2 { bottom: 25%; right: 20%; }
+.icon-3 { top: 30%; right: 15%; }
+
+/* --- BAGIAN KANAN (FORM) --- */
+.login-form-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0a0a0a;
+    padding: 40px;
+    position: relative;
+}
+
+/* Background Blur di belakang form (Efek Glow) */
+.login-form-area::before {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: rgba(254, 161, 0, 0.05);
+    filter: blur(150px);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.form-content {
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    z-index: 2;
+}
+
+.form-header { margin-bottom: 40px; }
+.form-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+    font-family: var(--font-display, 'Poppins', sans-serif);
+}
+.form-header p {
+    color: #94a3b8;
+    font-size: 1rem;
+}
+
+/* Input Fields */
+.form-group { margin-bottom: 20px; }
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 16px;
+    width: 20px;
+    height: 20px;
+    filter: invert(0.6); /* Abu-abu */
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 16px 16px 16px 50px; /* Padding kiri untuk icon */
+    background-color: #18181b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-wrapper input:focus {
+    border-color: #fea100;
+    background-color: #0f0f11;
+}
+
+/* Validation Styles */
+.input-wrapper input.invalid {
+    border-color: #ff4d4d;
+    background-color: rgba(255, 77, 77, 0.05);
+}
+
+.validation-msg {
+    color: #ff4d4d;
+    font-size: 0.8rem;
+    margin-top: 6px;
+    margin-left: 4px;
+    display: none;
+    animation: slideDown 0.2s ease;
+}
+
+.validation-msg.visible { display: block; }
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Links & Button */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 32px;
+}
+
+.forgot-password {
+    color: #fea100;
+    font-size: 0.9rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+.forgot-password:hover { text-decoration: underline; }
+
+.btn-login {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(90deg, #fea100, #ffdb43);
+    color: #000;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: var(--font-display, 'Poppins', sans-serif);
+    box-shadow: 0 4px 20px rgba(254, 161, 0, 0.3);
+    transition: 0.3s;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(254, 161, 0, 0.5);
+}
+
+.btn-login:disabled {
+    background: #333;
+    color: #666;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.form-footer {
+    margin-top: 30px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 0.95rem;
+}
+.form-footer a { color: #fea100; font-weight: 600; text-decoration: underline; }
+
+/* Pesan Error/Sukses */
+.message-box {
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.9rem;
+    display: none;
+}
+.message-box.error { background: rgba(255, 77, 77, 0.1); color: #ff4d4d; border: 1px solid #ff4d4d; display: block; }
+.message-box.success { background: rgba(0, 255, 0, 0.1); color: #00ff00; border: 1px solid #00ff00; display: block; }
+
+/* Animations */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Responsiveness */
+@media (max-width: 900px) {
+    /* FIX: Biarkan scroll di mobile */
+    .login-container { 
+        flex-direction: column; 
+        height: auto; 
+        min-height: 100vh;
+        overflow: visible; 
+    }
+    
+    .login-visual { display: none; }
+    
+    .login-form-area { 
+        padding: 40px 20px; 
+        height: auto; 
+        min-height: 100vh; 
+    }
+}

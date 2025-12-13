@@ -1,33 +1,28 @@
-const http = require('http');
-const { predictChurn } = require('./controller'); // Import controller tadi
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+require('dotenv').config();
 
-const PORT = 3000;
+const router = require('./router');
 
-const server = http.createServer((req, res) => {
-    // Header CORS (Supaya frontend nanti bisa akses)
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-    // Handle Preflight Request (Penting untuk browser)
-    if (req.method === 'OPTIONS') {
-        res.writeHead(204);
-        res.end();
-        return;
-    }
+// Middleware
+app.use(cors()); // Izinkan akses dari Frontend
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-    // --- ROUTING MANUAL ---
-    
-    // Route untuk Prediksi
-    if (req.url === '/api/predict' && req.method === 'POST') {
-        return predictChurn(req, res);
-    }
+// Routing
+// Endpoint akan menjadi: http://localhost:3000/api/register
+app.use('/api', router);
 
-    // Route Default
-    res.writeHead(404, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ message: "Route tidak ditemukan" }));
+// Health Check
+app.get('/', (req, res) => {
+    res.send('MyTelco Backend Service is Running...');
 });
 
-server.listen(PORT, () => {
-    console.log(`Server Telco berjalan di http://localhost:${PORT}`);
+// Start Server
+app.listen(PORT, () => {
+    console.log(`Server berjalan di http://localhost:${PORT}`);
 });

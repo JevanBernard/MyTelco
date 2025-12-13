@@ -6,22 +6,12 @@
     <title>Produk My Telco</title>
 
     <!-- Favicon -->
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="assets/img/favicon/favicon.ico"
-    />
-    <link
-      rel="icon"
-      sizes="32x32"
-      href="assets/img/favicon/favicon-32x32.png"
-    />
-    <link
-      rel="icon"
-      sizes="16x16"
-      href="assets/img/favicon/favicon-16x16.png"
-    />
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico">
+    <link rel="icon" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
+    <link rel="icon" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
 
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/styles.css" />
 
@@ -36,10 +26,11 @@
     <script src="assets/js/components.js" defer></script>
     <script type="module" src="assets/js/product-page.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"></script>
-  </head>
-  <body>
-    <my-navbar></my-navbar>
+
+</head>
+<body>
+    
+    <my-navbar active="produk"></my-navbar>
 
     <main>
       <section class="hero-product-section">
@@ -107,148 +98,113 @@
         </div>
       </section>
 
-      <section class="all-products">
-        <div class="container-product">
-          <aside class="filter">
-            <div class="search-bar">
-              <img src="./assets/img/icon/search.svg" alt="search bar" />
-              <input type="text" placeholder="Cari paket..." id="searchInput" />
-            </div>
-            <div class="list-category" id="listCategory">
-              <div class="header-category">
-                <img src="./assets/img/icon/filter.svg" alt="filter category" />
-                <h1>Kebutuhan Digital</h1>
-              </div>
-              <div class="category">
-                <div class="name-category">
-                  <img src="./assets/img/icon/menu-square-default.svg" alt="" />
-                  <p>Semua Paket</p>
-                </div>
-                <img
-                  src="./assets/img/icon/check-circle-dark.svg"
-                  alt=""
-                  class="check-icon"
-                />
-              </div>
-              <div class="category">
-                <div class="name-category">
-                  <img
-                    src="./assets/img/icon/menu-internet-default.svg"
-                    alt=""
-                  />
-                  <p>Internet & Chat</p>
-                </div>
-                <img
-                  src="./assets/img/icon/check-circle-dark.svg"
-                  alt=""
-                  class="check-icon"
-                />
-              </div>
-              <div class="category">
-                <div class="name-category">
-                  <img
-                    src="./assets/img/icon/menu-streaming-default.svg"
-                    alt=""
-                  />
-                  <p>Nonton Film</p>
-                </div>
-                <img
-                  src="./assets/img/icon/check-circle-dark.svg"
-                  alt=""
-                  class="check-icon"
-                />
-              </div>
-              <div class="category">
-                <div class="name-category">
-                  <img
-                    src="./assets/img/icon/menu-booster-default.svg"
-                    alt=""
-                  />
-                  <p>Booster</p>
-                </div>
-                <img
-                  src="./assets/img/icon/check-circle-dark.svg"
-                  alt=""
-                  class="check-icon"
-                />
-              </div>
-              <div class="category">
-                <div class="name-category">
-                  <img src="./assets/img/icon/menu-travel-default.svg" alt="" />
-                  <p>Travelling</p>
-                </div>
-                <img
-                  src="./assets/img/icon/check-circle-dark.svg"
-                  alt=""
-                  class="check-icon"
-                />
-              </div>
-              <div class="category">
-                <div class="name-category">
-                  <img src="./assets/img/icon/menu-family-default.svg" alt="" />
-                  <p>Keluarga</p>
-                </div>
-                <img
-                  src="./assets/img/icon/check-circle-dark.svg"
-                  alt=""
-                  class="check-icon"
-                />
-              </div>
-              <div class="category">
-                <div class="name-category">
-                  <img src="./assets/img/icon/menu-device-default.svg" alt="" />
-                  <p>Bundling Device</p>
-                </div>
-                <img
-                  src="./assets/img/icon/check-circle-dark.svg"
-                  alt=""
-                  class="check-icon"
-                />
-              </div>
-              <div class="category">
-                <div class="name-category">
-                  <img
-                    src="./assets/img/icon/menu-retention-default.svg"
-                    alt=""
-                  />
-                  <p>Loyalty</p>
-                </div>
-                <img
-                  src="./assets/img/icon/check-circle-dark.svg"
-                  alt=""
-                  class="check-icon"
-                />
-              </div>
-              <div class="category">
-                <div class="name-category">
-                  <img src="./assets/img/icon/menu-topup-default.svg" alt="" />
-                  <p>Top-Up Promo</p>
-                </div>
-                <img
-                  src="./assets/img/icon/check-circle-dark.svg"
-                  alt=""
-                  class="check-icon"
-                />
-              </div>
-              <div class="category">
-                <div class="name-category">
-                  <img src="./assets/img/icon/menu-voice-default.svg" alt="" />
-                  <p>Voice Bundle</p>
-                </div>
-                <img
-                  src="./assets/img/icon/check-circle-dark.svg"
-                  alt=""
-                  class="check-icon"
-                />
-              </div>
-            </div>
-          </aside>
+        <section class="all-products" id="product-lists">
+            <!-- Tombol Filter Mobile -->
+            <button class="mobile-filter-btn" id="toggleFilter">
+                <img src="./assets/img/icon/filter.svg" alt="Filter"> Filter Kategori
+            </button>
 
-          <div class="products" id="productsContainer"></div>
-        </div>
-      </section>
+            <div class="container-product">
+                <aside class="filter">
+                    <div class="search-bar">
+                        <img src="./assets/img/icon/search.svg" alt="search bar">
+                        <input type="text" placeholder="Cari paket..." id="searchInput">
+                    </div>
+                    <div class="header-category">
+                        <img src="./assets/img/icon/filter.svg" alt="filter category">
+                        <h1>Kebutuhan Digital</h1>
+                    </div>
+                    <div class="list-category" id="listCategory">
+                        <div class="category">
+                            <div class="name-category">
+                                <img src="./assets/img/icon/menu-square-default.svg" alt="">
+                                <p>Semua Paket</p>
+                            </div>
+                            <img src="./assets/img/icon/check-circle-dark.svg" alt="" class="check-icon">
+                        </div>
+                        <div class="category">
+                            <div class="name-category">
+                                <img src="./assets/img/icon/menu-internet-default.svg" alt="">
+                                <p>Internet & Chat</p>
+                            </div>
+                            <img src="./assets/img/icon/check-circle-dark.svg" alt="" class="check-icon">
+                        </div>
+                        <div class="category">
+                            <div class="name-category">
+                                <img src="./assets/img/icon/menu-streaming-default.svg" alt="">
+                                <p>Nonton Film</p>
+                            </div>
+                            <img src="./assets/img/icon/check-circle-dark.svg" alt="" class="check-icon">
+                        </div>
+                        <div class="category">
+                            <div class="name-category">
+                                <img src="./assets/img/icon/menu-booster-default.svg" alt="">
+                                <p>Booster</p>
+                            </div>
+                            <img src="./assets/img/icon/check-circle-dark.svg" alt="" class="check-icon">
+                        </div>
+                        <div class="category">
+                            <div class="name-category">
+                                <img src="./assets/img/icon/menu-travel-default.svg" alt="">
+                                <p>Travelling</p>
+                            </div>
+                            <img src="./assets/img/icon/check-circle-dark.svg" alt="" class="check-icon">
+                        </div>
+                        <div class="category">
+                            <div class="name-category">
+                                <img src="./assets/img/icon/menu-family-default.svg" alt="">
+                                <p>Keluarga</p>
+                            </div>
+                            <img src="./assets/img/icon/check-circle-dark.svg" alt="" class="check-icon">
+                        </div>
+                        <div class="category">
+                            <div class="name-category">
+                                <img src="./assets/img/icon/menu-device-default.svg" alt="">
+                                <p>Bundling Device</p>
+                            </div>
+                            <img src="./assets/img/icon/check-circle-dark.svg" alt="" class="check-icon">
+                        </div>
+                        <div class="category">
+                            <div class="name-category">
+                                <img src="./assets/img/icon/menu-retention-default.svg" alt="">
+                                <p>Loyalty</p>
+                            </div>
+                            <img src="./assets/img/icon/check-circle-dark.svg" alt="" class="check-icon">
+                        </div>
+                        <div class="category">
+                            <div class="name-category">
+                                <img src="./assets/img/icon/menu-topup-default.svg" alt="">
+                                <p>Top-Up Promo</p>
+                            </div>
+                            <img src="./assets/img/icon/check-circle-dark.svg" alt="" class="check-icon">
+                        </div>
+                        <div class="category">
+                            <div class="name-category">
+                                <img src="./assets/img/icon/menu-voice-default.svg" alt="">
+                                <p>Voice Bundle</p>
+                            </div>
+                            <img src="./assets/img/icon/check-circle-dark.svg" alt="" class="check-icon">
+                        </div>
+                    </div>
+
+                    <!-- Tombol Tutup Filter (Mobile Only) -->
+                    <button class="close-filter-btn" id="closeFilter">Tutup</button>
+                </aside>
+
+                <div class="products" id="productsContainer"></div>
+            </div>
+        </section>
+
     </main>
 
     <my-footer></my-footer>
-  </body>
-</html>
+
+    <div id="purchaseModal" class="modal-overlay hidden">
+        <div class="modal-glass">
+            
+            <div id="modalContent"></div> 
+        </div>
+    </div>
+
+
+</body>

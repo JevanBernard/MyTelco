@@ -1,38 +1,13 @@
+const express = require('express');
+const router = express.Router();
+const controller = require('./controller');
 
-const { 
-  createProduct, 
-  getAllProducts, 
-  getProductById, 
-  editProductById, 
-  deleteProductById 
-} = require('./handler');
+// Register Route
+// URL: /api/register
+router.post('/register', controller.registerUser);
 
-const routes = [
-  {
-    method: 'POST',
-    path: '/products',
-    handler: createProduct,
-  },
-  {
-    method: 'GET',
-    path: '/products',
-    handler: getAllProducts,
-  },
-  {
-    method: 'GET',
-    path: '/products/{productId}',
-    handler: getProductById,
-  },
-  {
-    method: 'PUT',
-    path: '/products/{productId}',
-    handler: editProductById,
-  },
-  {
-    method: 'DELETE',
-    path: '/products/{productId}',
-    handler: deleteProductById
-  },
-];
+// Login Route (WAJIB DITAMBAHKAN)
+// URL: /api/login
+router.post('/login', controller.loginUser);
 
-module.exports = routes;
+module.exports = router;

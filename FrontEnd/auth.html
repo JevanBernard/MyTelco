@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk / Daftar - MyTelco</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon/favicon.ico">
+    <link rel="icon" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
+    <link rel="icon" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
+    
+    <!-- CSS (Kita load Login CSS di sini agar bisa dipakai kedua halaman) -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/login.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Wadah Konten yang akan berubah-ubah -->
+    <div id="app"></div>
+
+    <!-- Script Router -->
+    <script type="module">
+        import Login from './assets/js/login-page.js';
+        import Register from './assets/js/register-page.js'; // Pastikan path ini benar
+
+        // Definisi Rute
+        const routes = {
+            '#login': Login,
+            '#register': Register
+        };
+
+        const router = async () => {
+            const contentDiv = document.getElementById('app');
+            
+            // Ambil hash dari URL (misal: #login), default ke #login jika kosong
+            let hash = location.hash || '#login';
+            
+            // Cari komponen yang cocok
+            let PageClass = routes[hash];
+
+            // Jika rute tidak ditemukan (404), balik ke login
+            if (!PageClass) {
+                window.location.hash = '#login';
+                return;
+            }
+
+            // Inisialisasi Halaman
+            const page = new PageClass();
+            contentDiv.innerHTML = await page.render();
+            
+            // Jalankan logika setelah render (event listeners, dll)
+            if (page.afterRender) await page.afterRender();
+        };
+
+        // Dengarkan perubahan Hash (saat link diklik)
+        window.addEventListener('hashchange', router);
+
+        // Jalankan saat pertama kali load
+        window.addEventListener('DOMContentLoaded', router);
+    </script>
+
+</body>
+</html>

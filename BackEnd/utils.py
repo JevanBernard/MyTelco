@@ -25,5 +25,5 @@ def apply_business_rules(recommendations, customer):
             {'rank':int(1), 'offer':'Premium Package', 'coinfidence':'Unggulan'},
             {'rank':int(2), 'offer':'Internet Malam Unlimited', 'coinfidence':'Unggulan'},
             {'rank':int(3), 'offer':'YouTube Unlimited', 'coinfidence':'Unggulan'}            
-            ]
+        ]
     return recommendations
