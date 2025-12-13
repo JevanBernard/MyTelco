@@ -19,121 +19,112 @@
 
     <!-- KOMPONEN NAVBAR & FOOTER -->
     <script src="assets/js/components.js" defer></script>
+    
+    <!-- LOGIC DASHBOARD -->
+    <script src="assets/js/dashboard-logic.js" defer></script>
 </head>
 <body>
     <my-navbar></my-navbar>
 
     <main>
         <section class="main-dashboard">
+            <!-- 1. PROFIL USER -->
             <div class="profile-dashboard">
                 <div class="avatar-user-dashboard">
                     <img src="./assets/img/icon/user-profile-dashboard.svg" alt="avatar user">
                 </div>
                 <div class="detail-user-dashboard">
-                    <h1>Galih Tambunan</h1>
-                    <h3>0812-3456-7890</h3>
+                    <!-- ID: userName -->
+                    <h1 id="userName">Memuat Nama...</h1>
+                    <!-- ID REVISI: userPhone (Sebelumnya userPlan) -->
+                    <h3 id="userPhone">...</h3>
                 </div>
             </div>
 
+            <!-- 2. INFO CARDS -->
             <div class="info-dashboard">
+                <!-- Card 1: Monthly Spend -->
                 <div class="info">
                     <div class="text-info">
                         <img src="./assets/img/icon/wallet.svg" alt="Sisa Pulsa">
-                        <p>Sisa Pulsa</p>
+                        <p>Total Pengeluaran</p>
                     </div>
                     <div class="detail-info">
-                        <h1>Rp 12.500</h1>
-                        <p>Aktif s.d 20 Des 2025</p>
+                        <!-- ID: userSpend -->
+                        <h1 id="userSpend">Rp 0</h1>
+                        <p>Bulan Ini</p>
                     </div>
-                    <div class="button-info">
+                    <div class="button-info" style="cursor: pointer;" onclick="window.location.href='product.html'">
                         <img src="./assets/img/icon/plus.svg" alt="tambah pulsa">
-                        <p>Isi Pulsa</p>
+                        <p>Beli Paket</p>
                     </div>
                 </div>
+
+                <!-- Card 2: Data Usage -->
                 <div class="info">
                     <div class="text-info">
                         <img src="./assets/img/icon/data.svg" alt="Internet">
-                        <p>Internet Utama</p>
+                        <p>Kapasitas Data</p>
                     </div>
                     <div class="detail-info">
-                        <h1>14.2 GB</h1>
+                        <!-- Angka ini diambil dari avg_data_usage_gb -->
+                        <h1><span id="userUsage">0</span> GB</h1>
                     </div>
                     <div class="group-parent">
                         <div class="rectangle-parent">
                             <div class="group-child"></div>
-                            <div class="group-item"></div>
+                            <!-- Visual bar bisa dibuat dinamis nanti -->
+                            <div class="group-item" style="width: 70%"></div>
                         </div>
-                        <div class="info-kuota">Total 30 GB</div>
+                        <div class="info-kuota">Rata-rata penggunaan data</div>
                     </div>
                 </div>
+
+                <!-- Card 3: Topup Freq -->
                 <div class="info">
                     <div class="text-info">
                         <img src="./assets/img/icon/crown.svg" alt="Point">
-                        <p>Telco Point</p>
+                        <p>Frekuensi Top-up</p>
                     </div>
                     <div class="detail-info">
-                        <h1>850</h1>
-                        <p>Level: Gold Member</p>
+                        <!-- ID: topupFreq -->
+                        <h1 id="topupFreq">0x</h1>
+                        <p>Loyalitas Member</p>
                     </div>
                     <a href="./product.html" class="button-trade">
-                        <p>Tukar Sekarang</p>
+                        <p>Beli Produk Lainnya</p>
                     </a>
                 </div>
             </div>
 
+            <!-- 3. AI RECOMMENDATION (SMART ANALYZER) -->
             <div class="smart-dashboard">
                 <div class="header-smart">
                     <img src="./assets/img/icon/thunder.svg" alt="">
                     <b>SMART Telco Analyzer</b>
                 </div>   
                 <div class="text-smart">
-                    <h1>Kamu cocok dengan paket <span>Streaming Partner Pack</span> kami!</h1>
-                    <p>Pola datamu 80% habis untuk Streaming. Paketmu saat ini tidak efisien. Hemat pengeluaran dengan paket khusus Streaming.</p>
+                    <!-- ID: recTitle (Akan diisi HTML dinamis dari JS) -->
+                    <h1 id="recTitle">Menganalisis profilmu...</h1>
+                    <!-- ID: recReason -->
+                    <p id="recReason">Mohon tunggu sebentar.</p>
                 </div>   
+                
+                <!-- REVISI: Hapus container produk list -->
+                <!-- Tombol CTA -->
                 <a href="./product.html" class="button-smart">
-                    Lihat Rekomendasi Streaming
+                    Lihat Rekomendasi
                     <img src="./assets/img/icon/arrow-up.svg" alt="">
                 </a>          
             </div>
 
+            <!-- 4. HISTORY -->
             <div class="about-dashboard">
                 <div class="history">
                     <h1>Transaksi Terakhir</h1>
+                    <!-- Container History -->
                     <div class="history-frames">
-                        <div class="history-frame">
-                            <div class="history-group">
-                                <img src="./assets/img/icon/global.svg" alt="history">
-                                <div class="history-list">
-                                    <h3>Combo Sakti</h3>
-                                    <p>Hari Ini, 14:00</p>
-                                </div>
-                            </div>
-                            <b>Rp 150k</b>
-                        </div>
-                    </div>
-                    <div class="history-frames">
-                        <div class="history-frame">
-                            <div class="history-group">
-                                <img src="./assets/img/icon/global.svg" alt="history">
-                                <div class="history-list">
-                                    <h3>Netflix Pack</h3>
-                                    <p>Kemarin, 16:00</p>
-                                </div>
-                            </div>
-                            <b>Rp 50k</b>
-                        </div>
-                    </div>
-                    <div class="history-frames">
-                        <div class="history-frame">
-                            <div class="history-group">
-                                <img src="./assets/img/icon/global.svg" alt="history">
-                                <div class="history-list">
-                                    <h3>Combo Sakti</h3>
-                                    <p>Kemarin, 14:00</p>
-                                </div>
-                            </div>
-                            <b>Rp 150k</b>
-                        </div>
+                        <!-- Akan diisi JS -->
                     </div>
                 </div>
                 <div class="customer-service">
@@ -145,7 +136,6 @@
                     <a href="./kontak.html" class="service-button">
                         Hubungi CS
                     </a>
-
                 </div>
             </div>
         </section>
@@ -153,3 +143,4 @@
 
     <my-footer></my-footer>
 </body>
+</html>

@@ -2156,7 +2156,7 @@ h2 {
 }
 .history-list {
     display: flex;
-    width: 184px;
+    width: 200px;
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
@@ -3638,7 +3638,273 @@ input[type="range"]::-webkit-slider-thumb {
     object-fit: contain;
 }
 /* For logic JS */
+/* =========================================
+   POPULAR PACKAGES SECTION (Dynamic)
+   Tambahkan ini di bagian bawah styles.css
+   ========================================= */
 
+/* Section Layout */
+.popular-packages {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header-section {
+    display: flex;
+    text-align: center;
+    margin-bottom: 50px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-section {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 10px 0;
+    color: #fff;
+}
+
+.title-section .highlight {
+    color: #FEA100; /* Warna Orange MyTelco */
+}
+
+.subtitle-section {
+    color: #94a3b8; /* Text Muted */
+    font-size: 1rem;
+}
+
+/* Grid Container */
+.packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+/* --- CARD STYLING --- */
+.package-card {
+    background-color: #0f0f11; /* Card BG Dark */
+    border: 1px solid #27272a; /* Border halus */
+    border-radius: 24px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    min-height: 420px;
+}
+
+.package-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-color: #FEA100;
+}
+
+/* Featured Card (Tengah/Sorotan) */
+.package-card.featured {
+    background: linear-gradient(145deg, #1a1a1a, #0f0f11);
+    border: 1px solid #FFDB43;
+    box-shadow: 0 0 30px rgba(254, 161, 0, 0.15);
+    transform: scale(1.05); /* Sedikit lebih besar */
+    z-index: 2;
+}
+
+.package-card.featured:hover {
+    transform: scale(1.05) translateY(-10px);
+}
+
+/* Card Header Area */
+.card-top {
+    margin-bottom: 20px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.badge-outline {
+    border: 1px solid #94a3b8;
+    color: #94a3b8;
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.package-card.featured .badge-outline {
+    border-color: #FFDB43;
+    color: #FFDB43;
+    background: rgba(255, 219, 67, 0.1);
+}
+
+.card-icon, .card-icon-filled {
+    width: 24px;
+    height: 24px;
+}
+
+/* Typography Data Amount */
+.data-amount {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+}
+
+.data-amount .unit {
+    font-size: 1.5rem;
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.data-amount.text-gold {
+    background: linear-gradient(90deg, #ffdb43, #fea100);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Divider & Features */
+.card-divider {
+    height: 1px;
+    background: #27272a;
+    margin: 0 0 20px 0;
+}
+
+.features-list {
+    list-style: none;
+    margin-bottom: 30px;
+    padding: 0;
+}
+
+.features-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    color: #d4d4d8;
+    font-size: 0.95rem;
+}
+
+.features-list li img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Footer & Price */
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+}
+
+.price-info .label {
+    display: block;
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 4px;
+}
+
+.price-info .price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.price-info .period {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #94a3b8;
+}
+
+/* Circle Button */
+.btn-circle-arrow {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid #27272a;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-circle-arrow img {
+    width: 20px;
+    transition: transform 0.3s;
+}
+
+.btn-circle-arrow:hover {
+    background: #FEA100;
+    border-color: #FEA100;
+}
+
+.btn-circle-arrow.filled {
+    background: linear-gradient(135deg, #ffdb43, #fea100);
+    border: none;
+    box-shadow: 0 5px 15px rgba(254, 161, 0, 0.3);
+}
+
+.btn-circle-arrow.filled:hover {
+    transform: scale(1.1);
+}
+
+/* Button Secondary (Lihat Semua) */
+.center-button {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 14px 32px;
+    border: 1px solid #27272a;
+    border-radius: 50px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    border-color: #FEA100;
+    color: #FEA100;
+    background: rgba(254, 161, 0, 0.05);
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+    .packages-grid {
+        grid-template-columns: 1fr; /* 1 Kolom di HP */
+    }
+    
+    .package-card.featured {
+        transform: scale(1); /* Reset scale di mobile agar rapi */
+    }
+    
+    .package-card.featured:hover {
+        transform: translateY(-5px);
+    }
+    
+    .title-section {
+        font-size: 2rem;
+    }
+    
+    .data-amount {
+        font-size: 3rem;
+    }
+}
 
 /* ========================================
    RESPONSIVE DESIGN

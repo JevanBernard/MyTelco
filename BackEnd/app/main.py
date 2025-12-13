@@ -1,14 +1,11 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware 
 from sqlalchemy.orm import Session
+from sqlalchemy import desc
 from typing import List, Dict, Any
 
 from . import models, schemas, database
-from .services import logic_mapper
-from .services import transaction_service
-
-# Inisialisasi DB (Opsional jika sudah ada via SQL script)
-# models.Base.metadata.create_all(bind=database.engine) 
+from .services import logic_mapper, transaction_service
 
 app = FastAPI(title="MyTelco API")
 
@@ -37,70 +34,6 @@ def get_products(db: Session = Depends(get_db)):
     products = db.query(models.Product).filter(models.Product.is_active == True).all()
     return products
 
-@app.post("/api/survey/submit", response_model=Dict[str, Any])
-def submit_survey(data: schemas.SurveyInput, db: Session = Depends(get_db)):
-    """
-    Menerima data survei -> Hitung Fitur Profil -> Simpan ke DB
-    """
-    # 1. Hitung Fitur Profil (Logic Mapper)
-    profile_data = logic_mapper.generate_user_profile(data.dict())
-    
-    # Tambahkan User ID
-    profile_data['user_id'] = str(data.userId)
-    
-    # 2. Simpan/Update Profil ke Database
-    # Cek apakah profil sudah ada
-    existing_profile = db.query(models.CustomerProfile).filter(
-        models.CustomerProfile.user_id == str(data.userId)
-    ).first()
-    
-    if existing_profile:
-        # Update
-        for key, value in profile_data.items():
-            setattr(existing_profile, key, value)
-        db_profile = existing_profile
-    else:
-        # Insert Baru
-        db_profile = models.CustomerProfile(**profile_data)
-        db.add(db_profile)
-    
-    try:
-        db.commit()
-        db.refresh(db_profile)
-    except Exception as e:
-        db.rollback()
-        print(f"Database Error: {e}")
-        raise HTTPException(status_code=500, detail=f"Database Error: {str(e)}")
-
-    # 3. Simple Rule-Based Recommendation (Mockup untuk ML)
-    # Gunakan profile_data (dict) untuk logika ini, bukan db_profile (object)
-    offer = "General Offer"
-    avg_data = profile_data.get('avg_data_usage_gb', 0)
-    pct_video = profile_data.get('pct_video_usage', 0)
-    travel_score = profile_data.get('travel_score', 0)
-
-    if avg_data > 8.0: 
-        offer = "Device Upgrade Offer"
-    elif pct_video > 0.7: 
-        offer = "Streaming Partner Pack"
-    elif travel_score > 0.6: 
-        offer = "Roaming Pass"
-    elif avg_data > 3.0 and pct_video < 0.3: 
-        offer = "Data Booster"
-
-    # 4. Return Response
-    return {
-        "status": "success",
-        "message": "Survey processed successfully",
-        "data": {
-            "profile_id": db_profile.profile_id,
-            "user_id": db_profile.user_id,
-            "plan_type": db_profile.plan_type,
-            "calculated_features": profile_data,
-            "initial_recommendation": offer
-        }
-    }
-
 @app.post("/api/purchase", response_model=schemas.TransactionResponse)
 def purchase_product(data: schemas.PurchaseInput, db: Session = Depends(get_db)):
     try:
@@ -115,3 +48,109 @@ def purchase_product(data: schemas.PurchaseInput, db: Session = Depends(get_db))
     except Exception as e:
         print(f"Transaction Error: {e}")
         raise HTTPException(status_code=500, detail="Terjadi kesalahan server")
+
+@app.post("/api/survey/submit", response_model=Dict[str, Any])
+def submit_survey(data: schemas.SurveyInput, db: Session = Depends(get_db)):
+    profile_data = logic_mapper.generate_user_profile(data.dict())
+    profile_data['user_id'] = str(data.userId)
+    
+    existing_profile = db.query(models.CustomerProfile).filter(
+        models.CustomerProfile.user_id == str(data.userId)
+    ).first()
+    
+    if existing_profile:
+        for key, value in profile_data.items():
+            setattr(existing_profile, key, value)
+        db_profile = existing_profile
+    else:
+        db_profile = models.CustomerProfile(**profile_data)
+        db.add(db_profile)
+    
+    try:
+        db.commit()
+        db.refresh(db_profile)
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Database Error: {str(e)}")
+
+    return {
+        "status": "success",
+        "message": "Survey processed",
+        "data": profile_data
+    }
+
+# --- ENDPOINT DASHBOARD (WAJIB ADA) ---
+@app.get("/api/dashboard/{user_id}")
+def get_user_dashboard(user_id: str, db: Session = Depends(get_db)):
+    # 1. Cek User
+    user = db.query(models.User).filter(models.User.user_id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User ID tidak valid")
+
+    # 2. Ambil Profil
+    profile = db.query(models.CustomerProfile).filter(
+        models.CustomerProfile.user_id == user_id
+    ).first()
+    
+    profile_data = {
+        "plan_type": "New Member",
+        "monthly_spend": 0,
+        "data_usage": 0,
+        "topup_freq": 0
+    }
+    
+    recommended_offer = "General Offer"
+
+    if profile:
+        profile_data = {
+            "plan_type": profile.plan_type,
+            "monthly_spend": profile.monthly_spend,
+            "data_usage": profile.avg_data_usage_gb,
+            "topup_freq": profile.topup_freq
+        }
+        
+        # LOGIKA REKOMENDASI MANUAL (PENGGANTI ML SEMENTARA)
+        usage = float(profile.avg_data_usage_gb or 0)
+        video = float(profile.pct_video_usage or 0)
+        travel = float(profile.travel_score or 0)
+
+        if usage > 2.0: recommended_offer = "Device Upgrade Offer"
+        elif video > 0.6: recommended_offer = "Streaming Partner Pack"
+        elif travel > 0.5: recommended_offer = "Roaming Pass"
+        elif usage > 1.0: recommended_offer = "Data Booster"
+
+    # 3. Cari Produk Sesuai Rekomendasi
+    recommended_products = db.query(models.Product).filter(
+        models.Product.category == recommended_offer,
+        models.Product.is_active == True
+    ).limit(3).all()
+
+    # 4. History Transaksi
+    transactions = db.query(models.Transaction, models.Product).join(
+        models.Product, models.Transaction.product_id == models.Product.product_id
+    ).filter(
+        models.Transaction.user_id == user_id
+    ).order_by(desc(models.Transaction.purchase_date)).limit(3).all()
+
+    history_list = []
+    for trx, prod in transactions:
+        history_list.append({
+            "product_name": prod.name,
+            "amount": trx.amount,
+            "date": trx.purchase_date,
+            "status": trx.status
+        })
+
+    return {
+        "user": {
+            "name": user.name,
+            "id": user_id,
+            "phone": user.phone_number
+        },
+        "profile": profile_data,
+        "recommendation": {
+            "offer_name": recommended_offer,
+            "products": recommended_products
+        },
+        "history": history_list
+    }
